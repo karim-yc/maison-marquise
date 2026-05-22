@@ -6,3 +6,4 @@ export { AdnSection } from "./AdnSection";
 export { LogoSection } from "./LogoSection";
 export { CouleursSection } from "./CouleursSection";
 export { TypographiesSection } from "./TypographiesSection";
+export { PackagingSection } from "./PackagingSection";

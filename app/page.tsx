@@ -3,6 +3,7 @@ import { AdnSection }         from "@/components/sections/AdnSection";
 import { LogoSection }        from "@/components/sections/LogoSection";
 import { CouleursSection }        from "@/components/sections/CouleursSection";
 import { TypographiesSection }    from "@/components/sections/TypographiesSection";
+import { PackagingSection }       from "@/components/sections/PackagingSection";
 import { BrandSection }       from "@/components/brand/BrandSection";
 import { BrandCard }          from "@/components/brand/BrandCard";
 import { ColorSwatch }        from "@/components/brand/ColorSwatch";
@@ -37,13 +38,7 @@ export default function HomePage() {
       </BrandSection>
 
       {/* 06 — PACKAGING */}
-      <BrandSection id="packaging" index="06" label="Direction packaging" title="L'objet Maison Marquise"
-        intro="Quatre formats emblématiques. Chaque support raconte la même histoire — sobre, chaleureuse, soignée."
-        bg="white" bottomLine>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {packaging.map((item, i) => <PackagingMockupCard key={item.id} item={item} animDelay={i * 100} />)}
-        </div>
-      </BrandSection>
+      <PackagingSection />
 
       {/* 07 — UNIVERS */}
       <BrandSection id="univers" index="07" label="Univers visuels" title="Trois univers, un territoire"

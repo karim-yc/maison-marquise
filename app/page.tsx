@@ -1,5 +1,6 @@
 import { HeroSection }        from "@/components/sections/HeroSection";
 import { AdnSection }         from "@/components/sections/AdnSection";
+import { LogoSection }        from "@/components/sections/LogoSection";
 import { BrandSection }       from "@/components/brand/BrandSection";
 import { BrandCard }          from "@/components/brand/BrandCard";
 import { ColorSwatch }        from "@/components/brand/ColorSwatch";
@@ -16,28 +17,7 @@ export default function HomePage() {
       <AdnSection />
 
       {/* 02 — LOGO */}
-      <BrandSection id="logo" index="02" label="Système logo" title="Le logo Maison Marquise"
-        intro="Quatre déclinaisons officielles. Chaque usage respecte une zone de respiration équivalente à la hauteur du M."
-        bg="white" bottomLine>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {[
-            { bg: "bg-ivoire-maison", tc: "text-noir-marquise", label: "Complet",      desc: "Usage principal",    t: "Maison Marquise" },
-            { bg: "bg-noir-marquise", tc: "text-ivoire-maison", label: "Inversé",       desc: "Sur fond sombre",   t: "Maison Marquise" },
-            { bg: "bg-blanc-marbre",  tc: "text-noir-marquise", label: "Sans baseline", desc: "Usage compact",     t: "Maison Marquise" },
-            { bg: "bg-or-champagne",  tc: "text-blanc-marbre",  label: "Monogramme",    desc: "Favicon · Sticker", t: "M" },
-          ].map(({ bg, tc, label, desc, t }, i) => (
-            <BrandCard key={label} variant={bg.includes("noir") ? "dark" : bg.includes("or") ? "gold" : "default"} animDelay={i * 80} noHover className="p-0 overflow-hidden">
-              <div className={`${bg} flex items-center justify-center min-h-36 md:min-h-44 p-6`}>
-                <span className={`font-script ${t === "M" ? "text-5xl" : "text-2xl md:text-3xl"} leading-none ${tc}`}>{t}</span>
-              </div>
-              <div className="px-4 py-3 border-t border-gris-marbre">
-                <p className="label-mm text-gris-texte">{label}</p>
-                <p className="font-sans text-[0.65rem] text-gris-texte/60 mt-0.5">{desc}</p>
-              </div>
-            </BrandCard>
-          ))}
-        </div>
-      </BrandSection>
+      <LogoSection />
 
       {/* 03 — COULEURS */}
       <BrandSection id="couleurs" index="03" label="Palette officielle" title="Les couleurs Maison Marquise"

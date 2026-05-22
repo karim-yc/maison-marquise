@@ -3,3 +3,4 @@
 //           PackagingSection, MenuSection, ToneSection, PhotoSection, DosDontsSection
 export { HeroSection } from "./HeroSection";
 export { AdnSection } from "./AdnSection";
+export { LogoSection } from "./LogoSection";

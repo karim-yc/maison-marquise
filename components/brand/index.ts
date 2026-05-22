@@ -18,3 +18,4 @@ export type { GuidelineCardProps } from "./GuidelineCard";
 export { PackagingMockupCard }  from "./PackagingMockupCard";
 
 export { FormulaCard }          from "./FormulaCard";
+export { HeroLogo } from "./HeroLogo";

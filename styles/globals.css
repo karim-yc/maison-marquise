@@ -1,0 +1,171 @@
+/* ============================================================
+   MAISON MARQUISE — Styles globaux
+   Design premium, sobre, chaleureux
+   ============================================================ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Variables CSS racine ────────────────────────────────── */
+@layer base {
+  :root {
+    /* Couleurs en format HSL pour calculs dynamiques */
+    --color-ivory:      42 33% 97%;
+    --color-champagne:  37 47% 61%;
+    --color-bordeaux:   0 55% 23%;
+    --color-taupe:      28 10% 49%;
+    --color-charbon:    0 0% 11%;
+    --color-creme:      36 29% 93%;
+
+    /* Tokens sémantiques */
+    --bg-primary:   #FAF7F2;
+    --bg-secondary: #F5F0E8;
+    --text-primary:   #1C1C1C;
+    --text-secondary: #8A7E72;
+    --text-accent:    #5C1A1A;
+    --accent-gold:    #C9A96E;
+    --accent-gold-light: #DEC48E;
+
+    /* Typographie */
+    --font-cormorant: "Cormorant Garamond";
+    --font-montserrat: "Montserrat";
+    --font-parisienne: "Parisienne";
+
+    /* Animations */
+    --ease-luxury: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-reveal: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+    /* Transitions */
+    --transition-fast:   150ms var(--ease-luxury);
+    --transition-medium: 300ms var(--ease-luxury);
+    --transition-slow:   600ms var(--ease-luxury);
+  }
+}
+
+/* ─── Reset & base ────────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+    /* Mobile-first : base 15px → 16px desktop */
+    font-size: 15px;
+  }
+
+  @media (min-width: 768px) {
+    html { font-size: 16px; }
+  }
+
+  body {
+    background-color: #FAF7F2;
+    color: #1C1C1C;
+    font-family: var(--font-montserrat), "Helvetica Neue", sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    min-height: 100dvh;
+  }
+
+  /* Titres : Cormorant Garamond par défaut */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-cormorant), Georgia, serif;
+    font-weight: 400;
+    line-height: 1.15;
+    color: #1C1C1C;
+  }
+
+  /* Sélection de texte */
+  ::selection {
+    background-color: #C9A96E;
+    color: #FAF7F2;
+  }
+
+  /* Focus visible accessible */
+  :focus-visible {
+    outline: 2px solid #C9A96E;
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Liens */
+  a {
+    color: inherit;
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  /* Images */
+  img, video {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Scrollbar personnalisée — webkit */
+  ::-webkit-scrollbar        { width: 6px; }
+  ::-webkit-scrollbar-track  { background: #F5F0E8; }
+  ::-webkit-scrollbar-thumb  { background: #C9A96E; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #A8864E; }
+}
+
+/* ─── Classes utilitaires brand ───────────────────────────── */
+@layer components {
+  /* Trait décoratif doré */
+  .brand-divider {
+    @apply h-px w-16 bg-champagne mx-auto my-6;
+  }
+
+  /* Superscript lettre ornementale */
+  .brand-ornament {
+    font-family: var(--font-parisienne);
+    color: #C9A96E;
+    line-height: 1;
+  }
+
+  /* Container max-width standard */
+  .container-brand {
+    @apply w-full mx-auto px-5 sm:px-8 md:px-12 lg:px-16;
+    max-width: 1440px;
+  }
+
+  /* Container éditorial resserré */
+  .container-editorial {
+    @apply w-full mx-auto px-5 sm:px-8;
+    max-width: 860px;
+  }
+
+  /* Texte en petites capitales espacées */
+  .text-caps {
+    font-family: var(--font-montserrat);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  /* Fond satiné subtil */
+  .bg-satin {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  }
+}
+
+/* ─── Utilitaires typographiques ──────────────────────────── */
+@layer utilities {
+  .font-cormorant   { font-family: var(--font-cormorant), Georgia, serif; }
+  .font-montserrat  { font-family: var(--font-montserrat), sans-serif; }
+  .font-parisienne  { font-family: var(--font-parisienne), cursive; }
+
+  .text-champagne { color: #C9A96E; }
+  .text-bordeaux  { color: #5C1A1A; }
+  .text-taupe     { color: #8A7E72; }
+  .text-ivory     { color: #FAF7F2; }
+
+  .bg-ivory       { background-color: #FAF7F2; }
+  .bg-champagne   { background-color: #C9A96E; }
+  .bg-bordeaux    { background-color: #5C1A1A; }
+  .bg-creme       { background-color: #F5F0E8; }
+}

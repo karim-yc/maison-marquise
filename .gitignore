@@ -1,0 +1,46 @@
+# ─── Next.js ──────────────────────────────────────────────────
+.next/
+out/
+build/
+
+# ─── Node ─────────────────────────────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# ─── Environnement ────────────────────────────────────────────
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# ─── OS ───────────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# ─── IDE ──────────────────────────────────────────────────────
+.idea/
+.vscode/settings.json
+*.swp
+*.swo
+*.suo
+*.user
+
+# ─── TypeScript ───────────────────────────────────────────────
+*.tsbuildinfo
+next-env.d.ts
+
+# ─── Tests ────────────────────────────────────────────────────
+coverage/
+
+# ─── Divers ───────────────────────────────────────────────────
+*.pem
+.vercel

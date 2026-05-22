@@ -1,7 +1,8 @@
 import { HeroSection }        from "@/components/sections/HeroSection";
 import { AdnSection }         from "@/components/sections/AdnSection";
 import { LogoSection }        from "@/components/sections/LogoSection";
-import { CouleursSection }     from "@/components/sections/CouleursSection";
+import { CouleursSection }        from "@/components/sections/CouleursSection";
+import { TypographiesSection }    from "@/components/sections/TypographiesSection";
 import { BrandSection }       from "@/components/brand/BrandSection";
 import { BrandCard }          from "@/components/brand/BrandCard";
 import { ColorSwatch }        from "@/components/brand/ColorSwatch";
@@ -24,15 +25,7 @@ export default function HomePage() {
       <CouleursSection />
 
       {/* 04 — TYPOGRAPHIES */}
-      <BrandSection id="typographies" index="04" label="Système typographique" title="Trois polices, une voix"
-        intro="Cormorant Garamond pour l'élégance des titres. Montserrat pour la clarté du corps. Parisienne pour la signature poétique."
-        bg="white" bottomLine>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-          <TypographySample family="serif" animDelay={0} />
-          <TypographySample family="sans"  animDelay={100} />
-          <TypographySample family="script" bg="dark" animDelay={200} />
-        </div>
-      </BrandSection>
+      <TypographiesSection />
 
       {/* 05 — MENUS */}
       <BrandSection id="menus" index="05" label="Menus & Formules" title="La structure des formules"

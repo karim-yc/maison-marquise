@@ -2,3 +2,4 @@
 // Prévues : HeroSection, ColorSection, TypographySection, LogoSection,
 //           PackagingSection, MenuSection, ToneSection, PhotoSection, DosDontsSection
 export { HeroSection } from "./HeroSection";
+export { AdnSection } from "./AdnSection";

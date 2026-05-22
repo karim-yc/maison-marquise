@@ -1,8 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Montserrat, Parisienne } from "next/font/google";
+import { Navbar }    from "@/components/layout/Navbar";
+import { Footer }    from "@/components/layout/Footer";
+import { BackToTop } from "@/components/layout/BackToTop";
 import "./globals.css";
 
-// ── Google Fonts — variables CSS ──────────────────────────────────────────────
+// ── Google Fonts ───────────────────────────────────────────────────────────────
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   weight:  ["300", "400", "500", "600"],
@@ -25,7 +28,7 @@ const parisienne = Parisienne({
   display: "swap",
 });
 
-// ── SEO ───────────────────────────────────────────────────────────────────────
+// ── Métadonnées ────────────────────────────────────────────────────────────────
 export const metadata: Metadata = {
   title: {
     default:  "Maison Marquise — Brandbook Digital",
@@ -51,7 +54,7 @@ export const viewport: Viewport = {
   themeColor:   "#FAFAF8",
 };
 
-// ── Root Layout ───────────────────────────────────────────────────────────────
+// ── Root Layout ────────────────────────────────────────────────────────────────
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
@@ -64,8 +67,27 @@ export default function RootLayout({
         parisienne.variable,
       ].join(" ")}
     >
-      <body className="antialiased min-h-screen-safe bg-blanc-marbre text-noir-marquise">
-        {children}
+      <body className="antialiased bg-blanc-marbre text-noir-marquise">
+
+        {/* Navigation sticky */}
+        <Navbar />
+
+        {/* Contenu principal — décalé de la hauteur navbar */}
+        <main
+          id="main-content"
+          className="pt-16 md:pt-[72px]"
+          role="main"
+          aria-label="Contenu du brandbook Maison Marquise"
+        >
+          {children}
+        </main>
+
+        {/* Footer */}
+        <Footer />
+
+        {/* Bouton retour en haut */}
+        <BackToTop />
+
       </body>
     </html>
   );

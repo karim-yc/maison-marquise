@@ -1,6 +1,7 @@
 import { HeroSection }        from "@/components/sections/HeroSection";
 import { AdnSection }         from "@/components/sections/AdnSection";
 import { LogoSection }        from "@/components/sections/LogoSection";
+import { CouleursSection }     from "@/components/sections/CouleursSection";
 import { BrandSection }       from "@/components/brand/BrandSection";
 import { BrandCard }          from "@/components/brand/BrandCard";
 import { ColorSwatch }        from "@/components/brand/ColorSwatch";
@@ -20,25 +21,7 @@ export default function HomePage() {
       <LogoSection />
 
       {/* 03 — COULEURS */}
-      <BrandSection id="couleurs" index="03" label="Palette officielle" title="Les couleurs Maison Marquise"
-        intro="80 % sobre et premium — ivoire, blanc marbre, noir, or champagne. 20 % gourmand et chaleureux — caramel, framboise, pistache, brun."
-        bg="ivory" bottomLine>
-        <div className="space-y-10">
-          <div>
-            <p className="label-mm text-gris-texte mb-6">Premium — 80 %</p>
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-5 md:gap-7">
-              {premiumColors.map((c, i) => <ColorSwatch key={c.token} color={c} size="lg" animDelay={i * 70} />)}
-            </div>
-          </div>
-          <div className="h-px w-full bg-gris-marbre/50" />
-          <div>
-            <p className="label-mm text-gris-texte mb-6">Gourmand — 20 %</p>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-5 md:gap-7">
-              {gourmandColors.map((c, i) => <ColorSwatch key={c.token} color={c} size="lg" animDelay={i * 70} />)}
-            </div>
-          </div>
-        </div>
-      </BrandSection>
+      <CouleursSection />
 
       {/* 04 — TYPOGRAPHIES */}
       <BrandSection id="typographies" index="04" label="Système typographique" title="Trois polices, une voix"

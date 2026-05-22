@@ -4,3 +4,4 @@
 export { HeroSection } from "./HeroSection";
 export { AdnSection } from "./AdnSection";
 export { LogoSection } from "./LogoSection";
+export { CouleursSection } from "./CouleursSection";

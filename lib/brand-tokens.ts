@@ -1,72 +1,108 @@
 /**
- * Tokens de marque Maison Marquise – source de vérité unique.
- * Utilisés pour la documentation de la charte et les composants dynamiques.
- * Ces valeurs DOIVENT correspondre exactement à tailwind.config.ts.
+ * Tokens Maison Marquise — source de vérité unique.
+ * Toute valeur ici DOIT correspondre à tailwind.config.ts et globals.css.
+ * Utilisé pour la documentation de la charte et les composants dynamiques.
  */
 
-export const colors = {
-  ivory: {
-    100: "#FDF9F5",
-    200: "#FAF7F2",
-    300: "#F2EBE0",
-  },
-  stone: {
-    100: "#EDE6DC",
-    200: "#E8E0D5",
-    300: "#D9CFBF",
-  },
-  charcoal: {
-    100: "#3D3935",
-    200: "#2A2724",
-    300: "#1A1816",
-  },
-  gold: {
-    light: "#D9BE90",
-    DEFAULT: "#C9A96E",
-    dark: "#A8854A",
-  },
-  terracotta: {
-    light: "#CC8875",
-    DEFAULT: "#B5705A",
-    dark: "#8C5040",
-  },
-  blush: {
-    light: "#F2E5DE",
-    DEFAULT: "#E8D5CC",
-    dark: "#CCBAB0",
-  },
-  muted: "#6B6560",
+// ── Palette officielle ────────────────────────────────────────────────────────
+export const palette = {
+  // 80 % – Neutres premium
+  "noir-marquise":  { hex: "#111111", label: "Noir Marquise",   usage: "Texte, logo, éléments forts" },
+  "ivoire-maison":  { hex: "#F7F3EC", label: "Ivoire Maison",   usage: "Surfaces, cartes, fonds chauds" },
+  "blanc-marbre":   { hex: "#FAFAF8", label: "Blanc Marbre",    usage: "Fond principal, respiration" },
+  "or-champagne":   { hex: "#B99A5F", label: "Or Champagne",    usage: "Accent, filets, boutons secondaires" },
+  "gris-marbre":    { hex: "#D8D6D1", label: "Gris Marbre",     usage: "Bordures, séparateurs" },
+  "gris-texte":     { hex: "#4A4A4A", label: "Gris Texte",      usage: "Corps de texte, légendes" },
+
+  // 20 % – Accents gourmands
+  "brun-marquis":   { hex: "#6F5A2E", label: "Brun Marquis",    usage: "Profondeur, packaging café" },
+  "caramel":        { hex: "#C7843E", label: "Caramel Pâtissier", usage: "Chaleur, illustrations, cup latte" },
+  "framboise":      { hex: "#A6192E", label: "Framboise Signature", usage: "Signature, éditions limitées" },
+  "pistache":       { hex: "#9A9B55", label: "Pistache Fine",   usage: "Fraîcheur, univers printemps" },
 } as const;
 
+export type PaletteKey = keyof typeof palette;
+
+// Groupes pour la documentation de la charte
+export const paletteGroups = {
+  premium: ["noir-marquise", "ivoire-maison", "blanc-marbre", "or-champagne", "gris-marbre", "gris-texte"] as PaletteKey[],
+  gourmand: ["brun-marquis", "caramel", "framboise", "pistache"] as PaletteKey[],
+};
+
+// ── Typographie ───────────────────────────────────────────────────────────────
 export const typography = {
   fonts: {
-    serif:  { name: "Cormorant Garamond", variable: "--font-cormorant", category: "Serif" },
-    sans:   { name: "Montserrat",         variable: "--font-montserrat", category: "Sans-serif" },
-    script: { name: "Parisienne",         variable: "--font-parisienne", category: "Script" },
-  },
-  weights: {
-    light:   300,
-    regular: 400,
-    medium:  500,
-    semibold: 600,
+    serif: {
+      name: "Cormorant Garamond",
+      variable: "--font-cormorant",
+      category: "Serif",
+      usage: "Titres, noms de produits, citations",
+      weights: [
+        { label: "Light 300",    value: 300 },
+        { label: "Regular 400",  value: 400 },
+        { label: "Medium 500",   value: 500 },
+        { label: "SemiBold 600", value: 600 },
+      ],
+    },
+    sans: {
+      name: "Montserrat",
+      variable: "--font-montserrat",
+      category: "Sans-serif",
+      usage: "Corps, labels, prix, navigation",
+      weights: [
+        { label: "Light 300",    value: 300 },
+        { label: "Regular 400",  value: 400 },
+        { label: "Medium 500",   value: 500 },
+        { label: "SemiBold 600", value: 600 },
+      ],
+    },
+    script: {
+      name: "Parisienne",
+      variable: "--font-parisienne",
+      category: "Script",
+      usage: "Signature, accroche poétique, packaging",
+      weights: [{ label: "Regular 400", value: 400 }],
+    },
   },
   scale: {
-    "display-2xl": "clamp(3rem, 8vw, 7rem)",
-    "display-xl":  "clamp(2.25rem, 6vw, 5rem)",
-    "display-lg":  "clamp(1.75rem, 4vw, 3.5rem)",
-    body:          "1rem",
-    small:         "0.875rem",
-    label:         "0.6875rem",
+    "display-2xl": { size: "clamp(3rem, 8vw, 7rem)",       lh: "1.05" },
+    "display-xl":  { size: "clamp(2.25rem, 6vw, 5rem)",    lh: "1.1"  },
+    "display-lg":  { size: "clamp(1.75rem, 4vw, 3.5rem)",  lh: "1.15" },
+    "display-md":  { size: "clamp(1.375rem, 3vw, 2.25rem)", lh: "1.2" },
+    body:          { size: "1rem",      lh: "1.65" },
+    small:         { size: "0.875rem",  lh: "1.5"  },
+    label:         { size: "0.6875rem", lh: "1.4"  },
   },
 } as const;
 
-export const spacing = {
-  section: "clamp(4rem, 10vw, 8rem)",
-  container: {
-    maxWidth: "1320px",
-    paddingInline: "clamp(1.25rem, 5vw, 5rem)",
-  },
+// ── Identité & baseline ───────────────────────────────────────────────────────
+export const brand = {
+  name:       "Maison Marquise",
+  baseline:   "BIEN PLUS QU'UNE BOULANGERIE",
+  positioning: "Pâtisserie fine, généreuse et accessible.",
+  tagline:    "Le raffinement gourmand, accessible à tous.",
+  monogram:   "M",
 } as const;
 
-export type BrandColor = keyof typeof colors;
-export type BrandFont  = keyof typeof typography.fonts;
+// ── Règles typographiques éditoriales ─────────────────────────────────────────
+export const toneOfVoice = {
+  avoid:  ["luxe froid", "prétentieux", "exceptionnel (répété)", "dinguerie", "trop commercial"],
+  prefer: ["préparé avec soin", "création maison", "pause gourmande", "goût du détail", "savoir-faire", "générosité maîtrisée"],
+} as const;
+
+// ── Structure des formules menu ───────────────────────────────────────────────
+export const menuStructure = [
+  "Logo",
+  "Nom de la formule",
+  "Prix visible",
+  "Contenu principal",
+  "Inclus dans la formule",
+  "Supplément éventuel",
+] as const;
+
+// ── Univers visuels ───────────────────────────────────────────────────────────
+export const visualUniverses = {
+  maison:    { colors: ["blanc-marbre", "noir-marquise", "or-champagne"],        desc: "Sobre, noble, quotidien premium" },
+  gourmand:  { colors: ["ivoire-maison", "caramel", "framboise", "pistache"],    desc: "Chaleureux, appétissant, accessible" },
+  signature: { colors: ["noir-marquise", "or-champagne", "framboise"],           desc: "Contrasté, fort, éditions limitées" },
+} as const;

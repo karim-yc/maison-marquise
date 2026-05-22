@@ -1,117 +1,190 @@
-# CLAUDE.md — Brief permanent Maison Marquise
+# Projet : Maison Marquise — Brandbook Digital
 
-> Ce fichier est la **source de vérité** pour toutes les interactions avec Claude sur ce projet.
-> À lire en priorité avant chaque session de travail.
+## Objectif
+Créer une charte graphique digitale interactive et responsive pour Maison Marquise.
+Ce n'est pas un PDF, mais un mini-site professionnel de brand guidelines.
 
----
+## Marque
+Maison Marquise est une maison gourmande contemporaine, entre pâtisserie fine, boulangerie premium, coffee time et expérience accessible.
 
-## 🏛️ Identité de la marque
+La marque doit être :
+- élégante
+- sobre
+- premium
+- proche des gens
+- gourmande
+- chaleureuse
+- non élitiste
 
-**Nom :** Maison Marquise
-**Secteur :** *(à compléter par le client – ex. : Haute Pâtisserie, Joaillerie, Mode, Art de vivre)*
-**Positionnement :** Maison artisanale française à l'excellence reconnue. Entre tradition savoir-faire et sensibilité contemporaine.
+Baseline officielle :
+BIEN PLUS QU'UNE BOULANGERIE
 
----
+Positionnement :
+Pâtisserie fine, généreuse et accessible.
+Le raffinement gourmand, accessible à tous.
 
-## 🎨 Direction artistique
+## Ton de voix
+Élégant, sobre, premium et proche.
+Éviter :
+- luxe froid
+- phrases prétentieuses
+- ton trop commercial
+- ton trop populaire
+- expressions type "dinguerie", "exceptionnel" répété partout
 
-### Ambiance générale
-Premium · Sobre · Chaleureux · Poétique · Intemporel
+Préférer :
+- préparé avec soin
+- création maison
+- pause gourmande
+- goût du détail
+- plaisir simple
+- savoir-faire
+- générosité maîtrisée
 
-### Palette
-| Rôle        | Couleur          | Hex        |
-|-------------|------------------|------------|
-| Fond        | Ivoire chaud     | `#FAF7F2`  |
-| Surface     | Ivoire profond   | `#F2EBE0`  |
-| Bordure     | Pierre           | `#E8E0D5`  |
-| Texte       | Charbon          | `#2A2724`  |
-| Muted       | Gris taupe       | `#6B6560`  |
-| Accent      | Or chaud         | `#C9A96E`  |
-| Highlight   | Terracotta       | `#B5705A`  |
-| Douceur     | Blush            | `#E8D5CC`  |
+## Logo
+Le logo officiel ne doit jamais être redessiné.
+Il faut utiliser les assets fournis.
 
-### Typographie
-| Usage        | Police              | Caractère              |
-|--------------|---------------------|------------------------|
-| Titres       | Cormorant Garamond  | Élégance éditoriale    |
-| Corps/UI     | Montserrat          | Lisibilité & clarté    |
-| Signature    | Parisienne          | Poésie & singularité   |
+Déclinaisons à prévoir :
+- logo complet
+- logo sans baseline
+- monogramme M seul
+- version horizontale
 
----
+Le monogramme M peut être utilisé comme :
+- favicon
+- sticker
+- pictogramme
+- motif discret
+- signature packaging
 
-## 🛠️ Stack technique
+Règles :
+- ne pas déformer
+- ne pas changer les proportions
+- ne pas ajouter d'ombre
+- ne pas utiliser sur fond chargé
+- conserver une zone de respiration
 
-```
-Next.js 14 (App Router) · TypeScript strict · Tailwind CSS
-shadcn/ui · lucide-react · framer-motion · Google Fonts
-```
+## Palette officielle
+Noir Marquise      : #111111
+Ivoire Maison      : #F7F3EC
+Blanc Marbre       : #FAFAF8
+Or Champagne       : #B99A5F
+Brun Marquis       : #6F5A2E
+Caramel Pâtissier  : #C7843E
+Framboise Signature: #A6192E
+Pistache Fine      : #9A9B55
+Gris Marbre        : #D8D6D1
+Gris Texte         : #4A4A4A
 
----
+Règle d'usage :
+80 % sobre et premium : ivoire, blanc marbre, noir, or champagne.
+20 % gourmand et chaleureux : caramel, framboise, pistache, brun.
 
-## 📐 Principes de développement
+## Typographies
+Titres élégants :
+Cormorant Garamond
 
-### Mobile-first
-- Toujours écrire les styles base (mobile) en premier
-- Utiliser `clamp()` pour la typographie fluide
-- Breakpoints : `md` (768px) → `lg` (1024px) → `xl` (1280px)
+Texte courant :
+Montserrat
 
-### Accessibilité
-- Ratio de contraste WCAG AA minimum (4.5:1 pour le texte)
-- `aria-label` sur tous les éléments interactifs sans texte visible
-- Navigation clavier complète (focus-visible stylisé)
-- Attribut `lang="fr"` sur les éléments en français
+Accent manuscrit :
+Parisienne
 
-### Performance
-- Images : `next/image` obligatoire, formats AVIF/WebP
-- Fonts : `display: swap` + `variable` font quand possible
-- Animations : `framer-motion` uniquement pour les entrées/sorties, CSS pour les micro-interactions
+Règles :
+- limiter les capitales espacées
+- éviter les longs paragraphes en majuscules
+- utiliser la manuscrite uniquement en accent
+- garder les prix et informations pratiques très lisibles
 
-### Code
-- TypeScript strict (`noImplicitAny`, `strictNullChecks`)
-- Composants : fonctionnels + `forwardRef` pour les UI primitives
-- Nommage : `PascalCase` composants, `camelCase` fonctions/variables, `kebab-case` fichiers
-- Commentaires : uniquement sur la logique non évidente
+## Menus et formules
+Structure officielle :
+1. Logo
+2. Nom de la formule
+3. Prix visible
+4. Contenu principal
+5. Inclus dans la formule
+6. Supplément éventuel
 
----
+Exemple :
+FORMULE SIGNATURE
+9,90 €
+Au choix : Wrap · Panini · Mauricette · Crudités
+Boisson 33 cl incluse
+Dessert au choix selon vitrine
+Supplément pâtisserie signature : +2,50 €
 
-## 📁 Structure du projet
+## Packaging à présenter
+Créer une direction DA pour :
+- cup coffee
+- cup latte
+- cup cocktail / iced latte transparent
+- boîte pâtissière basique 16/16
 
-```
-/app                    → Pages & layouts (App Router)
-/components
-  /ui                   → Primitives shadcn/ui adaptées
-  /sections             → Sections de la charte (hero, couleurs, typo…)
-  /brand                → Composants spécifiques à la marque
-/lib
-  utils.ts              → cn(), helpers
-  brand-tokens.ts       → Source de vérité des tokens
-/public
-  /assets
-    /fonts              → Polices locales si besoin
-    /images             → Images de référence
-    /icons              → Icônes SVG custom
-```
+Cup coffee :
+- ivoire + logo noir
+- sobre, quotidien premium
+- phrase : Une pause préparée avec soin
 
----
+Cup latte :
+- brun latte ou caramel
+- logo ivoire ou or champagne
+- courbe douce inspirée du café, du lait ou de la crème
+- phrase : Le goût d'une pause douce
 
-## ✍️ Ton éditorial
+Cup transparent iced latte :
+- transparent
+- bande centrale semi-opaque ivoire, caramel ou brun doré
+- logo Maison Marquise
+- laisser voir la boisson
 
-- Français impeccable, registre soigné sans être ampoulé
-- Labels : toujours en majuscules espacées (`COLLECTION AUTOMNE`)
-- Titres : Cormorant, poids léger, pas de gras
-- Éviter : superlatives vides ("unique", "exceptionnel") sans contenu
-- Préférer : la précision sensorielle et l'évocation
+Boîte pâtissière 16/16 :
+- ivoire mat
+- logo noir ou doré centré
+- fine ligne or champagne
+- monogramme M discret
+- texte intérieur possible : Préparé avec soin pour vous
 
----
+## Univers visuels
+Univers Maison :
+blanc, marbre, noir, doré subtil.
 
-## ⚠️ Contraintes absolues
+Univers Gourmand :
+ivoire, caramel, framboise, pistache.
 
-1. **Jamais** de MUI, Ant Design, Bootstrap ou équivalents
-2. **Jamais** de couleurs saturées ou flashy hors palette
-3. **Jamais** de border-radius > 4px (esthétique architecturale sobre)
-4. **Toujours** tester le rendu mobile avant desktop
-5. **Toujours** vérifier les contrastes avant de valider une couleur
+Univers Signature :
+noir, photo forte, contraste, éditions limitées, collaborations.
 
----
+## Direction photo
+Privilégier :
+- produit héros
+- geste de chef
+- détail texture
+- boîte ouverte
+- moment client
+- lumière douce
+- précision
+- générosité
 
-*Dernière mise à jour : à compléter lors du prochain prompt.*
+Éviter :
+- photos trop chargées
+- lumière trop froide
+- fonds trop bruyants
+- composition illisible
+
+## Contraintes techniques
+- Next.js 14
+- TypeScript strict
+- Tailwind CSS
+- shadcn/ui
+- lucide-react
+- framer-motion
+- mobile-first
+- responsive 320px, 768px, 1024px, 1440px
+- performance et accessibilité soignées
+- composants réutilisables
+- design system centralisé dans Tailwind
+
+## Style global
+Le rendu doit ressembler à un brandbook digital premium :
+clair, élégant, aéré, chaleureux, professionnel, explorable par un graphiste, un imprimeur ou un fabricant packaging.

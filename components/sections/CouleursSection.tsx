@@ -509,33 +509,7 @@ export function CouleursSection() {
             Les codes RGB, CMYK et Pantone sont disponibles en dépliant chaque carte.
           </motion.p>
 
-          {/* Bouton téléchargement palette */}
-          <motion.div
-            className="mt-6"
-            initial={{ opacity: 0 }}
-            animate={headerIn ? { opacity: 1 } : {}}
-            transition={{ duration: 0.5, delay: 0.4, ease: EASE }}
-          >
-            <button
-              disabled
-              className="inline-flex items-center gap-2.5 px-5 py-3 rounded-[2px] border border-gris-marbre bg-blanc-marbre text-gris-texte/45 cursor-not-allowed font-sans text-[0.65rem] font-medium tracking-[0.14em] uppercase"
-              title="Téléchargement bientôt disponible"
-              aria-label="Télécharger la palette couleurs — bientôt disponible"
-            >
-              <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
-                <path d="M6.5 1v7M3.5 5.5l3 3.5 3-3.5M1 10.5h11" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
-              </svg>
-              Télécharger la palette couleurs
-              <span className="inline-flex gap-1 ml-1">
-                {["PDF", "ASE", "CSS"].map((f) => (
-                  <span key={f} className="px-1.5 py-0.5 bg-gris-marbre/50 rounded-[2px] text-[0.5rem] font-medium tracking-wide normal-case text-gris-texte/40">
-                    {f}
-                  </span>
-                ))}
-              </span>
-              <span className="text-[0.5rem] text-gris-texte/30 normal-case tracking-normal">— bientôt disponible</span>
-            </button>
-          </motion.div>
+
         </div>
 
         {/* ══ RÈGLE 80 / 20 ════════════════════════════════════════════ */}

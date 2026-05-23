@@ -27,7 +27,7 @@ const VARIANTS = [
     minSize:   "120 px de largeur minimum",
     fondOk:    "Ivoire · Blanc marbre · Noir Marquise",
     fondEviter: "Fond photographique · Fond coloré non approuvé",
-    files:     ["SVG (complet)", "PNG", "PDF"],
+    files:     ["SVG (complet)", "PNG (blanc)", "PNG (transparent)", "PDF"],
   },
   {
     id:        "no-baseline",
@@ -38,7 +38,7 @@ const VARIANTS = [
     minSize:   "80 px de largeur minimum",
     fondOk:    "Ivoire · Blanc marbre · Noir Marquise",
     fondEviter: "Fond photographique · Couleurs non approuvées",
-    files:     ["SVG (sans baseline)", "PNG"],
+    files:     ["SVG (sans baseline)", "PNG (blanc)", "PNG (transparent)"],
   },
   {
     id:        "monogram",
@@ -49,7 +49,7 @@ const VARIANTS = [
     minSize:   "24 px minimum (favicon) · 30 mm pour impression",
     fondOk:    "Ivoire · Noir · Or Champagne",
     fondEviter: "Fond surchargé · Fond couleur non approuvé",
-    files:     ["SVG (monogramme)", "PNG"],
+    files:     ["SVG (monogramme)", "PNG (blanc)", "PNG (transparent)"],
   },
   {
     id:        "horizontal",
@@ -60,7 +60,7 @@ const VARIANTS = [
     minSize:   "200 px de largeur minimum",
     fondOk:    "Ivoire · Blanc marbre · Noir Marquise",
     fondEviter: "Fond photographique · Formats très étroits",
-    files:     ["SVG (complet)", "PNG"],
+    files:     ["SVG (complet)", "PNG (blanc)", "PNG (transparent)"],
   },
 ] as const;
 
@@ -112,21 +112,37 @@ const LOGO_COMPONENTS: Record<VariantId, (p: { fill: string; className?: string 
 // ── Boutons de téléchargement logo ───────────────────────────────────────────
 // SVG disponibles dès maintenant ; PNG/PDF à intégrer plus tard.
 const LOGO_FILE_URLS: Record<string, string | null> = {
-  // Logos SVG officiels — téléchargeables directement
-  "SVG (complet)":     "/assets/LOGO_complet.svg",
-  "SVG (sans baseline)": "/assets/LOGO_sans_M.svg",
-  "SVG (monogramme)":  "/assets/FAVICON.svg",
-  // Formats à produire
-  "PNG":  null,
-  "PDF":  null,
+  // SVG officiels
+  "SVG (complet)":        "/assets/LOGO_complet.svg",
+  "SVG (sans baseline)":  "/assets/LOGO_sans_M.svg",
+  "SVG (monogramme)":     "/assets/FAVICON.svg",
+  // PNG — fond blanc
+  "PNG (blanc)":          null, // géré par variante
+  // PNG — fond transparent
+  "PNG (transparent)":    null,
+  // PDF — à produire
+  "PDF":                  null,
 };
 
-function DownloadButtons({ files }: { files: readonly string[] }) {
+// URLs PNG par variante
+const LOGO_PNG_URLS: Record<string, { blanc: string; transparent: string }> = {
+  "full":        { blanc: "/assets/LOGO_complet_fond_blanc.png",    transparent: "/assets/LOGO_complet_transparent.png" },
+  "no-baseline": { blanc: "/assets/LOGO_sans_M_fond_blanc.png",     transparent: "/assets/LOGO_sans_M_transparent.png" },
+  "monogram":    { blanc: "/assets/LOGO_monogramme_fond_blanc.png", transparent: "/assets/LOGO_monogramme_transparent.png" },
+  "horizontal":  { blanc: "/assets/LOGO_complet_fond_blanc.png",    transparent: "/assets/LOGO_complet_transparent.png" },
+};
+
+function DownloadButtons({ files, variantId }: { files: readonly string[]; variantId?: string }) {
   return (
     <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-gris-marbre/60">
       <span className="label-mm text-gris-texte/45 w-full mb-1">Télécharger</span>
       {files.map((fmt) => {
-        const url = LOGO_FILE_URLS[fmt] ?? null;
+        let url = LOGO_FILE_URLS[fmt] ?? null;
+        // PNG — résoudre via la variante si disponible
+        if (fmt === "PNG (blanc)" && variantId && LOGO_PNG_URLS[variantId])
+          url = LOGO_PNG_URLS[variantId].blanc;
+        if (fmt === "PNG (transparent)" && variantId && LOGO_PNG_URLS[variantId])
+          url = LOGO_PNG_URLS[variantId].transparent;
         const DownloadIcon = (
           <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
             <path d="M5 1v5M2.5 4l2.5 3 2.5-3M1 8h8" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
@@ -285,7 +301,7 @@ function VariantCard({
         </div>
 
         {/* Boutons téléchargement */}
-        <DownloadButtons files={variant.files} />
+        <DownloadButtons files={variant.files} variantId={variant.id} />
       </div>
     </motion.article>
   );

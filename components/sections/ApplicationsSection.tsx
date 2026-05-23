@@ -26,7 +26,6 @@ const APPLICATIONS = [
     objectif:  "Rendre la marque identifiable depuis la rue, dès le premier regard.",
     rule:      "Logo complet centré sur fond ivoire ou blanc marbre. Zone de respiration maximale. Lisibilité garantie à 10 mètres minimum.",
     specs:     ["Logo officiel complet obligatoire", "Taille minimum : 60 cm de large", "Fond uni uniquement — pas de fond photographique"],
-    template:  null,
     bg:        "bg-ivoire-maison",
   },
   {
@@ -36,7 +35,6 @@ const APPLICATIONS = [
     objectif:  "Prolonger l'expérience Maison Marquise dans chaque objet tenu en main.",
     rule:      "Palette restreinte : ivoire, noir, or champagne. Monogramme M ou logo sans baseline. Finition mate ou dorure or champagne.",
     specs:     ["3 couleurs maximum par support", "Monogramme M si espace < 3 cm", "Référez-vous à la section Packaging pour les templates"],
-    template:  null,
     bg:        "bg-blanc-marbre",
   },
   {
@@ -46,7 +44,6 @@ const APPLICATIONS = [
     objectif:  "Créer une présence reconnaissable, premium et cohérente en ligne.",
     rule:      "Produit héros centré sur fond ivoire ou noir. Texte court, 1 message par visuel. Utiliser l'Univers Maison ou Gourmand selon la saison.",
     specs:     ["Format carré 1:1 ou vertical 9:16", "Polices : Cormorant ou Montserrat uniquement", "Pas d'effet, filtre ou ombre sur le logo"],
-    template:  "Template réseaux sociaux",
     bg:        "bg-blanc-marbre",
   },
   {
@@ -56,7 +53,6 @@ const APPLICATIONS = [
     objectif:  "Permettre une lecture immédiate du produit, du prix et de la marque en vitrine.",
     rule:      "Nom produit en Cormorant Medium. Prix en Montserrat Regular. Description en une ligne maximum. Fond ivoire ou blanc.",
     specs:     ["Nom produit — Cormorant Medium 14pt min.", "Prix — Montserrat Regular 16pt min.", "Max 3 lignes au total"],
-    template:  "Template étiquette produit",
     bg:        "bg-ivoire-maison",
   },
   {
@@ -66,7 +62,6 @@ const APPLICATIONS = [
     objectif:  "Rendre l'offre lisible à distance, en boutique ou en terrasse.",
     rule:      "Prix visible en priorité. Fond clair. Hiérarchie simple : titre formule → contenu → prix → option. Logo en en-tête centré.",
     specs:     ["Taille minimale : A3 impression, 50 cm écran", "Prix en Cormorant Medium — jamais en script", "Séparateur or champagne entre les sections"],
-    template:  "Template menu board",
     bg:        "bg-blanc-marbre",
   },
   {
@@ -76,7 +71,6 @@ const APPLICATIONS = [
     objectif:  "Guider le client en boutique tout en renforçant l'identité de la marque.",
     rule:      "Montserrat Medium pour tous les panneaux. Fond ivoire ou noir selon la zone. Pictogrammes minimalistes, pas d'illustration.",
     specs:     ["Labels — Montserrat Medium 500, espacement 0.15em", "Fond ivoire clair ou noir profond", "Aucun autre style typographique"],
-    template:  null,
     bg:        "bg-ivoire-maison",
   },
 ] as const;
@@ -151,23 +145,7 @@ function AppCard({
           ))}
         </div>
 
-        {/* Bouton template */}
-        {app.template && (
-          <div className="mt-auto pt-3 border-t border-gris-marbre/50">
-            <button
-              disabled
-              className="inline-flex items-center gap-2 px-3 py-2 rounded-[2px] border border-gris-marbre bg-ivoire-maison/60 text-gris-texte/40 cursor-not-allowed font-sans text-[0.58rem] font-medium tracking-[0.1em] uppercase w-full justify-center"
-              title={`${app.template} — bientôt disponible`}
-              aria-label={`${app.template} — bientôt disponible`}
-            >
-              <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true">
-                <path d="M5.5 1v6M3 4.5l2.5 3 2.5-3M1 9.5h9" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
-              </svg>
-              {app.template}
-              <span className="text-[0.48rem] text-gris-texte/25 normal-case tracking-normal font-normal">— bientôt</span>
-            </button>
-          </div>
-        )}
+
       </div>
     </motion.article>
   );

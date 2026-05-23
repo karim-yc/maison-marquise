@@ -9,9 +9,14 @@ import { cn } from "@/lib/utils";
 
 // Aspect ratio du canvas 1682.98×1682.98 — carré
 // ViewBox originals — aucune coupure garantie
+// Marges négatives pour compenser l'espace vide du canvas 1682×1682
+// Usage : <div style={LOGO_FULL_MARGINS}><LogoFull .../></div>
+export const LOGO_FULL_MARGINS     = { margin: "-27% -12% -38% -12%" } as const;
+export const LOGO_MONOGRAM_MARGINS = { margin: "-27% -21% -29% -28%" } as const;
+
 const VIEWBOX_FULL     = "0 0 1682.98 1682.98";
 const VIEWBOX_VARIANT  = "0 0 1682.98 1682.98";
-const VIEWBOX_MONOGRAM = "440 500 860 720";  // crop M seul (2 paths simples)
+const VIEWBOX_MONOGRAM = "414 398 960 844";  // crop précis M seul
 
 interface LogoSvgProps {
   className?: string;

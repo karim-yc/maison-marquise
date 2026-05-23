@@ -9,7 +9,7 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { cn } from "@/lib/utils";
-import { LogoFull, LogoVariant, LogoMonogram } from "./LogoSvg";
+import { LogoFull, LogoVariant, LogoMonogram, LOGO_FULL_MARGINS } from "./LogoSvg";
 
 interface HeroLogoProps {
   variant?: "full" | "variant" | "monogram";
@@ -31,7 +31,7 @@ export function HeroLogo({
     <div className={cn("w-full overflow-hidden", className)}>
       {/* Marge négative pour compenser l'espace vide du canvas SVG 1682×1682 */}
       {(variant === "full" || variant === "variant") && (
-        <div style={{ margin: "-27% -12% -38% -12%" }}>
+        <div style={LOGO_FULL_MARGINS}>
           {variant === "full"    ? <LogoFull    {...shared} aria-label="Maison Marquise — logo officiel" />
                                  : <LogoVariant {...shared} aria-label="Maison Marquise" />}
         </div>

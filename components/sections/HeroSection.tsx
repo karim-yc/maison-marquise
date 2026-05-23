@@ -28,10 +28,9 @@ export function HeroSection({ className }: { className?: string }) {
     <motion.section
       ref={sectionRef}
       className={cn(
-        // Exactement la hauteur visible sous la navbar — ni plus ni moins
         "relative w-full overflow-hidden bg-ivoire-maison",
         "h-[calc(100dvh-4rem)] md:h-[calc(100dvh-72px)]",
-        "flex flex-col",
+        "flex flex-col items-center justify-center",
         className,
       )}
       style={mounted ? { opacity: sectionOpacity } : undefined}
@@ -48,107 +47,103 @@ export function HeroSection({ className }: { className?: string }) {
         <div className="absolute inset-0 bg-ivoire-maison/72" />
       </div>
 
-      {/* Zone principale — prend tout l'espace disponible et centre le contenu */}
-      <div className="relative z-raised flex-1 flex flex-col items-center justify-center px-5 py-6">
+      {/* ── Bloc central unique — tout ensemble, bien groupé ── */}
+      <div className="relative z-raised w-full max-w-[min(420px,88vw)] mx-auto px-4 flex flex-col items-center text-center">
 
         <h1 className="sr-only">Maison Marquise — Brandbook Digital</h1>
 
-        {/* Contenu centré — espacement en vh pour s'adapter à la hauteur d'écran */}
-        <div className="w-full max-w-[min(380px,90vw)] flex flex-col items-center text-center gap-[2.5vh]">
+        {/* Eyebrow collé au logo — même groupe visuel */}
+        <motion.div
+          className="inline-flex items-center gap-2 mb-3"
+          initial={{ opacity: 0, y: -6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1, duration: 0.6, ease: EASE }}
+        >
+          <span className="block w-4 h-px bg-or-champagne/60" aria-hidden="true" />
+          <span className="font-sans text-[0.58rem] font-medium tracking-[0.22em] uppercase text-gris-texte">
+            Identité de marque
+          </span>
+          <span className="block w-4 h-px bg-or-champagne/60" aria-hidden="true" />
+        </motion.div>
 
-          {/* Eyebrow */}
-          <motion.div
-            className="inline-flex items-center gap-2"
-            initial={{ opacity: 0, y: -6 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1, duration: 0.6, ease: EASE }}
-          >
-            <span className="block w-4 h-px bg-or-champagne/60" aria-hidden="true" />
-            <span className="label-mm text-gris-texte tracking-[0.2em] text-[0.58rem]">
-              Identité de marque
-            </span>
-            <span className="block w-4 h-px bg-or-champagne/60" aria-hidden="true" />
-          </motion.div>
-
-          {/* Logo officiel */}
-          <motion.div
+        {/* Logo officiel */}
+        <motion.div
+          className="w-full mb-4"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.25, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <HeroLogo
+            variant="full"
+            colorClass="text-noir-marquise"
             className="w-full"
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.25, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <HeroLogo
-              variant="full"
-              colorClass="text-noir-marquise"
-              className="w-full max-h-[28vh] object-contain"
-            />
-          </motion.div>
+          />
+        </motion.div>
 
-          {/* Filet or */}
-          <motion.div
-            className="flex items-center gap-3 w-full"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.6, duration: 0.4 }}
-            aria-hidden="true"
-          >
-            <div className="h-px flex-1" style={{ background: "linear-gradient(to right, transparent, #B99A5F)" }} />
-            <div className="w-1.5 h-1.5 bg-or-champagne rotate-45 shrink-0" />
-            <div className="h-px flex-1" style={{ background: "linear-gradient(to left, transparent, #B99A5F)" }} />
-          </motion.div>
+        {/* Filet or */}
+        <motion.div
+          className="flex items-center gap-3 w-4/5 mb-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6, duration: 0.4 }}
+          aria-hidden="true"
+        >
+          <div className="h-px flex-1" style={{ background: "linear-gradient(to right, transparent, #B99A5F)" }} />
+          <div className="w-1.5 h-1.5 bg-or-champagne rotate-45 shrink-0" />
+          <div className="h-px flex-1" style={{ background: "linear-gradient(to left, transparent, #B99A5F)" }} />
+        </motion.div>
 
-          {/* Sous-titre */}
-          <motion.p
-            className="font-serif italic font-light text-gris-texte text-[clamp(1rem,2.5vh,1.375rem)]"
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.75, duration: 0.6, ease: EASE }}
-          >
-            Pâtisserie fine, généreuse et accessible.
-          </motion.p>
+        {/* Sous-titre */}
+        <motion.p
+          className="font-serif italic font-light text-gris-texte mb-2 text-lg md:text-xl"
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.75, duration: 0.6, ease: EASE }}
+        >
+          Pâtisserie fine, généreuse et accessible.
+        </motion.p>
 
-          {/* Phrase secondaire */}
-          <motion.p
-            className="font-sans font-light text-gris-texte/70 leading-snug text-[clamp(0.75rem,1.8vh,0.9rem)]"
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.9, duration: 0.6, ease: EASE }}
-          >
-            Une maison gourmande, élégante et proche —
-            bien plus qu&apos;une boulangerie.
-          </motion.p>
+        {/* Phrase secondaire */}
+        <motion.p
+          className="font-sans font-light text-gris-texte/70 leading-snug text-sm mb-7"
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.9, duration: 0.6, ease: EASE }}
+        >
+          Une maison gourmande, élégante et proche —
+          bien plus qu&apos;une boulangerie.
+        </motion.p>
 
-          {/* CTAs — empilés sur mobile, côte à côte sur sm+ */}
-          <motion.div
-            className="w-full flex flex-col sm:flex-row gap-2.5"
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.05, duration: 0.6, ease: EASE }}
+        {/* CTAs — empilés sur mobile (<640px), côte à côte au-delà */}
+        <motion.div
+          className="w-full flex flex-col sm:flex-row gap-2.5"
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.05, duration: 0.6, ease: EASE }}
+        >
+          <button
+            onClick={scrollToContent}
+            className="btn-mm w-full sm:flex-1 flex items-center justify-center gap-2"
+            aria-label="Découvrir la charte graphique"
           >
-            <button
-              onClick={scrollToContent}
-              className="btn-mm w-full sm:flex-1 flex items-center justify-center gap-2 text-[0.6rem]"
-              aria-label="Découvrir la charte graphique"
-            >
-              <BookOpen size={12} strokeWidth={1.5} aria-hidden="true" />
-              <span>Découvrir la charte</span>
-            </button>
-            <button
-              onClick={scrollToPackaging}
-              className="btn-mm-gold w-full sm:flex-1 flex items-center justify-center gap-2 text-[0.6rem]"
-              aria-label="Voir le système packaging"
-            >
-              <Package size={12} strokeWidth={1.5} aria-hidden="true" />
-              <span>Voir le packaging</span>
-            </button>
-          </motion.div>
+            <BookOpen size={12} strokeWidth={1.5} aria-hidden="true" />
+            <span>Découvrir la charte</span>
+          </button>
+          <button
+            onClick={scrollToPackaging}
+            className="btn-mm-gold w-full sm:flex-1 flex items-center justify-center gap-2"
+            aria-label="Voir le système packaging"
+          >
+            <Package size={12} strokeWidth={1.5} aria-hidden="true" />
+            <span>Voir le packaging</span>
+          </button>
+        </motion.div>
 
-        </div>
       </div>
 
       {/* Scroll indicator — ancré en bas */}
       <motion.button
-        className="relative z-raised flex flex-col items-center gap-1 pb-4 text-gris-texte/35 hover:text-or-champagne transition-colors duration-300 mx-auto"
+        className="absolute bottom-5 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-gris-texte/35 hover:text-or-champagne transition-colors duration-300"
         onClick={scrollToContent}
         aria-label="Défiler vers le contenu"
         initial={{ opacity: 0 }}

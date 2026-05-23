@@ -3,6 +3,7 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { LogoMonogram } from "@/components/brand/LogoSvg";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // ApplicationsSection — Applications de marque Maison Marquise
@@ -208,15 +209,15 @@ function VisualStickers() {
     <div className="absolute inset-0 flex items-center justify-center bg-blanc-marbre gap-3 overflow-hidden">
       {/* Rond or */}
       <div className="w-12 h-12 rounded-full bg-or-champagne flex items-center justify-center shadow-sm">
-        <span className="font-script text-blanc-marbre text-xl leading-none">M</span>
+        <div className="w-6 h-6 text-blanc-marbre"><LogoMonogram aria-hidden={true} /></div>
       </div>
       {/* Rond noir */}
       <div className="w-10 h-10 rounded-full bg-noir-marquise flex items-center justify-center shadow-sm">
-        <span className="font-script text-ivoire-maison text-base leading-none">M</span>
+        <div className="w-5 h-5 text-ivoire-maison"><LogoMonogram aria-hidden={true} /></div>
       </div>
       {/* Carré ivoire */}
       <div className="w-10 h-10 bg-ivoire-maison border border-gris-marbre flex items-center justify-center shadow-sm rounded-[2px]">
-        <span className="font-script text-noir-marquise text-base leading-none">M</span>
+        <div className="w-5 h-5 text-noir-marquise"><LogoMonogram aria-hidden={true} /></div>
       </div>
     </div>
   );
@@ -228,14 +229,14 @@ function VisualFavicon() {
       {/* Favicon 32px simulé */}
       <div className="flex flex-col items-center gap-1">
         <div className="w-8 h-8 bg-noir-marquise flex items-center justify-center rounded-[2px]">
-          <span className="font-script text-ivoire-maison text-base leading-none">M</span>
+          <div className="w-5 h-5 text-ivoire-maison"><LogoMonogram aria-hidden={true} /></div>
         </div>
         <span className="font-sans text-[0.38rem] text-gris-texte/50">32px</span>
       </div>
       {/* 192px */}
       <div className="flex flex-col items-center gap-1">
         <div className="w-14 h-14 bg-noir-marquise flex items-center justify-center rounded-[3px] shadow-md">
-          <span className="font-script text-ivoire-maison text-3xl leading-none">M</span>
+          <div className="w-10 h-10 text-ivoire-maison"><LogoMonogram aria-hidden={true} /></div>
         </div>
         <span className="font-sans text-[0.38rem] text-gris-texte/50">192px</span>
       </div>

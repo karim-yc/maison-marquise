@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useSpring } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { LogoMonogram, LogoFull } from "@/components/brand/LogoSvg";
 import { NAV_ITEMS, BRAND } from "./nav-config";
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -101,17 +102,15 @@ export function Navbar() {
               className="flex items-center gap-3 group focus-visible:outline-or-champagne"
               aria-label="Maison Marquise — retour en haut"
             >
-              {/* Monogramme M — toujours visible */}
-              <span
+              {/* Monogramme M officiel SVG */}
+              <div
                 className={cn(
-                  "font-script leading-none transition-colors duration-300",
-                  "text-3xl md:text-4xl",
-                  scrolled ? "text-noir-marquise" : "text-noir-marquise",
-                  "group-hover:text-or-champagne",
+                  "w-8 h-8 md:w-10 md:h-10 transition-colors duration-300",
+                  "group-hover:text-or-champagne text-noir-marquise",
                 )}
               >
-                M
-              </span>
+                <LogoMonogram aria-hidden={true} />
+              </div>
 
               {/* Séparateur + nom complet — desktop uniquement */}
               <span className="hidden lg:flex items-center gap-3" aria-hidden="true">
@@ -336,7 +335,7 @@ function MobileMenu({ open, activeId, onItemClick, onClose }: MobileMenuProps) {
 
               {/* Signature en bas du menu mobile */}
               <div className="mt-4 pt-4 border-t border-gris-marbre/60 flex items-center justify-between">
-                <span className="font-script text-xl text-gris-marbre">Maison Marquise</span>
+                <div className="w-28 text-gris-marbre"><LogoFull aria-hidden={true} /></div>
                 <span className="label-mm text-gris-marbre/60 text-[0.55rem]">Brandbook 2025</span>
               </div>
             </nav>

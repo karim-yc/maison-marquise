@@ -1,3 +1,4 @@
+import { LogoFull } from "@/components/brand/LogoSvg";
 // ─────────────────────────────────────────────────────────────────────────────
 // Footer — Server component sobre.
 // Composition : filet or · logo script · baseline · copyright
@@ -24,13 +25,10 @@ export function Footer() {
         {/* Colonne centrale */}
         <div className="flex flex-col items-center text-center gap-5">
 
-          {/* Signature */}
-          <p
-            className="font-script text-4xl md:text-5xl text-ivoire-maison/90 leading-none"
-            aria-label="Maison Marquise"
-          >
-            Maison Marquise
-          </p>
+          {/* Logo officiel */}
+          <div className="w-48 md:w-56 mx-auto text-ivoire-maison/85">
+            <LogoFull aria-label="Maison Marquise" />
+          </div>
 
           {/* Filet court */}
           <div

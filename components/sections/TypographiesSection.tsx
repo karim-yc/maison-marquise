@@ -1,450 +1,296 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { motion, useInView, AnimatePresence } from "framer-motion";
-import { AlertTriangle, Check } from "lucide-react";
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import { AlertTriangle, Check, ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // TypographiesSection — Système typographique Maison Marquise
-//
-// Structure :
-//   · En-tête (index 04, titre, intro)
-//   · Spécimen 01 — Cormorant Garamond (fond ivoire, grande zone display)
-//   · Spécimen 02 — Montserrat (fond blanc, hiérarchie de corps)
-//   · Spécimen 03 — Parisienne (fond noir Marquise, usage exclusif)
-//   · Règles d'usage — 3 Do + 3 Don't en grille éditoriale
-//   · Prix demo — lisibilité maximale
+// Orienté prestataires : graphistes, développeurs, imprimeurs.
 // ─────────────────────────────────────────────────────────────────────────────
 
 const EASE        = [0.25, 0.46, 0.45, 0.94] as const;
 const EASE_SPRING = [0.16, 1, 0.3, 1]        as const;
 
-// ── Données ───────────────────────────────────────────────────────────────────
-
-const CORMORANT_WEIGHTS = [
-  { label: "Light 300",    value: 300, style: "normal" },
-  { label: "Light Italic", value: 300, style: "italic" },
-  { label: "Regular 400",  value: 400, style: "normal" },
-  { label: "Italic 400",   value: 400, style: "italic" },
-  { label: "Medium 500",   value: 500, style: "normal" },
-  { label: "SemiBold 600", value: 600, style: "normal" },
+// ── Données des 3 polices ─────────────────────────────────────────────────────
+const FONTS = [
+  {
+    index:   "01",
+    name:    "Cormorant Garamond",
+    role:    "Titres élégants",
+    tagline: "CRÉATIONS MAISON",
+    sample:  "L'art de sublimer chaque instant.",
+    fontClass: "font-serif",
+    fontStyle: { fontWeight: 300, fontStyle: "italic" as const },
+    bg:      "bg-ivoire-maison",
+    dark:    false,
+    weights: ["Light 300", "Light Italic 300", "Regular 400", "Italic 400", "Medium 500", "SemiBold 600"],
+    usages: [
+      "Titres H1, H2, H3 éditoriaux",
+      "Noms de créations et produits signature",
+      "Citations et accroches premium",
+      "Prix mis en valeur (format Cormorant Medium)",
+    ],
+    interdits: [
+      "Corps de texte courant (trop délicat en petit)",
+      "Boutons et labels interactifs",
+      "Textes entiers en capitales",
+    ],
+    sizes: [
+      { label: "Display",   spec: "clamp(2.5rem → 6rem)", note: "Titres héros, couverture" },
+      { label: "H2",        spec: "2rem — Light",         note: "Titres de section" },
+      { label: "H3",        spec: "1.5rem — Regular",     note: "Sous-titres" },
+      { label: "Prix",      spec: "1.75rem — Medium",     note: "Format lisibilité maximale" },
+    ],
+    source:  "Google Fonts",
+    sourceUrl: "https://fonts.google.com/specimen/Cormorant+Garamond",
+    npm:     "@fontsource/cormorant-garamond",
+  },
+  {
+    index:   "02",
+    name:    "Montserrat",
+    role:    "Texte courant & lisibilité",
+    tagline: "UNE PAUSE PRÉPARÉE AVEC SOIN.",
+    sample:  "Une pause gourmande préparée avec soin.",
+    fontClass: "font-sans",
+    fontStyle: { fontWeight: 400, fontStyle: "normal" as const },
+    bg:      "bg-blanc-marbre",
+    dark:    false,
+    weights: ["Light 300", "Regular 400", "Medium 500", "SemiBold 600"],
+    usages: [
+      "Corps de texte, menus, descriptions",
+      "Informations pratiques et prix",
+      "Labels et signalétique boutique",
+      "Boutons et navigation",
+    ],
+    interdits: [
+      "Titres principaux (utiliser Cormorant)",
+      "Accents décoratifs (utiliser Parisienne)",
+      "Paragraphes entiers en uppercase espacé",
+    ],
+    sizes: [
+      { label: "Label",   spec: "0.6875rem — Medium 500", note: "Espacement 0.15–0.25em" },
+      { label: "Body",    spec: "1rem — Regular 400",      note: "Ligne de base" },
+      { label: "Body+",   spec: "1rem — Medium 500",       note: "Corps renforcé" },
+      { label: "Caption", spec: "0.8125rem — Regular",     note: "Mentions, notes" },
+    ],
+    source:  "Google Fonts",
+    sourceUrl: "https://fonts.google.com/specimen/Montserrat",
+    npm:     "@fontsource/montserrat",
+  },
+  {
+    index:   "03",
+    name:    "Parisienne",
+    role:    "Accent manuscrit exclusif",
+    tagline: "Signature",
+    sample:  "Préparé avec soin",
+    fontClass: "font-script",
+    fontStyle: { fontWeight: 400, fontStyle: "normal" as const },
+    bg:      "bg-noir-marquise",
+    dark:    true,
+    weights: ["Regular 400 (seule graisse disponible)"],
+    usages: [
+      "Signature officielle Maison Marquise",
+      "Accroche packaging — un seul usage par composition",
+      "Élément décoratif unique sur fond premium",
+    ],
+    interdits: [
+      "Jamais en bloc de texte courant",
+      "Jamais en dessous de 24px / 8mm impression",
+      "Jamais combinée à une autre police script",
+      "Jamais pour des prix ou informations pratiques",
+    ],
+    sizes: [
+      { label: "Minimum", spec: "24px écran · 8mm impression", note: "En dessous = illisible" },
+      { label: "Standard", spec: "clamp(2rem → 4rem)",          note: "Packaging, signature" },
+      { label: "Display",  spec: "clamp(4rem → 8rem)",          note: "Hero, façade" },
+    ],
+    source:  "Google Fonts",
+    sourceUrl: "https://fonts.google.com/specimen/Parisienne",
+    npm:     "@fontsource/parisienne",
+  },
 ] as const;
 
-const MONTSERRAT_WEIGHTS = [
-  { label: "Light 300",    value: 300 },
-  { label: "Regular 400",  value: 400 },
-  { label: "Medium 500",   value: 500 },
-  { label: "SemiBold 600", value: 600 },
+// ── Règles essentielles ───────────────────────────────────────────────────────
+const RULES_DO = [
+  "Cormorant pour faire rêver — titres, noms de créations, citations.",
+  "Montserrat pour informer clairement — corps, menus, prix, labels.",
+  "Parisienne uniquement en accent — un seul usage par composition.",
 ] as const;
 
-// Hiérarchie corps Montserrat pour le tableau de styles
-const MONTSERRAT_SCALE = [
-  { role: "Titre H2",          size: "2rem",      weight: 300, sample: "Formules du jour", isSerif: false },
-  { role: "Titre H3",          size: "1.5rem",    weight: 400, sample: "Viennoiseries maison", isSerif: false },
-  { role: "Body — courant",    size: "1rem",       weight: 400, sample: "Une pause gourmande préparée avec soin.", isSerif: false },
-  { role: "Body — renforcé",   size: "1rem",       weight: 500, sample: "Ouvert du mardi au dimanche.", isSerif: false },
-  { role: "Label — espacé",    size: "0.6875rem",  weight: 500, sample: "COLLECTION AUTOMNE", isSerif: false },
-  { role: "Prix — lisible",    size: "1.75rem",    weight: 400, sample: "9,90 €", isSerif: true },
-  { role: "Caption",           size: "0.8125rem",  weight: 400, sample: "Disponible selon la vitrine.", isSerif: false },
+const RULES_DONT = [
+  "Longs textes en capitales espacées — illisible au-delà de 5 mots.",
+  "Parisienne en petite taille ou en bloc de texte courant.",
+  "Prix en police script ou ultra-light — toujours en Cormorant Medium minimum.",
 ] as const;
-
-const RULES = {
-  do: [
-    { title: "Cormorant pour faire rêver",        desc: "Titres de sections, noms de créations, citations éditoriales. La graisse light en italic est la plus élégante." },
-    { title: "Montserrat pour informer clairement", desc: "Corps de texte, menus, prix, descriptions pratiques. Toujours en minuscules ou casse naturelle." },
-    { title: "Parisienne uniquement en accent",   desc: "Signature, accroche packaging, élément décoratif unique par composition. Jamais en bloc." },
-  ],
-  dont: [
-    { title: "Éviter les longs textes en capitales", desc: "Les majuscules espacées sont réservées aux labels courts (3–5 mots max). Un paragraphe entier en caps nuit à la lecture." },
-    { title: "Éviter les textes trop espacés",    desc: "Letter-spacing > 0.25em sur plus d&apos;une ligne devient illisible. L&apos;espacement est un outil, pas un style systématique." },
-    { title: "Garder les prix très lisibles",     desc: "Les prix s'affichent toujours en Cormorant Medium ou Montserrat Regular, jamais en script ou en ultra-light." },
-  ],
-} as const;
 
 // ─────────────────────────────────────────────────────────────────────────────
-// En-tête partagé pour chaque spécimen
+// FontCard — carte typographie compacte orientée prestataire
 // ─────────────────────────────────────────────────────────────────────────────
-
-function SpecimenHeader({
-  index, name, role, isDark = false,
+function FontCard({
+  font,
+  index,
 }: {
-  index: string; name: string; role: string; isDark?: boolean;
+  font: typeof FONTS[number];
+  index: number;
 }) {
-  return (
-    <div className={cn(
-      "flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 pb-5",
-      "border-b",
-      isDark ? "border-or-champagne/15" : "border-gris-marbre",
-    )}>
-      <div className="flex items-baseline gap-3">
-        <span className={cn(
-          "font-serif font-light text-2xl leading-none",
-          isDark ? "text-or-champagne/30" : "text-gris-marbre",
-        )}>
-          {index}
-        </span>
-        <div>
-          <h3 className={cn(
-            "font-sans text-ui-lg font-medium",
-            isDark ? "text-ivoire-maison" : "text-noir-marquise",
-          )}>
-            {name}
-          </h3>
-          <p className={cn(
-            "label-mm mt-0.5",
-            isDark ? "text-gris-marbre/60" : "text-gris-texte/70",
-          )}>
-            {role}
-          </p>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Spécimen 01 — Cormorant Garamond
-// ─────────────────────────────────────────────────────────────────────────────
-
-function CormorantSpecimen() {
   const ref    = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px 0px" });
 
   return (
     <motion.article
       ref={ref}
-      className="rounded-[3px] border border-gris-marbre bg-ivoire-maison overflow-hidden"
+      className={cn(
+        "rounded-[3px] overflow-hidden border",
+        font.dark ? "border-or-champagne/15" : "border-gris-marbre",
+        "flex flex-col",
+      )}
       initial={{ opacity: 0, y: 24 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.8, ease: EASE_SPRING }}
-      aria-label="Spécimen Cormorant Garamond"
+      transition={{ duration: 0.8, delay: index * 0.12, ease: EASE_SPRING }}
+      aria-label={`Police ${font.name} — ${font.role}`}
     >
-      <div className="p-7 md:p-10 space-y-10">
-        <SpecimenHeader
-          index="01"
-          name="Cormorant Garamond"
-          role="Titres élégants · Noms de créations · Citations · Prix"
-        />
-
-        {/* Grande zone display */}
-        <div className="space-y-1">
-          <p className="label-mm text-gris-texte/50 mb-4">Affichage display</p>
-
-          {/* Ligne principale — très grand, light italic */}
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.2, duration: 0.9, ease: EASE_SPRING }}
-          >
-            <p
-              className="font-serif font-light italic text-noir-marquise leading-none tracking-tight"
-              style={{ fontSize: "clamp(3rem, 9vw, 7.5rem)" }}
-              lang="fr"
-            >
-              Créations
-            </p>
-            <p
-              className="font-serif font-light text-noir-marquise leading-none tracking-tight"
-              style={{ fontSize: "clamp(3rem, 9vw, 7.5rem)" }}
-              lang="fr"
-            >
-              Maison
-            </p>
-          </motion.div>
-
-          {/* Sous-titre exemple */}
-          <motion.p
-            className="font-serif font-light italic text-gris-texte"
-            style={{ fontSize: "clamp(1.25rem, 3vw, 2rem)" }}
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.5, duration: 0.7 }}
-          >
-            Pâtisserie fine, généreuse et accessible.
-          </motion.p>
-        </div>
-
-        {/* Filet or */}
-        <motion.div
-          className="h-px"
-          style={{ background: "linear-gradient(90deg, #B99A5F, transparent)", transformOrigin: "left" }}
-          initial={{ scaleX: 0 }}
-          animate={inView ? { scaleX: 1 } : {}}
-          transition={{ delay: 0.4, duration: 1, ease: EASE_SPRING }}
-          aria-hidden="true"
-        />
-
-        {/* Alphabet complet */}
-        <div className="space-y-3">
-          <p className="label-mm text-gris-texte/50">Alphabet & chiffres</p>
-          <p
-            className="font-serif font-light text-noir-marquise/60 leading-relaxed tracking-wide"
-            style={{ fontSize: "clamp(1.1rem, 2.5vw, 1.5rem)" }}
-          >
-            Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm
-          </p>
-          <p
-            className="font-serif font-light text-noir-marquise/60 leading-relaxed tracking-wide"
-            style={{ fontSize: "clamp(1.1rem, 2.5vw, 1.5rem)" }}
-          >
-            Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz
-          </p>
-          <p
-            className="font-serif font-light text-noir-marquise/50 leading-relaxed tracking-wide"
-            style={{ fontSize: "clamp(1.1rem, 2.5vw, 1.5rem)" }}
-          >
-            0 1 2 3 4 5 6 7 8 9 &nbsp; , . : ; ! ? € %
-          </p>
-        </div>
-
-        {/* Grille des graisses */}
-        <div className="space-y-3">
-          <p className="label-mm text-gris-texte/50">Déclinaisons de graisse</p>
-          <div className="divide-y divide-gris-marbre/50">
-            {CORMORANT_WEIGHTS.map((w, i) => (
-              <motion.div
-                key={`${w.value}-${w.style}`}
-                className="flex items-baseline gap-4 md:gap-6 py-3 first:pt-0 last:pb-0"
-                initial={{ opacity: 0, x: -10 }}
-                animate={inView ? { opacity: 1, x: 0 } : {}}
-                transition={{ delay: 0.3 + i * 0.07, duration: 0.5, ease: EASE }}
-              >
-                <span className="label-mm text-gris-texte/40 w-28 shrink-0">
-                  {w.label}
-                </span>
-                <span
-                  className="font-serif text-noir-marquise leading-snug flex-1"
-                  style={{
-                    fontSize: "clamp(1.25rem, 2.5vw, 1.75rem)",
-                    fontWeight: w.value,
-                    fontStyle: w.style,
-                  }}
-                >
-                  L'art de sublimer chaque instant.
-                </span>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </motion.article>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Spécimen 02 — Montserrat
-// ─────────────────────────────────────────────────────────────────────────────
-
-function MontserratSpecimen() {
-  const ref    = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-60px 0px" });
-
-  return (
-    <motion.article
-      ref={ref}
-      className="rounded-[3px] border border-gris-marbre bg-blanc-marbre overflow-hidden"
-      initial={{ opacity: 0, y: 24 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.8, delay: 0.1, ease: EASE_SPRING }}
-      aria-label="Spécimen Montserrat"
-    >
-      <div className="p-7 md:p-10 space-y-10">
-        <SpecimenHeader
-          index="02"
-          name="Montserrat"
-          role="Texte courant · Menus · Prix · Informations pratiques"
-        />
-
-        {/* Zone display corps */}
-        <div className="space-y-4">
-          <p className="label-mm text-gris-texte/50">Affichage corps</p>
-
-          <motion.p
-            className="font-sans font-light text-noir-marquise leading-relaxed text-balance"
-            style={{ fontSize: "clamp(1.25rem, 3vw, 2rem)" }}
-            initial={{ opacity: 0, y: 12 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.2, duration: 0.8, ease: EASE_SPRING }}
-          >
-            Une pause gourmande
-            <br />
-            préparée avec soin.
-          </motion.p>
-
-          <motion.p
-            className="font-sans font-medium text-gris-texte"
-            style={{ fontSize: "clamp(0.8rem, 1.5vw, 1rem)", letterSpacing: "0.18em", textTransform: "uppercase" }}
-            initial={{ opacity: 0 }}
-            animate={inView ? { opacity: 1 } : {}}
-            transition={{ delay: 0.4, duration: 0.6 }}
-          >
-            Collection Automne · Maison Marquise
-          </motion.p>
-        </div>
-
-        {/* Filet neutre */}
-        <div className="h-px bg-gris-marbre/60" aria-hidden="true" />
-
-        {/* Alphabet */}
-        <div className="space-y-3">
-          <p className="label-mm text-gris-texte/50">Alphabet & chiffres</p>
-          <p className="font-sans font-light text-noir-marquise/50 leading-loose tracking-wider text-sm md:text-base">
-            Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz
-          </p>
-          <p className="font-sans font-light text-noir-marquise/40 leading-loose tracking-wider text-sm md:text-base">
-            0 1 2 3 4 5 6 7 8 9 &nbsp; , . : ; ! ? € %
-          </p>
-        </div>
-
-        {/* Hiérarchie de styles */}
-        <div className="space-y-3">
-          <p className="label-mm text-gris-texte/50">Hiérarchie de styles</p>
-          <div className="divide-y divide-gris-marbre/50">
-            {MONTSERRAT_SCALE.map((item, i) => (
-              <motion.div
-                key={item.role}
-                className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4 md:gap-6 py-3 first:pt-0 last:pb-0"
-                initial={{ opacity: 0, x: -10 }}
-                animate={inView ? { opacity: 1, x: 0 } : {}}
-                transition={{ delay: 0.25 + i * 0.07, duration: 0.5, ease: EASE }}
-              >
-                <span className="label-mm text-gris-texte/40 sm:w-32 shrink-0">
-                  {item.role}
-                </span>
-                <span
-                  className={cn("text-noir-marquise leading-snug", item.isSerif ? "font-serif" : "font-sans")}
-                  style={{ fontSize: item.size, fontWeight: item.weight }}
-                >
-                  {item.sample}
-                </span>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-
-        {/* Grille des graisses */}
-        <div className="space-y-3">
-          <p className="label-mm text-gris-texte/50">Déclinaisons de graisse</p>
-          <div className="divide-y divide-gris-marbre/50">
-            {MONTSERRAT_WEIGHTS.map((w, i) => (
-              <motion.div
-                key={w.value}
-                className="flex items-baseline gap-4 md:gap-6 py-3 first:pt-0 last:pb-0"
-                initial={{ opacity: 0, x: -10 }}
-                animate={inView ? { opacity: 1, x: 0 } : {}}
-                transition={{ delay: 0.3 + i * 0.07, duration: 0.5, ease: EASE }}
-              >
-                <span className="label-mm text-gris-texte/40 w-28 shrink-0">
-                  {w.label}
-                </span>
-                <span
-                  className="font-sans text-noir-marquise text-lg leading-snug"
-                  style={{ fontWeight: w.value }}
-                >
-                  Préparé avec soin, chaque matin.
-                </span>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </motion.article>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Spécimen 03 — Parisienne
-// ─────────────────────────────────────────────────────────────────────────────
-
-function ParisienneSpecimen() {
-  const ref    = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-60px 0px" });
-
-  return (
-    <motion.article
-      ref={ref}
-      className="rounded-[3px] bg-noir-marquise border border-or-champagne/20 overflow-hidden"
-      initial={{ opacity: 0, y: 24 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.8, delay: 0.15, ease: EASE_SPRING }}
-      aria-label="Spécimen Parisienne"
-    >
-      <div className="p-7 md:p-10 space-y-10">
-        <SpecimenHeader
-          index="03"
-          name="Parisienne"
-          role="Accent manuscrit · Signature · Packaging · Usage exclusif"
-          isDark
-        />
-
-        {/* Grande zone display — très aérée */}
-        <div className="space-y-8">
-          <p className="label-mm text-gris-marbre/50">Signature officielle</p>
-
-          <motion.div
-            className="py-4"
-            initial={{ opacity: 0, y: 20, scale: 0.97 }}
-            animate={inView ? { opacity: 1, y: 0, scale: 1 } : {}}
-            transition={{ delay: 0.25, duration: 1, ease: EASE_SPRING }}
-          >
-            <p
-              className="font-script text-ivoire-maison leading-none"
-              style={{ fontSize: "clamp(4rem, 12vw, 9rem)" }}
-            >
-              Maison Marquise
-            </p>
-          </motion.div>
-
-          {/* Filet or */}
-          <motion.div
-            className="h-px"
-            style={{ background: "linear-gradient(90deg, transparent, #B99A5F, transparent)", transformOrigin: "center" }}
-            initial={{ scaleX: 0 }}
-            animate={inView ? { scaleX: 1 } : {}}
-            transition={{ delay: 0.5, duration: 1.1, ease: EASE_SPRING }}
+      {/* ── Zone specimen ─────────────────────────────────────────────── */}
+      <div className={cn("px-7 md:px-10 py-9 md:py-11", font.bg)}>
+        {/* Index + Nom */}
+        <div className="flex items-baseline gap-3 mb-5">
+          <span
+            className={cn(
+              "font-serif font-light text-2xl leading-none select-none",
+              font.dark ? "text-or-champagne/25" : "text-gris-marbre/40"
+            )}
             aria-hidden="true"
-          />
+          >
+            {font.index}
+          </span>
+          <div>
+            <p className={cn("font-sans text-[0.6rem] font-medium tracking-[0.18em] uppercase mb-0.5", font.dark ? "text-or-champagne/50" : "text-gris-texte/50")}>
+              {font.role}
+            </p>
+            <h3 className={cn("font-sans font-medium text-base", font.dark ? "text-ivoire-maison" : "text-noir-marquise")}>
+              {font.name}
+            </h3>
+          </div>
+        </div>
 
-          {/* Exemples secondaires */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-10">
-            {[
-              { label: "Accroche packaging",  text: "Préparé avec soin",  size: "clamp(2rem, 5vw, 3.5rem)" },
-              { label: "Signature courte",    text: "Signature",           size: "clamp(2.5rem, 6vw, 4.5rem)" },
-            ].map(({ label, text, size }, i) => (
-              <motion.div
-                key={label}
-                className="space-y-2"
-                initial={{ opacity: 0, y: 12 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: 0.45 + i * 0.12, duration: 0.7, ease: EASE }}
-              >
-                <p className="label-mm text-gris-marbre/40">{label}</p>
-                <p
-                  className="font-script text-ivoire-maison/80 leading-none"
-                  style={{ fontSize: size }}
-                >
-                  {text}
+        {/* Specimen display */}
+        <p
+          className={cn("leading-tight mb-2", font.fontClass, font.dark ? "text-ivoire-maison/90" : "text-noir-marquise")}
+          style={{ fontSize: "clamp(1.75rem, 5vw, 3rem)", ...font.fontStyle }}
+        >
+          {font.tagline}
+        </p>
+        <p
+          className={cn("leading-relaxed", font.fontClass, font.dark ? "text-gris-marbre/55" : "text-gris-texte/70")}
+          style={{ fontSize: "clamp(0.9rem, 2vw, 1.1rem)", fontWeight: 300, fontStyle: "italic" }}
+        >
+          {font.sample}
+        </p>
+
+        {/* Graisses disponibles */}
+        <div className="mt-6 flex flex-wrap gap-1.5">
+          {font.weights.map((w) => (
+            <span
+              key={w}
+              className={cn(
+                "inline-flex px-2 py-0.5 rounded-[2px] font-sans text-[0.55rem] font-medium tracking-[0.08em]",
+                font.dark
+                  ? "bg-ivoire-maison/8 text-ivoire-maison/45 border border-ivoire-maison/10"
+                  : "bg-noir-marquise/5 text-gris-texte/55 border border-gris-marbre"
+              )}
+            >
+              {w}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      {/* ── Infos prestataire ─────────────────────────────────────────── */}
+      <div className={cn("flex-1 flex flex-col", font.dark ? "bg-noir-marquise" : "bg-blanc-marbre")}>
+
+        {/* Usages + Interdits */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-0 divide-y md:divide-y-0 md:divide-x divide-gris-marbre/30 border-t border-gris-marbre/20">
+
+          <div className="px-6 py-5 space-y-2.5">
+            <div className="flex items-center gap-1.5 mb-3">
+              <Check size={11} strokeWidth={2} className="text-pistache" />
+              <span className="label-mm text-pistache">Usages recommandés</span>
+            </div>
+            <ul className="space-y-1.5" role="list">
+              {font.usages.map((u) => (
+                <li key={u} className={cn("font-sans text-[0.72rem] leading-snug flex gap-2 items-start", font.dark ? "text-gris-marbre/65" : "text-gris-texte")}>
+                  <span className="mt-1.5 w-1 h-1 rounded-full bg-or-champagne/50 shrink-0" aria-hidden="true" />
+                  {u}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="px-6 py-5 space-y-2.5">
+            <div className="flex items-center gap-1.5 mb-3">
+              <AlertTriangle size={11} strokeWidth={1.8} className="text-framboise" />
+              <span className="label-mm text-framboise">À ne jamais faire</span>
+            </div>
+            <ul className="space-y-1.5" role="list">
+              {font.interdits.map((u) => (
+                <li key={u} className={cn("font-sans text-[0.72rem] leading-snug flex gap-2 items-start", font.dark ? "text-gris-marbre/65" : "text-gris-texte")}>
+                  <span className="mt-1.5 w-1 h-1 rounded-full bg-framboise/40 shrink-0" aria-hidden="true" />
+                  {u}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* Tailles conseillées */}
+        <div className={cn("border-t px-6 py-5", font.dark ? "border-or-champagne/10" : "border-gris-marbre/40")}>
+          <p className={cn("label-mm mb-3", font.dark ? "text-gris-marbre/40" : "text-gris-texte/45")}>
+            Niveaux conseillés
+          </p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {font.sizes.map((s) => (
+              <div key={s.label} className={cn("rounded-[2px] px-3 py-2.5 space-y-1", font.dark ? "bg-ivoire-maison/5" : "bg-ivoire-maison/60")}>
+                <p className={cn("font-sans text-[0.58rem] font-medium tracking-[0.12em] uppercase", font.dark ? "text-or-champagne/50" : "text-gris-texte/50")}>
+                  {s.label}
                 </p>
-              </motion.div>
+                <p className={cn("font-mono text-[0.62rem]", font.dark ? "text-ivoire-maison/70" : "text-noir-marquise/80")}>
+                  {s.spec}
+                </p>
+                <p className={cn("font-sans text-[0.6rem]", font.dark ? "text-gris-marbre/40" : "text-gris-texte/50")}>
+                  {s.note}
+                </p>
+              </div>
             ))}
           </div>
         </div>
 
-        {/* Règle d'usage exclusive */}
-        <div className="pt-6 border-t border-or-champagne/15">
-          <div className="flex items-start gap-3 p-4 border border-or-champagne/20 bg-or-champagne/5 rounded-[2px]">
-            <AlertTriangle size={14} strokeWidth={1.5} className="text-or-champagne/70 mt-0.5 shrink-0" />
-            <div className="space-y-1">
-              <p className="font-sans text-[0.7rem] font-medium tracking-[0.12em] uppercase text-or-champagne/80">
-                Usage exclusif
-              </p>
-              <p className="font-sans text-ui text-gris-marbre/60 leading-relaxed">
-                La Parisienne ne s'utilise jamais en bloc de texte courant, jamais
-                en dessous de 24&nbsp;px et jamais combinée avec d'autres fontes
-                en script. Un seul usage par composition.
-              </p>
-            </div>
+        {/* Source & accès */}
+        <div className={cn("mt-auto border-t px-6 py-4 flex flex-wrap items-center justify-between gap-3", font.dark ? "border-or-champagne/10" : "border-gris-marbre/40")}>
+          <div className="space-y-0.5">
+            <p className={cn("label-mm", font.dark ? "text-gris-marbre/35" : "text-gris-texte/40")}>Source légale</p>
+            <code className={cn("font-mono text-[0.65rem]", font.dark ? "text-ivoire-maison/45" : "text-gris-texte/60")}>
+              {font.npm}
+            </code>
+          </div>
+          <div className="flex items-center gap-2">
+            <a
+              href={font.sourceUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(
+                "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[2px] border",
+                "font-sans text-[0.58rem] font-medium tracking-[0.12em] uppercase",
+                "transition-colors duration-200",
+                font.dark
+                  ? "border-or-champagne/25 text-or-champagne/60 hover:border-or-champagne/50 hover:text-or-champagne/90"
+                  : "border-gris-marbre text-gris-texte/60 hover:border-noir-marquise/40 hover:text-noir-marquise",
+              )}
+              aria-label={`Voir ${font.name} sur ${font.source}`}
+            >
+              <ExternalLink size={9} strokeWidth={1.5} />
+              {font.source}
+            </a>
           </div>
         </div>
       </div>
@@ -453,125 +299,50 @@ function ParisienneSpecimen() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Règles Do / Don't
+// Règles essentielles — do / don't
 // ─────────────────────────────────────────────────────────────────────────────
-
-function RulesGrid() {
+function RulesPanel() {
   const ref    = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px 0px" });
-
-  return (
-    <div ref={ref} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      {/* Do */}
-      <div className="space-y-3">
-        <div className="flex items-center gap-2.5 mb-5">
-          <Check size={14} strokeWidth={2} className="text-pistache" />
-          <span className="label-mm text-pistache">À faire</span>
-        </div>
-        {RULES.do.map((rule, i) => (
-          <motion.div
-            key={rule.title}
-            className="p-5 rounded-[3px] border border-pistache/20 border-l-2 border-l-pistache/50 bg-blanc-marbre"
-            initial={{ opacity: 0, x: -12 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ delay: i * 0.09, duration: 0.55, ease: EASE }}
-          >
-            <p className="font-sans text-ui-lg font-medium text-noir-marquise mb-1.5">
-              {rule.title}
-            </p>
-            <p className="font-sans text-ui text-gris-texte leading-relaxed">
-              {rule.desc}
-            </p>
-          </motion.div>
-        ))}
-      </div>
-
-      {/* Don't */}
-      <div className="space-y-3">
-        <div className="flex items-center gap-2.5 mb-5">
-          <AlertTriangle size={14} strokeWidth={1.8} className="text-framboise" />
-          <span className="label-mm text-framboise">À éviter</span>
-        </div>
-        {RULES.dont.map((rule, i) => (
-          <motion.div
-            key={rule.title}
-            className="p-5 rounded-[3px] border border-framboise/15 border-l-2 border-l-framboise/40 bg-blanc-marbre"
-            initial={{ opacity: 0, x: 12 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ delay: i * 0.09, duration: 0.55, ease: EASE }}
-          >
-            <p className="font-sans text-ui-lg font-medium text-noir-marquise mb-1.5">
-              {rule.title}
-            </p>
-            <p className="font-sans text-ui text-gris-texte leading-relaxed">
-              {rule.desc}
-            </p>
-          </motion.div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Démo prix — lisibilité en situation
-// ─────────────────────────────────────────────────────────────────────────────
-
-function PriceDemo() {
-  const ref    = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-40px 0px" });
-
-  const examples = [
-    { label: "Formule déjeuner",  price: "9,90 €",  font: "font-serif",  weight: 500, note: "Cormorant Medium — recommandé" },
-    { label: "Pâtisserie",        price: "4,50 €",  font: "font-serif",  weight: 400, note: "Cormorant Regular — acceptable" },
-    { label: "Boisson",           price: "3,00 €",  font: "font-sans",   weight: 500, note: "Montserrat Medium — lisible" },
-    { label: "Menu enfant",       price: "7,50 €",  font: "font-sans",   weight: 600, note: "Montserrat SemiBold — fort" },
-  ] as const;
 
   return (
     <motion.div
       ref={ref}
-      className="rounded-[3px] border border-gris-marbre bg-blanc-marbre overflow-hidden"
+      className="grid grid-cols-1 md:grid-cols-2 gap-4"
       initial={{ opacity: 0, y: 16 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.7, ease: EASE }}
     >
-      <div className="px-6 py-4 border-b border-gris-marbre bg-ivoire-maison">
-        <span className="label-mm text-gris-texte">Règle prioritaire</span>
-        <h3 className="font-serif text-d-sm font-light text-noir-marquise mt-1">
-          Les prix — lisibilité maximale
-        </h3>
+      {/* Do */}
+      <div className="rounded-[3px] border border-pistache/20 border-l-2 border-l-pistache/50 bg-blanc-marbre p-5 space-y-3">
+        <div className="flex items-center gap-2">
+          <Check size={13} strokeWidth={2} className="text-pistache" />
+          <span className="label-mm text-pistache">À retenir</span>
+        </div>
+        <ul className="space-y-2.5">
+          {RULES_DO.map((r) => (
+            <li key={r} className="font-sans text-ui text-gris-texte leading-snug flex gap-2 items-start">
+              <span className="mt-1.5 w-1 h-1 rounded-full bg-pistache/60 shrink-0" aria-hidden="true" />
+              {r}
+            </li>
+          ))}
+        </ul>
       </div>
 
-      <div className="p-6 md:p-8">
-        <p className="font-sans text-ui text-gris-texte leading-relaxed mb-8 max-w-reading">
-          Les prix ne s'affichent jamais en Parisienne ni en Cormorant Light.
-          La lisibilité prime sur l'esthétique — le client doit pouvoir lire
-          le prix en un coup d'œil.
-        </p>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-          {examples.map((ex, i) => (
-            <motion.div
-              key={ex.label}
-              className="flex flex-col gap-2"
-              initial={{ opacity: 0, y: 10 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.2 + i * 0.07, duration: 0.5, ease: EASE }}
-            >
-              <span className="label-mm text-gris-texte/50">{ex.label}</span>
-              <span
-                className={cn("text-noir-marquise leading-none", ex.font)}
-                style={{ fontSize: "clamp(1.5rem, 3.5vw, 2.25rem)", fontWeight: ex.weight }}
-              >
-                {ex.price}
-              </span>
-              <span className="font-sans text-[0.6rem] text-gris-texte/40 leading-snug">
-                {ex.note}
-              </span>
-            </motion.div>
-          ))}
+      {/* Don't */}
+      <div className="rounded-[3px] border border-framboise/15 border-l-2 border-l-framboise/40 bg-blanc-marbre p-5 space-y-3">
+        <div className="flex items-center gap-2">
+          <AlertTriangle size={13} strokeWidth={1.8} className="text-framboise" />
+          <span className="label-mm text-framboise">À éviter</span>
         </div>
+        <ul className="space-y-2.5">
+          {RULES_DONT.map((r) => (
+            <li key={r} className="font-sans text-ui text-gris-texte leading-snug flex gap-2 items-start">
+              <span className="mt-1.5 w-1 h-1 rounded-full bg-framboise/40 shrink-0" aria-hidden="true" />
+              {r}
+            </li>
+          ))}
+        </ul>
       </div>
     </motion.div>
   );
@@ -580,7 +351,6 @@ function PriceDemo() {
 // ─────────────────────────────────────────────────────────────────────────────
 // SECTION PRINCIPALE
 // ─────────────────────────────────────────────────────────────────────────────
-
 export function TypographiesSection() {
   const headerRef = useRef<HTMLDivElement>(null);
   const headerIn  = useInView(headerRef, { once: true, margin: "-80px 0px" });
@@ -592,8 +362,6 @@ export function TypographiesSection() {
       aria-labelledby="typo-title"
     >
       <div className="line-gold w-full" aria-hidden="true" />
-
-        {/* M fantôme supprimé */}
 
       <div className="container-mm py-section relative">
 
@@ -647,63 +415,63 @@ export function TypographiesSection() {
             animate={headerIn ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.25, ease: EASE }}
           >
-            Chaque police a un rôle précis. Ensemble, elles forment
-            une voix reconnaissable — élégante, claire et humaine.
+            Chaque police a un rôle défini. Les substitutions sont interdites.
+            Les polices sont disponibles gratuitement sur Google Fonts et via npm.
           </motion.p>
 
-          {/* Aperçu rapide des trois fontes */}
+          {/* Aperçu rapide + bouton download */}
           <motion.div
-            className="mt-8 flex flex-wrap items-baseline gap-x-6 gap-y-2"
+            className="mt-6 flex flex-wrap items-center justify-between gap-4"
             initial={{ opacity: 0 }}
             animate={headerIn ? { opacity: 1 } : {}}
-            transition={{ delay: 0.45, duration: 0.6 }}
+            transition={{ delay: 0.4, duration: 0.6 }}
           >
-            <span className="font-serif font-light italic text-noir-marquise text-2xl leading-none">
-              Cormorant
-            </span>
-            <span className="text-gris-marbre/50 text-sm" aria-hidden="true">·</span>
-            <span className="font-sans font-medium text-noir-marquise text-sm tracking-wide">
-              Montserrat
-            </span>
-            <span className="text-gris-marbre/50 text-sm" aria-hidden="true">·</span>
-            <span className="font-script text-noir-marquise text-2xl leading-none">
-              Parisienne
-            </span>
+            <div className="flex flex-wrap items-baseline gap-x-5 gap-y-1">
+              <span className="font-serif font-light italic text-noir-marquise text-2xl leading-none">Cormorant</span>
+              <span className="text-gris-marbre/50 text-sm" aria-hidden="true">·</span>
+              <span className="font-sans font-medium text-noir-marquise text-sm tracking-wide">Montserrat</span>
+              <span className="text-gris-marbre/50 text-sm" aria-hidden="true">·</span>
+              <span className="font-script text-noir-marquise text-2xl leading-none">Parisienne</span>
+            </div>
+
+            <button
+              disabled
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-[2px] border border-gris-marbre bg-ivoire-maison/60 text-gris-texte/45 cursor-not-allowed font-sans text-[0.6rem] font-medium tracking-[0.12em] uppercase"
+              title="Bientôt disponible"
+              aria-label="Télécharger les règles typographiques — bientôt disponible"
+            >
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+                <path d="M6 1v7M3 5.5l3 3 3-3M1 10h10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
+              </svg>
+              Télécharger les règles typographiques
+              <span className="px-1.5 py-0.5 bg-gris-marbre/40 rounded-[2px] text-[0.5rem] normal-case tracking-normal text-gris-texte/35">PDF — bientôt</span>
+            </button>
           </motion.div>
         </div>
 
-        {/* ══ SPÉCIMENS ════════════════════════════════════════════════ */}
-        <div className="space-y-6 mb-14 md:mb-20">
-          <CormorantSpecimen />
-          <MontserratSpecimen />
-          <ParisienneSpecimen />
+        {/* ══ 3 CARTES POLICES ════════════════════════════════════════ */}
+        <div className="space-y-5 mb-14 md:mb-20">
+          {FONTS.map((font, i) => (
+            <FontCard key={font.name} font={font} index={i} />
+          ))}
         </div>
 
-        {/* ══ PRIX ════════════════════════════════════════════════════ */}
-        <div className="mb-14 md:mb-20">
-          <PriceDemo />
-        </div>
-
-        {/* ══ RÈGLES ══════════════════════════════════════════════════ */}
+        {/* ══ RÈGLES ESSENTIELLES ══════════════════════════════════════ */}
         <div>
           <motion.div
-            className="mb-8"
+            className="mb-7"
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.6, ease: EASE }}
           >
-            <span className="label-mm text-gris-texte">Guide d&apos;usage</span>
+            <span className="label-mm text-gris-texte">Règles d&apos;usage</span>
             <h3 className="font-serif text-d-md font-light text-noir-marquise mt-1">
-              Règles typographiques
+              Ce qu&apos;il faut retenir
             </h3>
-            <div
-              className="h-px mt-4 w-14"
-              style={{ background: "linear-gradient(90deg, #B99A5F, transparent)" }}
-              aria-hidden="true"
-            />
+            <div className="h-px mt-4 w-14" style={{ background: "linear-gradient(90deg, #B99A5F, transparent)" }} aria-hidden="true" />
           </motion.div>
-          <RulesGrid />
+          <RulesPanel />
         </div>
 
       </div>

@@ -27,7 +27,7 @@ const VARIANTS = [
     minSize:   "120 px de largeur minimum",
     fondOk:    "Ivoire · Blanc marbre · Noir Marquise",
     fondEviter: "Fond photographique · Fond coloré non approuvé",
-    files:     ["SVG", "PNG", "PDF"],
+    files:     ["SVG (complet)", "PNG", "PDF"],
   },
   {
     id:        "no-baseline",
@@ -38,7 +38,7 @@ const VARIANTS = [
     minSize:   "80 px de largeur minimum",
     fondOk:    "Ivoire · Blanc marbre · Noir Marquise",
     fondEviter: "Fond photographique · Couleurs non approuvées",
-    files:     ["SVG", "PNG"],
+    files:     ["SVG (sans baseline)", "PNG"],
   },
   {
     id:        "monogram",
@@ -49,7 +49,7 @@ const VARIANTS = [
     minSize:   "24 px minimum (favicon) · 30 mm pour impression",
     fondOk:    "Ivoire · Noir · Or Champagne",
     fondEviter: "Fond surchargé · Fond couleur non approuvé",
-    files:     ["SVG", "PNG"],
+    files:     ["SVG (monogramme)", "PNG"],
   },
   {
     id:        "horizontal",
@@ -60,7 +60,7 @@ const VARIANTS = [
     minSize:   "200 px de largeur minimum",
     fondOk:    "Ivoire · Blanc marbre · Noir Marquise",
     fondEviter: "Fond photographique · Formats très étroits",
-    files:     ["SVG", "PNG"],
+    files:     ["SVG (complet)", "PNG"],
   },
 ] as const;
 
@@ -110,30 +110,63 @@ const LOGO_COMPONENTS: Record<VariantId, (p: { fill: string; className?: string 
 // ─────────────────────────────────────────────────────────────────────────────
 
 // ── Boutons de téléchargement logo ───────────────────────────────────────────
+// SVG disponibles dès maintenant ; PNG/PDF à intégrer plus tard.
+const LOGO_FILE_URLS: Record<string, string | null> = {
+  // Logos SVG officiels — téléchargeables directement
+  "SVG (complet)":     "/assets/LOGO_complet.svg",
+  "SVG (sans baseline)": "/assets/LOGO_sans_M.svg",
+  "SVG (monogramme)":  "/assets/FAVICON.svg",
+  // Formats à produire
+  "PNG":  null,
+  "PDF":  null,
+};
+
 function DownloadButtons({ files }: { files: readonly string[] }) {
   return (
     <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-gris-marbre/60">
       <span className="label-mm text-gris-texte/45 w-full mb-1">Télécharger</span>
-      {files.map((fmt) => (
-        <button
-          key={fmt}
-          disabled
-          className={[
-            "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[2px]",
-            "font-sans text-[0.58rem] font-medium tracking-[0.12em] uppercase",
-            "border border-gris-marbre text-gris-texte/40 bg-blanc-marbre",
-            "cursor-not-allowed",
-          ].join(" ")}
-          title={`Téléchargement ${fmt} — bientôt disponible`}
-          aria-label={`Télécharger ${fmt} — bientôt disponible`}
-        >
+      {files.map((fmt) => {
+        const url = LOGO_FILE_URLS[fmt] ?? null;
+        const DownloadIcon = (
           <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
             <path d="M5 1v5M2.5 4l2.5 3 2.5-3M1 8h8" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
           </svg>
-          {fmt}
-        </button>
-      ))}
-      <span className="font-sans text-[0.55rem] text-gris-texte/30 ml-1">— bientôt disponible</span>
+        );
+        if (url) {
+          return (
+            <a
+              key={fmt}
+              href={url}
+              download
+              className={[
+                "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[2px]",
+                "font-sans text-[0.58rem] font-medium tracking-[0.12em] uppercase",
+                "border border-or-champagne/40 text-noir-marquise bg-ivoire-maison",
+                "hover:border-or-champagne hover:bg-or-champagne/5 transition-colors duration-200",
+              ].join(" ")}
+              aria-label={`Télécharger ${fmt}`}
+            >
+              {DownloadIcon}
+              {fmt}
+            </a>
+          );
+        }
+        return (
+          <button
+            key={fmt}
+            disabled
+            className={[
+              "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[2px]",
+              "font-sans text-[0.58rem] font-medium tracking-[0.12em] uppercase",
+              "border border-gris-marbre text-gris-texte/35 bg-blanc-marbre cursor-not-allowed",
+            ].join(" ")}
+            title={`${fmt} — bientôt disponible`}
+          >
+            {DownloadIcon}
+            {fmt}
+          </button>
+        );
+      })}
     </div>
   );
 }
@@ -609,20 +642,20 @@ export function LogoSection() {
             animate={headerIn ? { opacity: 1 } : {}}
             transition={{ duration: 0.6, delay: 0.4, ease: EASE }}
           >
-            <button
-              disabled
-              className="inline-flex items-center gap-2.5 px-5 py-3 rounded-[2px] border border-gris-marbre bg-blanc-marbre text-gris-texte/50 cursor-not-allowed font-sans text-[0.65rem] font-medium tracking-[0.14em] uppercase"
-              title="Téléchargement bientôt disponible"
-              aria-label="Télécharger le pack logos complet — bientôt disponible"
+            <a
+              href="/assets/logos-maison-marquise.zip"
+              download="logos-maison-marquise.zip"
+              className="inline-flex items-center gap-2.5 px-5 py-3 rounded-[2px] border border-or-champagne/40 bg-ivoire-maison text-noir-marquise font-sans text-[0.65rem] font-medium tracking-[0.14em] uppercase hover:border-or-champagne hover:bg-or-champagne/5 transition-colors duration-200"
+              aria-label="Télécharger le pack logos complet — SVG officiels"
             >
               <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
                 <path d="M6.5 1v7M3.5 5.5l3 3.5 3-3.5M1 10.5h11" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
               </svg>
-              Télécharger le pack logos complet
-              <span className="ml-1 px-1.5 py-0.5 bg-gris-marbre/50 rounded-[2px] text-[0.5rem] font-medium tracking-wide normal-case text-gris-texte/40">
-                Bientôt disponible
+              Télécharger le pack logos
+              <span className="ml-1 px-1.5 py-0.5 bg-or-champagne/15 rounded-[2px] text-[0.5rem] font-medium tracking-wide normal-case text-or-champagne/80">
+                ZIP · SVG
               </span>
-            </button>
+            </a>
           </motion.div>
         </div>
 

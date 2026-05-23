@@ -434,18 +434,18 @@ export function TypographiesSection() {
               <span className="font-script text-noir-marquise text-2xl leading-none">Parisienne</span>
             </div>
 
-            <button
-              disabled
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-[2px] border border-gris-marbre bg-ivoire-maison/60 text-gris-texte/45 cursor-not-allowed font-sans text-[0.6rem] font-medium tracking-[0.12em] uppercase"
-              title="Téléchargement bientôt disponible"
-              aria-label="Télécharger les règles typographiques — bientôt disponible"
+            <a
+              href="/assets/fonts-maison-marquise.zip"
+              download="fonts-maison-marquise.zip"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-[2px] border border-or-champagne/40 bg-ivoire-maison text-noir-marquise font-sans text-[0.6rem] font-medium tracking-[0.12em] uppercase hover:border-or-champagne hover:bg-or-champagne/5 transition-colors duration-200"
+              aria-label="Télécharger les polices Maison Marquise — WOFF2"
             >
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
                 <path d="M6 1v7M3 5.5l3 3 3-3M1 10h10" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
               </svg>
-              Télécharger les règles typographiques
-              <span className="px-1.5 py-0.5 bg-gris-marbre/40 rounded-[2px] text-[0.5rem] normal-case tracking-normal text-gris-texte/35">PDF — bientôt</span>
-            </button>
+              Télécharger les polices
+              <span className="px-1.5 py-0.5 bg-or-champagne/15 rounded-[2px] text-[0.5rem] normal-case tracking-normal text-or-champagne/80 font-medium">ZIP · WOFF2</span>
+            </a>
           </motion.div>
         </div>
 

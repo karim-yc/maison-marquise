@@ -10,19 +10,7 @@ import { cn } from "@/lib/utils";
 import { LogoFull, LogoVariant, LogoMonogram } from "@/components/brand/LogoSvg";
 
 // ─────────────────────────────────────────────────────────────────────────────
-// LogoSection — Système logo Maison Marquise
-//
-// Structure :
-//   · En-tête (index 02, titre, intro)
-//   · Grille déclinaisons × 4 (chaque carte : fond clair + fond sombre + usages)
-//   · Section trichromie (noir / blanc / or / brun)
-//   · Règles d'usage (Don'ts visuels)
-//   · Zone de respiration interactive
-//
-// ASSETS : tous les logos sont des composants SVG inline pour permettre
-// la trichromie (changement de couleur via fill CSS).
-// Remplacer par <Image> next/image dès réception des fichiers officiels.
-//
+// LogoSection — Système logo & ressources Maison Marquise
 // ─────────────────────────────────────────────────────────────────────────────
 
 const EASE       = [0.25, 0.46, 0.45, 0.94] as const;
@@ -31,32 +19,48 @@ const EASE_SPRING = [0.16, 1, 0.3, 1] as const;
 // ── Déclinaisons ─────────────────────────────────────────────────────────────
 const VARIANTS = [
   {
-    id:     "full",
-    label:  "Logo complet",
-    badge:  "Usage principal",
-    usages: ["Façade & enseignes", "Documents officiels", "Menus & cartes", "Supports de marque"],
-    desc:   "La version de référence. Signature script, filet or et baseline. À utiliser sur tous les supports premium et documents officiels.",
+    id:        "full",
+    label:     "Logo complet",
+    badge:     "Usage principal",
+    usages:    ["Façade & enseignes", "Documents officiels", "Menus & cartes", "Supports de marque"],
+    desc:      "La version de référence. Mark M, nom complet et baseline. À utiliser sur tous les supports premium.",
+    minSize:   "120 px de largeur minimum",
+    fondOk:    "Ivoire · Blanc marbre · Noir Marquise",
+    fondEviter: "Fond photographique · Fond coloré non approuvé",
+    files:     ["SVG", "PNG", "PDF"],
   },
   {
-    id:     "no-baseline",
-    label:  "Sans baseline",
-    badge:  "Usage secondaire",
-    usages: ["Packaging", "Réseaux sociaux", "Cartes de visite", "Supports réduits"],
-    desc:   "Version épurée sans la baseline. Idéale quand l'espace est contraint ou quand le contexte rend la baseline redondante.",
+    id:        "no-baseline",
+    label:     "Sans baseline",
+    badge:     "Usage secondaire",
+    usages:    ["Packaging", "Réseaux sociaux", "Cartes de visite", "Supports réduits"],
+    desc:      "Version épurée sans la baseline. Idéale quand l'espace est contraint ou le contexte suffit.",
+    minSize:   "80 px de largeur minimum",
+    fondOk:    "Ivoire · Blanc marbre · Noir Marquise",
+    fondEviter: "Fond photographique · Couleurs non approuvées",
+    files:     ["SVG", "PNG"],
   },
   {
-    id:     "monogram",
-    label:  "Monogramme M",
-    badge:  "Usage pictogramme",
-    usages: ["Favicon & app icon", "Sticker & pastille", "Motif packaging", "Pictogramme"],
-    desc:   "Le monogramme seul. Unité minimale de la marque. Reconnaissable, polyvalent, utilisable en très petit format.",
+    id:        "monogram",
+    label:     "Monogramme M",
+    badge:     "Usage pictogramme",
+    usages:    ["Favicon & app icon", "Sticker & pastille", "Motif packaging", "Pictogramme"],
+    desc:      "L'unité minimale de la marque. Reconnaissable, polyvalent, utilisable en très petit format.",
+    minSize:   "24 px minimum (favicon) · 30 mm pour impression",
+    fondOk:    "Ivoire · Noir · Or Champagne",
+    fondEviter: "Fond surchargé · Fond couleur non approuvé",
+    files:     ["SVG", "PNG"],
   },
   {
-    id:     "horizontal",
-    label:  "Version horizontale",
-    badge:  "Usage banneau",
-    usages: ["Site web header", "Enseignes longues", "Signatures email", "Bandeaux"],
-    desc:   "Disposition horizontale pour les contextes à largeur contrainte. Le M précède le nom complet sur une seule ligne.",
+    id:        "horizontal",
+    label:     "Version horizontale",
+    badge:     "Usage banneau",
+    usages:    ["Site web header", "Enseignes longues", "Signatures email", "Bandeaux"],
+    desc:      "Le M précède le nom complet sur une seule ligne. Pour contextes à largeur contrainte.",
+    minSize:   "200 px de largeur minimum",
+    fondOk:    "Ivoire · Blanc marbre · Noir Marquise",
+    fondEviter: "Fond photographique · Formats très étroits",
+    files:     ["SVG", "PNG"],
   },
 ] as const;
 
@@ -79,10 +83,6 @@ const COLORWAYS = [
   { label: "Or Champagne",  fill: "#B99A5F", bg: "#111111", border: "rgba(185,154,95,0.2)", textOnBg: "#B99A5F", name: "Or sur noir" },
   { label: "Brun Doré",     fill: "#6F5A2E", bg: "#F7F3EC", border: "#D8D6D1",       textOnBg: "#6F5A2E", name: "Brun sur ivoire" },
 ] as const;
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Adaptateurs locaux — branche sur les SVG officiels via couleur CSS
-// ─────────────────────────────────────────────────────────────────────────────
 
 
 function LogoFullAdapter({ fill, className }: { fill: string; className?: string }) {
@@ -108,6 +108,35 @@ const LOGO_COMPONENTS: Record<VariantId, (p: { fill: string; className?: string 
 // ─────────────────────────────────────────────────────────────────────────────
 // SOUS-COMPOSANTS
 // ─────────────────────────────────────────────────────────────────────────────
+
+// ── Boutons de téléchargement logo ───────────────────────────────────────────
+function DownloadButtons({ files }: { files: readonly string[] }) {
+  return (
+    <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-gris-marbre/60">
+      <span className="label-mm text-gris-texte/45 w-full mb-1">Télécharger</span>
+      {files.map((fmt) => (
+        <button
+          key={fmt}
+          disabled
+          className={[
+            "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[2px]",
+            "font-sans text-[0.58rem] font-medium tracking-[0.12em] uppercase",
+            "border border-gris-marbre text-gris-texte/40 bg-blanc-marbre",
+            "cursor-not-allowed",
+          ].join(" ")}
+          title={`Téléchargement ${fmt} — bientôt disponible`}
+          aria-label={`Télécharger ${fmt} — bientôt disponible`}
+        >
+          <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+            <path d="M5 1v5M2.5 4l2.5 3 2.5-3M1 8h8" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round"/>
+          </svg>
+          {fmt}
+        </button>
+      ))}
+      <span className="font-sans text-[0.55rem] text-gris-texte/30 ml-1">— bientôt disponible</span>
+    </div>
+  );
+}
 
 // ── Carte déclinaison ─────────────────────────────────────────────────────────
 function VariantCard({
@@ -193,6 +222,22 @@ function VariantCard({
           {variant.desc}
         </p>
 
+        {/* Specs prestataire */}
+        <div className="space-y-1.5">
+          <div className="flex gap-2 items-baseline">
+            <span className="label-mm text-gris-texte/40 shrink-0 w-20">Taille min.</span>
+            <span className="font-sans text-[0.72rem] text-gris-texte">{variant.minSize}</span>
+          </div>
+          <div className="flex gap-2 items-baseline">
+            <span className="label-mm text-gris-texte/40 shrink-0 w-20">Fonds OK</span>
+            <span className="font-sans text-[0.72rem] text-gris-texte">{variant.fondOk}</span>
+          </div>
+          <div className="flex gap-2 items-baseline">
+            <span className="label-mm text-framboise/50 shrink-0 w-20">À éviter</span>
+            <span className="font-sans text-[0.72rem] text-gris-texte">{variant.fondEviter}</span>
+          </div>
+        </div>
+
         {/* Usages */}
         <div className="pt-2 border-t border-gris-marbre/60">
           <p className="label-mm text-gris-texte/50 mb-2.5">Usages recommandés</p>
@@ -205,6 +250,9 @@ function VariantCard({
             ))}
           </ul>
         </div>
+
+        {/* Boutons téléchargement */}
+        <DownloadButtons files={variant.files} />
       </div>
     </motion.article>
   );
@@ -554,27 +602,27 @@ export function LogoSection() {
             Chaque version respecte une zone de respiration équivalente à la hauteur du&nbsp;M.
           </motion.p>
 
-          {/* Bannière asset */}
+          {/* Bouton pack logos global */}
           <motion.div
-            className="mt-6 flex items-start gap-2.5 px-4 py-3 border border-caramel/30 bg-caramel/4 rounded-[2px]"
+            className="mt-6"
             initial={{ opacity: 0 }}
             animate={headerIn ? { opacity: 1 } : {}}
             transition={{ duration: 0.6, delay: 0.4, ease: EASE }}
-            role="note"
-            aria-label="Information sur les assets logo"
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-caramel mt-1.5 shrink-0" aria-hidden="true" />
-            <div>
-              <p className="font-sans text-[0.65rem] font-medium tracking-[0.12em] uppercase text-caramel">
-                Assets placeholder actifs
-              </p>
-              <p className="font-sans text-[0.7rem] text-caramel/70 mt-1 leading-snug">
-                Déposer les SVG officiels dans{" "}
-                <code className="font-mono text-caramel/80">/public/assets/</code>{" "}
-                puis passer <code className="font-mono text-caramel/80">LOGO_MODE = "official"</code>{" "}
-                dans <code className="font-mono text-caramel/80">HeroLogo.tsx</code>.
-              </p>
-            </div>
+            <button
+              disabled
+              className="inline-flex items-center gap-2.5 px-5 py-3 rounded-[2px] border border-gris-marbre bg-blanc-marbre text-gris-texte/50 cursor-not-allowed font-sans text-[0.65rem] font-medium tracking-[0.14em] uppercase"
+              title="Téléchargement disponible prochainement"
+              aria-label="Télécharger le pack logos complet — bientôt disponible"
+            >
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+                <path d="M6.5 1v7M3.5 5.5l3 3.5 3-3.5M1 10.5h11" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
+              </svg>
+              Télécharger le pack logos complet
+              <span className="ml-1 px-1.5 py-0.5 bg-gris-marbre/50 rounded-[2px] text-[0.5rem] font-medium tracking-wide normal-case text-gris-texte/40">
+                Bientôt disponible
+              </span>
+            </button>
           </motion.div>
         </div>
 

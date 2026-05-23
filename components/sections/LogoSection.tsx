@@ -348,53 +348,133 @@ function ClearSpaceDemo() {
       </div>
 
       {/* Démonstration visuelle */}
-      <div className="relative flex items-center justify-center bg-ivoire-maison min-h-56 md:min-h-64 p-12">
+      <div className="relative bg-ivoire-maison py-10 px-6 md:px-10 overflow-hidden">
+        <div className="flex items-center justify-center gap-0">
 
-        {/* Grille de fond — marbre discret */}
-        <div
-          className="absolute inset-0 opacity-[0.015] pointer-events-none"
-          style={{
-            backgroundImage: "linear-gradient(#111 1px, transparent 1px), linear-gradient(90deg, #111 1px, transparent 1px)",
-            backgroundSize: "40px 40px",
-          }}
-          aria-hidden="true"
-        />
+          {/* Monogramme gauche — unité de mesure visuelle */}
+          <AnimatePresence>
+            {showZone && (
+              <motion.div
+                className="flex flex-col items-center gap-1.5 shrink-0"
+                initial={{ opacity: 0, x: -8 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -8 }}
+                transition={{ duration: 0.35 }}
+                aria-hidden="true"
+              >
+                <div className="w-px h-8 border-l border-dashed border-or-champagne/50" />
+                <div className="w-10 md:w-12 text-or-champagne/70">
+                  <LogoMonogram aria-hidden={true} />
+                </div>
+                <div className="w-px h-8 border-l border-dashed border-or-champagne/50" />
+                <span className="font-sans text-[0.45rem] tracking-[0.14em] uppercase text-or-champagne/55 [writing-mode:vertical-rl] rotate-180 mt-1">zone libre</span>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
-        {/* Zone de respiration */}
+          {/* Trait pointillé gauche */}
+          <AnimatePresence>
+            {showZone && (
+              <motion.div
+                className="w-8 md:w-12 h-px border-t border-dashed border-or-champagne/40 shrink-0"
+                initial={{ opacity: 0, scaleX: 0 }}
+                animate={{ opacity: 1, scaleX: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                aria-hidden="true"
+              />
+            )}
+          </AnimatePresence>
+
+          {/* Logo — agrandi, avec cadre pointillé */}
+          <div className="relative shrink-0 w-44 md:w-60 lg:w-72">
+            <AnimatePresence>
+              {showZone && (
+                <motion.div
+                  className="absolute -inset-3 border border-dashed border-or-champagne/30 rounded-[2px] pointer-events-none"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  aria-hidden="true"
+                />
+              )}
+            </AnimatePresence>
+            <div className="overflow-hidden">
+              <div style={{ margin: "-27% -12% -38% -12%" }}>
+                <LogoFull style={{ color: "#111111" }} aria-hidden={true} />
+              </div>
+            </div>
+          </div>
+
+          {/* Trait pointillé droit */}
+          <AnimatePresence>
+            {showZone && (
+              <motion.div
+                className="w-8 md:w-12 h-px border-t border-dashed border-or-champagne/40 shrink-0"
+                initial={{ opacity: 0, scaleX: 0 }}
+                animate={{ opacity: 1, scaleX: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                aria-hidden="true"
+              />
+            )}
+          </AnimatePresence>
+
+          {/* Monogramme droit */}
+          <AnimatePresence>
+            {showZone && (
+              <motion.div
+                className="flex flex-col items-center gap-1.5 shrink-0"
+                initial={{ opacity: 0, x: 8 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 8 }}
+                transition={{ duration: 0.35 }}
+                aria-hidden="true"
+              >
+                <div className="w-px h-8 border-l border-dashed border-or-champagne/50" />
+                <div className="w-10 md:w-12 text-or-champagne/70">
+                  <LogoMonogram aria-hidden={true} />
+                </div>
+                <div className="w-px h-8 border-l border-dashed border-or-champagne/50" />
+                <span className="font-sans text-[0.45rem] tracking-[0.14em] uppercase text-or-champagne/55 [writing-mode:vertical-rl] mt-1">zone libre</span>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+        </div>
+
+        {/* M en haut et bas */}
         <AnimatePresence>
           {showZone && (
-            <motion.div
-              className="absolute inset-[10%] border border-dashed border-or-champagne/40 pointer-events-none"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.35 }}
-              aria-hidden="true"
-            >
-              {/* Labels des côtés */}
-              {(["top", "bottom", "left", "right"] as const).map((side) => (
-                <div
-                  key={side}
-                  className={cn(
-                    "absolute font-sans text-[0.5rem] tracking-[0.15em] uppercase text-or-champagne/70",
-                    side === "top"    && "-top-4 left-1/2 -translate-x-1/2",
-                    side === "bottom" && "-bottom-4 left-1/2 -translate-x-1/2",
-                    side === "left"   && "top-1/2 -translate-y-1/2 -left-8 [writing-mode:vertical-rl] rotate-180",
-                    side === "right"  && "top-1/2 -translate-y-1/2 -right-8 [writing-mode:vertical-rl]",
-                  )}
-                  aria-hidden="true"
-                >
-                  = hauteur M
-                </div>
-              ))}
-            </motion.div>
+            <>
+              <motion.div
+                className="absolute top-3 left-1/2 -translate-x-1/2 flex items-center gap-2"
+                initial={{ opacity: 0, y: -4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                aria-hidden="true"
+              >
+                <div className="h-px w-8 border-t border-dashed border-or-champagne/35" />
+                <div className="w-5 text-or-champagne/55"><LogoMonogram aria-hidden={true} /></div>
+                <div className="h-px w-8 border-t border-dashed border-or-champagne/35" />
+              </motion.div>
+              <motion.div
+                className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2"
+                initial={{ opacity: 0, y: 4 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+                aria-hidden="true"
+              >
+                <div className="h-px w-8 border-t border-dashed border-or-champagne/35" />
+                <div className="w-5 text-or-champagne/55"><LogoMonogram aria-hidden={true} /></div>
+                <div className="h-px w-8 border-t border-dashed border-or-champagne/35" />
+              </motion.div>
+            </>
           )}
         </AnimatePresence>
-
-        {/* Logo centré */}
-        <div className="relative z-raised w-full max-w-[220px] mx-auto">
-          <LogoFull style={{ color: "#111111" }} aria-hidden />
-        </div>
       </div>
 
       <div className="px-5 py-4 border-t border-gris-marbre">

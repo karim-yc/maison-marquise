@@ -185,12 +185,12 @@ function VariantCard({
       aria-label={`Déclinaison logo : ${variant.label}`}
     >
       {/* Previews : clair + sombre */}
-      <div className="grid grid-cols-2 divide-x divide-gris-marbre">
+      <div className="grid grid-cols-1 sm:grid-cols-2 sm:divide-x divide-gris-marbre">
 
         {/* Fond clair */}
         <div
           className={cn(
-            "flex items-center justify-center p-6 md:p-8 min-h-36 md:min-h-44 bg-ivoire-maison",
+            "flex items-center justify-center p-4 sm:p-6 md:p-8 min-h-28 sm:min-h-36 md:min-h-44 bg-ivoire-maison",
             isMonogram && "py-8",
           )}
           aria-label="Logo sur fond clair"
@@ -210,7 +210,7 @@ function VariantCard({
         {/* Fond sombre */}
         <div
           className={cn(
-            "flex items-center justify-center p-6 md:p-8 min-h-36 md:min-h-44 bg-noir-marquise",
+            "flex items-center justify-center p-4 sm:p-6 md:p-8 min-h-28 sm:min-h-36 md:min-h-44 bg-noir-marquise",
             isMonogram && "py-8",
           )}
           aria-label="Logo sur fond sombre"
@@ -228,7 +228,7 @@ function VariantCard({
       </div>
 
       {/* Légende fond clair / fond sombre */}
-      <div className="grid grid-cols-2 divide-x divide-gris-marbre border-t border-gris-marbre">
+      <div className="hidden sm:grid grid-cols-2 divide-x divide-gris-marbre border-t border-gris-marbre">
         <p className="label-mm text-gris-texte/50 px-4 py-2 text-center">Fond clair</p>
         <p className="label-mm text-gris-texte/50 px-4 py-2 text-center">Fond sombre</p>
       </div>
@@ -462,7 +462,7 @@ export function LogoSection() {
   return (
     <section
       id="logo"
-      className="relative w-full bg-blanc-marbre overflow-hidden"
+      className="relative w-full scroll-mt-16 md:scroll-mt-[72px] bg-blanc-marbre overflow-hidden"
       aria-labelledby="logo-title"
     >
       <div className="line-gold w-full" aria-hidden="true" />
@@ -594,7 +594,7 @@ export function LogoSection() {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {COLORWAYS.map((cw, i) => (
               <ColorwayCard key={cw.label} colorway={cw} index={i} />
             ))}
@@ -625,7 +625,7 @@ export function LogoSection() {
             animate={dontsIn ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, ease: EASE }}
           >
-            <span className="label-mm text-framboise/80">Règles d'usage</span>
+            <span className="label-mm text-framboise/80">Règles d&apos;usage</span>
             <h3 className="font-serif text-d-md font-light text-noir-marquise mt-2">
               Ce qu'il ne faut jamais faire
             </h3>

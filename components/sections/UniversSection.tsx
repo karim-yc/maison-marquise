@@ -586,7 +586,7 @@ export function UniversSection() {
   return (
     <section
       id="univers"
-      className="relative w-full bg-blanc-marbre overflow-hidden"
+      className="relative w-full scroll-mt-16 md:scroll-mt-[72px] bg-blanc-marbre overflow-hidden"
       aria-labelledby="univers-title"
     >
       <div className="line-gold w-full" aria-hidden="true" />

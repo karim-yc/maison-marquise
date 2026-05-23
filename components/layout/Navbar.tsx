@@ -208,7 +208,7 @@ function NavLink({ item, active, onClick }: NavLinkProps) {
     <button
       onClick={onClick}
       className={cn(
-        "relative px-3 py-2 group",
+        "relative px-3 py-3 group",
         "font-sans text-[0.625rem] font-medium tracking-[0.18em] uppercase",
         "transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2",
         "focus-visible:ring-or-champagne focus-visible:ring-offset-2 rounded-[2px]",
@@ -297,6 +297,7 @@ function MobileMenu({ open, activeId, onItemClick, onClose }: MobileMenuProps) {
                     transition={{ delay: i * 0.04, duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
                   >
                     <button
+                      autoFocus={i === 0}
                       className={cn(
                         "w-full flex items-center gap-4 py-3 px-2 rounded-[2px]",
                         "transition-colors duration-200",

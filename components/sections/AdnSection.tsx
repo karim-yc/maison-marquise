@@ -170,7 +170,7 @@ export function AdnSection() {
   return (
     <section
       id="adn"
-      className="relative w-full bg-ivoire-maison overflow-hidden"
+      className="relative w-full scroll-mt-16 md:scroll-mt-[72px] bg-ivoire-maison overflow-hidden"
       aria-labelledby="adn-title"
     >
       {/* Filet or supérieur */}

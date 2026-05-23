@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Montserrat, Parisienne } from "next/font/google";
 import { Navbar }    from "@/components/layout/Navbar";
+import { MotionProvider } from "@/components/layout/MotionProvider";
 import { Footer }    from "@/components/layout/Footer";
 import { BackToTop } from "@/components/layout/BackToTop";
 import "./globals.css";
@@ -45,6 +46,7 @@ export const metadata: Metadata = {
     title:       "Maison Marquise — Brandbook Digital",
     description: "Identité visuelle officielle. Bien plus qu'une boulangerie.",
     siteName:    "Maison Marquise",
+    images: [{ url: "/assets/LOGO_1.svg", width: 1200, height: 630, alt: "Maison Marquise" }],
   },
 };
 
@@ -68,6 +70,15 @@ export default function RootLayout({
       ].join(" ")}
     >
       <body className="antialiased bg-blanc-marbre text-noir-marquise">
+        <MotionProvider>
+
+        {/* Lien d'évitement — accessibilité clavier */}
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[9999] focus:px-4 focus:py-2 focus:bg-noir-marquise focus:text-ivoire-maison focus:text-sm focus:font-sans focus:font-medium focus:tracking-wide focus:rounded-[2px] focus:outline-none focus:ring-2 focus:ring-or-champagne"
+        >
+          Aller au contenu principal
+        </a>
 
         {/* Navigation sticky */}
         <Navbar />
@@ -88,6 +99,7 @@ export default function RootLayout({
         {/* Bouton retour en haut */}
         <BackToTop />
 
+        </MotionProvider>
       </body>
     </html>
   );

@@ -59,7 +59,7 @@ export function BrandSection({
     <section
       ref={ref}
       id={id}
-      className={cn("relative w-full", bgMap[bg], className)}
+      className={cn("relative w-full scroll-mt-16 md:scroll-mt-[72px]", bgMap[bg], className)}
       aria-labelledby={id ? `${id}-title` : undefined}
     >
       {/* Ligne or supérieure */}

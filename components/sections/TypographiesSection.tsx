@@ -57,7 +57,7 @@ const RULES = {
   ],
   dont: [
     { title: "Éviter les longs textes en capitales", desc: "Les majuscules espacées sont réservées aux labels courts (3–5 mots max). Un paragraphe entier en caps nuit à la lecture." },
-    { title: "Éviter les textes trop espacés",    desc: "Letter-spacing > 0.25em sur plus d'une ligne devient illisible. L'espacement est un outil, pas un style systématique." },
+    { title: "Éviter les textes trop espacés",    desc: "Letter-spacing > 0.25em sur plus d&apos;une ligne devient illisible. L&apos;espacement est un outil, pas un style systématique." },
     { title: "Garder les prix très lisibles",     desc: "Les prix s'affichent toujours en Cormorant Medium ou Montserrat Regular, jamais en script ou en ultra-light." },
   ],
 } as const;
@@ -588,7 +588,7 @@ export function TypographiesSection() {
   return (
     <section
       id="typographies"
-      className="relative w-full bg-blanc-marbre overflow-hidden"
+      className="relative w-full scroll-mt-16 md:scroll-mt-[72px] bg-blanc-marbre overflow-hidden"
       aria-labelledby="typo-title"
     >
       <div className="line-gold w-full" aria-hidden="true" />
@@ -700,7 +700,7 @@ export function TypographiesSection() {
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.6, ease: EASE }}
           >
-            <span className="label-mm text-gris-texte">Guide d'usage</span>
+            <span className="label-mm text-gris-texte">Guide d&apos;usage</span>
             <h3 className="font-serif text-d-md font-light text-noir-marquise mt-1">
               Règles typographiques
             </h3>

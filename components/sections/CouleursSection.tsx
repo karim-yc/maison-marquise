@@ -300,7 +300,7 @@ function ProportionRule() {
         {/* Titre */}
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <span className="label-mm text-gris-texte">Règle d'usage fondamentale</span>
+            <span className="label-mm text-gris-texte">Règle d&apos;usage fondamentale</span>
             <h3 className="font-serif text-d-md font-light text-noir-marquise mt-1">
               La règle 80 / 20
             </h3>
@@ -435,7 +435,7 @@ function UsageTable() {
         className="grid grid-cols-[1fr_auto] gap-4 px-5 py-3 bg-ivoire-maison border-b border-gris-marbre"
         role="row"
       >
-        <span className="label-mm text-gris-texte" role="columnheader">Contexte d'usage</span>
+        <span className="label-mm text-gris-texte" role="columnheader">Contexte d&apos;usage</span>
         <span className="label-mm text-gris-texte" role="columnheader">Couleurs associées</span>
       </div>
 
@@ -487,7 +487,7 @@ export function CouleursSection() {
   return (
     <section
       id="couleurs"
-      className="relative w-full bg-ivoire-maison overflow-hidden"
+      className="relative w-full scroll-mt-16 md:scroll-mt-[72px] bg-ivoire-maison overflow-hidden"
       aria-labelledby="couleurs-title"
     >
       <div className="line-gold w-full" aria-hidden="true" />

@@ -99,7 +99,7 @@ function VisualFacade() {
         <div className="w-40 h-12 bg-blanc-marbre border border-gris-marbre flex flex-col items-center justify-center gap-0.5 shadow-sm">
           <div className="font-script text-noir-marquise text-lg leading-none">Maison Marquise</div>
           <div className="w-20 h-px bg-or-champagne/50" />
-          <div className="font-sans text-[0.38rem] tracking-[0.2em] uppercase text-gris-texte/50">Bien plus qu'une boulangerie</div>
+          <div className="font-sans text-[0.38rem] tracking-[0.2em] uppercase text-gris-texte/50">Bien plus qu&apos;une boulangerie</div>
         </div>
         {/* Vitrine */}
         <div className="w-40 h-10 border border-t-0 border-gris-marbre/60 bg-gradient-to-b from-gris-marbre/10 to-gris-marbre/5 flex items-center justify-center gap-2">
@@ -478,7 +478,7 @@ export function ApplicationsSection() {
   return (
     <section
       id="applications"
-      className="relative w-full bg-ivoire-maison overflow-hidden"
+      className="relative w-full scroll-mt-16 md:scroll-mt-[72px] bg-ivoire-maison overflow-hidden"
       aria-labelledby="applications-title"
     >
       <div className="line-gold w-full" aria-hidden="true" />

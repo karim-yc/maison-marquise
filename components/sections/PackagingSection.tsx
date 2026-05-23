@@ -817,7 +817,7 @@ export function PackagingSection() {
   return (
     <section
       id="packaging"
-      className="relative w-full bg-ivoire-maison overflow-hidden"
+      className="relative w-full scroll-mt-16 md:scroll-mt-[72px] bg-ivoire-maison overflow-hidden"
       aria-labelledby="packaging-title"
     >
       <div className="line-gold w-full" aria-hidden="true" />

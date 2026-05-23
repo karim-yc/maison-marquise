@@ -8,9 +8,9 @@ import React from "react";
 import { cn } from "@/lib/utils";
 
 // Aspect ratio du canvas 1682.98×1682.98 — carré
-const VIEWBOX_FULL     = "340 630 1010 450";   // crop tight autour du logo complet
-const VIEWBOX_VARIANT  = "340 630 1010 450";   // même crop pour la variante
-const VIEWBOX_MONOGRAM = "380 420 920 780";    // crop autour du M seul
+const VIEWBOX_FULL     = "340 640 1040 410";   // crop tight autour du logo complet
+const VIEWBOX_VARIANT  = "340 640 1040 410";   // même crop pour la variante
+const VIEWBOX_MONOGRAM = "440 500 860 720";    // crop autour du M seul
 
 interface LogoSvgProps {
   className?: string;

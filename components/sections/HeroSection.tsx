@@ -116,14 +116,14 @@ export function HeroSection({ className }: { className?: string }) {
 
         {/* CTAs — empilés sur mobile (<640px), côte à côte au-delà */}
         <motion.div
-          className="w-full flex flex-col sm:flex-row gap-2.5"
+          className="w-full flex flex-col md:flex-row gap-2.5"
           initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.05, duration: 0.6, ease: EASE }}
         >
           <button
             onClick={scrollToContent}
-            className="btn-mm w-full sm:flex-1 flex items-center justify-center gap-2"
+            className="btn-mm w-full md:flex-1 flex items-center justify-center gap-2"
             aria-label="Découvrir la charte graphique"
           >
             <BookOpen size={12} strokeWidth={1.5} aria-hidden="true" />
@@ -131,7 +131,7 @@ export function HeroSection({ className }: { className?: string }) {
           </button>
           <button
             onClick={scrollToPackaging}
-            className="btn-mm-gold w-full sm:flex-1 flex items-center justify-center gap-2"
+            className="btn-mm-gold w-full md:flex-1 flex items-center justify-center gap-2"
             aria-label="Voir le système packaging"
           >
             <Package size={12} strokeWidth={1.5} aria-hidden="true" />

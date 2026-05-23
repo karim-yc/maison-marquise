@@ -8,7 +8,9 @@ import React from "react";
 import { cn } from "@/lib/utils";
 
 // Aspect ratio du canvas 1682.98×1682.98 — carré
-const VIEWBOX = "0 0 1682.98 1682.98";
+const VIEWBOX_FULL     = "340 630 1010 450";   // crop tight autour du logo complet
+const VIEWBOX_VARIANT  = "340 630 1010 450";   // même crop pour la variante
+const VIEWBOX_MONOGRAM = "380 420 920 780";    // crop autour du M seul
 
 interface LogoSvgProps {
   className?: string;
@@ -22,7 +24,7 @@ interface LogoSvgProps {
 export function LogoFull({ className, style, ...aria }: LogoSvgProps) {
   return (
     <svg
-      viewBox={VIEWBOX}
+      viewBox={VIEWBOX_FULL}
       xmlns="http://www.w3.org/2000/svg"
       className={cn("w-full h-auto", className)}
       style={style}
@@ -83,7 +85,7 @@ export function LogoFull({ className, style, ...aria }: LogoSvgProps) {
 export function LogoVariant({ className, style, ...aria }: LogoSvgProps) {
   return (
     <svg
-      viewBox={VIEWBOX}
+      viewBox={VIEWBOX_VARIANT}
       xmlns="http://www.w3.org/2000/svg"
       className={cn("w-full h-auto", className)}
       style={style}
@@ -142,7 +144,7 @@ export function LogoVariant({ className, style, ...aria }: LogoSvgProps) {
 export function LogoMonogram({ className, style, ...aria }: LogoSvgProps) {
   return (
     <svg
-      viewBox={VIEWBOX}
+      viewBox={VIEWBOX_MONOGRAM}
       xmlns="http://www.w3.org/2000/svg"
       className={cn("w-full h-auto", className)}
       style={style}

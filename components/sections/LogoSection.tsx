@@ -84,11 +84,25 @@ const COLORWAYS = [
 // Adaptateurs locaux — branche sur les SVG officiels via couleur CSS
 // ─────────────────────────────────────────────────────────────────────────────
 
+const LOGO_MARGIN = { margin: "-27% -12% -38% -12%" };
+
 function LogoFullAdapter({ fill, className }: { fill: string; className?: string }) {
-  return <LogoFull className={cn("w-full h-auto", className)} style={{ color: fill }} aria-hidden={true} />;
+  return (
+    <div className={cn("w-full overflow-hidden", className)}>
+      <div style={LOGO_MARGIN}>
+        <LogoFull className="w-full h-auto" style={{ color: fill }} aria-hidden={true} />
+      </div>
+    </div>
+  );
 }
 function LogoNoBaseline({ fill, className }: { fill: string; className?: string }) {
-  return <LogoVariant className={cn("w-full h-auto", className)} style={{ color: fill }} aria-hidden={true} />;
+  return (
+    <div className={cn("w-full overflow-hidden", className)}>
+      <div style={LOGO_MARGIN}>
+        <LogoVariant className="w-full h-auto" style={{ color: fill }} aria-hidden={true} />
+      </div>
+    </div>
+  );
 }
 function LogoMonogramAdapter({ fill, className }: { fill: string; className?: string }) {
   return <LogoMonogram className={cn("h-full w-auto", className)} style={{ color: fill }} aria-hidden={true} />;

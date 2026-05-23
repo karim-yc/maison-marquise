@@ -28,9 +28,14 @@ export function HeroLogo({
   };
 
   return (
-    <div className={cn("w-full", className)}>
-      {variant === "full"     && <LogoFull     {...shared} aria-label="Maison Marquise — logo officiel" />}
-      {variant === "variant"  && <LogoVariant  {...shared} aria-label="Maison Marquise" />}
+    <div className={cn("w-full overflow-hidden", className)}>
+      {/* Marge négative pour compenser l'espace vide du canvas SVG 1682×1682 */}
+      {(variant === "full" || variant === "variant") && (
+        <div style={{ margin: "-27% -12% -38% -12%" }}>
+          {variant === "full"    ? <LogoFull    {...shared} aria-label="Maison Marquise — logo officiel" />
+                                 : <LogoVariant {...shared} aria-label="Maison Marquise" />}
+        </div>
+      )}
       {variant === "monogram" && <LogoMonogram {...shared} aria-label="M — Maison Marquise" />}
     </div>
   );

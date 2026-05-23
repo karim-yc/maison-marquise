@@ -43,20 +43,6 @@ export default function HomePage() {
 
       {/* 07 — UNIVERS */}
       <UniversSection />
-
-      {/* 08 — APPLICATIONS */}
-      <BrandSection id="applications" index="08" label="Dos & Don'ts" title="Règles d'application"
-        intro="La marque vit dans ses détails. Ces règles garantissent la cohérence à travers tous les supports."
-        bg="white">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl">
-          <GuidelineCard type="do"   title="Utiliser des formules sobres et sincères"   description="« Préparé avec soin chaque matin » — direct, chaleureux, vrai."             animDelay={0}   />
-          <GuidelineCard type="dont" title="Abuser des superlatifs creux"               description="« Une expérience exceptionnelle et incroyable » — vague, impersonnel."       animDelay={80}  />
-          <GuidelineCard type="do"   title="Laisser respirer la composition"             description="Les blancs et silences font partie du langage visuel Marquise."              animDelay={160} />
-          <GuidelineCard type="dont" title="Surcharger les supports"                    description="Un message fort vaut mieux que dix messages moyens sur un même espace."       animDelay={240} />
-          <GuidelineCard type="do"   title="Respecter la zone de respiration du logo"   description="Un espace libre équivalent à la hauteur du M encadre toujours le logo."      animDelay={320} />
-          <GuidelineCard type="dont" title="Déformer ou recoloriser le logo"            description="Ni ombre portée, ni couleur hors palette, ni proportion modifiée."           animDelay={400} />
-        </div>
-      </BrandSection>
     </>
   );
 }

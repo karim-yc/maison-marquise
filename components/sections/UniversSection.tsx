@@ -7,434 +7,488 @@ import { cn } from "@/lib/utils";
 // ─────────────────────────────────────────────────────────────────────────────
 // UniversSection — Les 3 univers visuels de Maison Marquise
 //
-// Chaque univers est une grande carte immersive avec :
-//   · Fond teinté spécifique à l'univers
-//   · Composition typographique editorial
-//   · Mini-palette de couleurs
-//   · Exemples d'usage concrets
+// Chaque univers = grande carte immersive avec :
+//   · Scène atmosphérique CSS (compositions géométriques + typographie)
+//   · Mini-palette interactive
+//   · Exemples d'usage
 //   · Ambiance / mots-clés
 // ─────────────────────────────────────────────────────────────────────────────
 
 const EASE        = [0.25, 0.46, 0.45, 0.94] as const;
 const EASE_SPRING = [0.16, 1, 0.3, 1]        as const;
 
-// ── Définition des 3 univers ──────────────────────────────────────────────────
+// ── Données enrichies des univers ─────────────────────────────────────────────
 const UNIVERS = [
   {
     id:      "maison",
     index:   "01",
     name:    "Univers Maison",
-    tagline: "L'excellence du quotidien",
-    desc:    "Supports officiels, menus, façades, packaging principal. La base sobre et premium de la marque — là où chaque détail compte.",
-    ambiance: ["Élégante", "Claire", "Premium", "Maîtrisée"],
-    usages:  [
-      "Menus & cartes",
-      "Façade & enseigne",
-      "Documents officiels",
-      "Packaging principal",
-      "Site web",
-      "Papeterie marque",
-    ],
+    tagline: "L'élégance du quotidien",
+    desc:    "Le socle permanent de la marque. Sobre, architecturé, premium. Toutes les communications officielles s'inscrivent dans cet univers.",
+    mood:    ["Élégant", "Maîtrisé", "Intemporel", "Premium"],
     palette: [
-      { hex: "#FAFAF8", label: "Blanc Marbre",  border: "rgba(17,17,17,0.08)" },
-      { hex: "#F7F3EC", label: "Ivoire Maison", border: "rgba(17,17,17,0.08)" },
-      { hex: "#D8D6D1", label: "Gris Marbre",   border: "rgba(17,17,17,0.08)" },
-      { hex: "#111111", label: "Noir Marquise", border: "transparent" },
-      { hex: "#B99A5F", label: "Or Champagne",  border: "transparent" },
+      { hex: "#FAFAF8", label: "Blanc Marbre",  role: "Fond" },
+      { hex: "#F7F3EC", label: "Ivoire Maison", role: "Surface" },
+      { hex: "#111111", label: "Noir Marquise", role: "Texte" },
+      { hex: "#B99A5F", label: "Or Champagne",  role: "Accent" },
+      { hex: "#D8D6D1", label: "Gris Marbre",   role: "Neutre" },
     ],
-    // Composition visuelle CSS
-    bg:         "#F7F3EC",
-    bgGradient: "linear-gradient(135deg, #FAFAF8 0%, #F7F3EC 55%, #EDE7DC 100%)",
-    textColor:  "#111111",
-    accentColor:"#B99A5F",
-    muteColor:  "#4A4A4A",
-    number:     "I",
+    usages: [
+      "Façade & enseigne",
+      "Menus & cartes officielles",
+      "Packaging principal",
+      "Documents de marque",
+      "Site web & brandbook",
+    ],
+    // Composition CSS de la scène
+    bg:     "#F7F3EC",
+    dark:   false,
   },
   {
     id:      "gourmand",
     index:   "02",
     name:    "Univers Gourmand",
-    tagline: "La chaleur de la maison",
-    desc:    "Produits, vitrines, réseaux sociaux, créations saisonnières. L'identité chaude et généreuse — proche, appétissante, accessible.",
-    ambiance: ["Chaleureuse", "Généreuse", "Accessible", "Vivante"],
-    usages:  [
-      "Fiches produits",
-      "Réseaux sociaux",
-      "Vitrines & PLV",
-      "Créations saisonnières",
-      "Emballages cadeau",
-      "Communication événement",
-    ],
+    tagline: "La chaleur de la création",
+    desc:    "L'univers des produits, des saisons et des émotions. Chaud, généreux, accessible. Il fait envie et invite à la dégustation.",
+    mood:    ["Chaleureux", "Généreux", "Appétissant", "Accessible"],
     palette: [
-      { hex: "#F7F3EC", label: "Ivoire Maison",    border: "rgba(17,17,17,0.08)" },
-      { hex: "#C7843E", label: "Caramel Pâtissier", border: "transparent" },
-      { hex: "#A6192E", label: "Framboise Signature", border: "transparent" },
-      { hex: "#9A9B55", label: "Pistache Fine",     border: "transparent" },
-      { hex: "#6F5A2E", label: "Brun Marquis",      border: "transparent" },
+      { hex: "#F7F3EC", label: "Ivoire Maison",       role: "Fond" },
+      { hex: "#C7843E", label: "Caramel Pâtissier",   role: "Principal" },
+      { hex: "#A6192E", label: "Framboise Signature", role: "Accent fort" },
+      { hex: "#9A9B55", label: "Pistache Fine",        role: "Accent doux" },
+      { hex: "#6F5A2E", label: "Brun Marquis",         role: "Profondeur" },
     ],
-    bg:         "#F0E8DC",
-    bgGradient: "linear-gradient(135deg, #F7F3EC 0%, #EDD8BE 50%, #E8C8A0 100%)",
-    textColor:  "#2A1A08",
-    accentColor:"#C7843E",
-    muteColor:  "#6F5A2E",
-    number:     "II",
+    usages: [
+      "Fiches produits & vitrines",
+      "Posts réseaux sociaux",
+      "Affiches saisonnières",
+      "Créations spéciales",
+      "Menus ardoise & animations",
+    ],
+    bg:     "#2A1505",
+    dark:   true,
   },
   {
     id:      "signature",
     index:   "03",
     name:    "Univers Signature",
     tagline: "L'édition qui marque",
-    desc:    "Collaborations, éditions limitées, lancements spéciaux. L'identité éditoriale forte — contrastée, mémorable, événementielle.",
-    ambiance: ["Forte", "Éditoriale", "Événementielle", "Collectible"],
-    usages:  [
-      "Éditions limitées",
-      "Collaborations",
-      "Lancements produits",
-      "Campagnes créatives",
-      "Packaging premium",
-      "Direction photo forte",
-    ],
+    desc:    "Réservé aux moments forts. Contrasté, éditorial, collectible. Un univers à utiliser avec parcimonie pour lui conserver son impact.",
+    mood:    ["Fort", "Contrasté", "Éditorial", "Événementiel"],
     palette: [
-      { hex: "#111111", label: "Noir Marquise",  border: "rgba(255,255,255,0.1)" },
-      { hex: "#1A1816", label: "Noir profond",   border: "rgba(255,255,255,0.08)" },
-      { hex: "#B99A5F", label: "Or Champagne",   border: "transparent" },
-      { hex: "#F7F3EC", label: "Ivoire Maison",  border: "rgba(255,255,255,0.15)" },
-      { hex: "#A6192E", label: "Framboise",       border: "transparent" },
+      { hex: "#111111", label: "Noir Marquise", role: "Fond dominant" },
+      { hex: "#B99A5F", label: "Or Champagne",  role: "Accent signature" },
+      { hex: "#A6192E", label: "Framboise",      role: "Accent émotionnel" },
+      { hex: "#F7F3EC", label: "Ivoire Maison",  role: "Texte clair" },
     ],
-    bg:         "#111111",
-    bgGradient: "linear-gradient(135deg, #1A1816 0%, #111111 50%, #0A0A08 100%)",
-    textColor:  "#F7F3EC",
-    accentColor:"#B99A5F",
-    muteColor:  "#D8D6D1",
-    number:     "III",
+    usages: [
+      "Collaborations & partenariats",
+      "Éditions limitées",
+      "Lancements & événements",
+      "Coffrets cadeaux premium",
+      "Campagnes éditoriales",
+    ],
+    bg:     "#111111",
+    dark:   true,
   },
 ] as const;
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Composition décorative propre à chaque univers
+// Scènes atmosphériques CSS — une par univers
+// Compositions purement graphiques, sans image externe
 // ─────────────────────────────────────────────────────────────────────────────
 
-function UniversDecor({ id }: { id: string }) {
-  if (id === "maison") {
-    return (
-      <svg viewBox="0 0 320 220" className="w-full h-full" aria-hidden="true">
-        {/* Grille marbre légère */}
-        <line x1="0"   y1="55"  x2="320" y2="55"  stroke="#B99A5F" strokeWidth="0.4" opacity="0.18" />
-        <line x1="0"   y1="110" x2="320" y2="110" stroke="#B99A5F" strokeWidth="0.4" opacity="0.10" />
-        <line x1="0"   y1="165" x2="320" y2="165" stroke="#B99A5F" strokeWidth="0.4" opacity="0.18" />
-        <line x1="80"  y1="0"   x2="80"  y2="220" stroke="#B99A5F" strokeWidth="0.4" opacity="0.10" />
-        <line x1="160" y1="0"   x2="160" y2="220" stroke="#B99A5F" strokeWidth="0.4" opacity="0.18" />
-        <line x1="240" y1="0"   x2="240" y2="220" stroke="#B99A5F" strokeWidth="0.4" opacity="0.10" />
-
-        {/* Grand M centré */}
-        <text x="160" y="175" textAnchor="middle"
-          fontFamily="Georgia, serif" fontSize="160" fontWeight="300" fontStyle="italic"
-          fill="#111111" opacity="0.055" letterSpacing="-4">
-          M
-        </text>
-
-        {/* Filets encadrant */}
-        <rect x="18" y="18" width="284" height="184" rx="1"
-          fill="none" stroke="#B99A5F" strokeWidth="0.5" opacity="0.15" />
-        <rect x="24" y="24" width="272" height="172" rx="1"
-          fill="none" stroke="#B99A5F" strokeWidth="0.3" opacity="0.08" />
-
-        {/* Losange or central */}
-        <polygon points="160,90 168,102 160,114 152,102"
-          fill="#B99A5F" opacity="0.18" />
-      </svg>
-    );
-  }
-
-  if (id === "gourmand") {
-    return (
-      <svg viewBox="0 0 320 220" className="w-full h-full" aria-hidden="true">
-        {/* Cercles organiques évoquant les pâtisseries */}
-        <circle cx="60"  cy="55"  r="38" fill="#C7843E" opacity="0.12" />
-        <circle cx="260" cy="160" r="52" fill="#A6192E" opacity="0.10" />
-        <circle cx="160" cy="110" r="70" fill="#9A9B55" opacity="0.07" />
-        <circle cx="40"  cy="175" r="28" fill="#6F5A2E" opacity="0.10" />
-        <circle cx="290" cy="40"  r="30" fill="#C7843E" opacity="0.09" />
-
-        {/* M fantôme */}
-        <text x="160" y="170" textAnchor="middle"
-          fontFamily="Georgia, serif" fontSize="150" fontWeight="300" fontStyle="italic"
-          fill="#6F5A2E" opacity="0.06">
-          M
-        </text>
-
-        {/* Points décoratifs */}
-        {[40, 90, 140, 190, 240, 280].map((x) =>
-          [30, 80, 130, 180].map((y) => (
-            <circle key={`${x}-${y}`} cx={x} cy={y} r="1.5" fill="#C7843E" opacity="0.12" />
-          ))
-        )}
-      </svg>
-    );
-  }
-
-  // Signature — géométrique fort
+// ── Scène Maison — marbre, grille, or discret ─────────────────────────────────
+function SceneMaison() {
   return (
-    <svg viewBox="0 0 320 220" className="w-full h-full" aria-hidden="true">
-      {/* Bloc plein or en coin haut droit */}
-      <rect x="220" y="0" width="100" height="4" fill="#B99A5F" opacity="0.6" />
-      <rect x="316" y="0" width="4" height="80" fill="#B99A5F" opacity="0.6" />
+    <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
+      {/* Fond ivoire */}
+      <div className="absolute inset-0 bg-ivoire-maison" />
 
-      {/* Bloc plein or en coin bas gauche */}
-      <rect x="0" y="216" width="100" height="4" fill="#B99A5F" opacity="0.6" />
-      <rect x="0" y="140" width="4" height="80" fill="#B99A5F" opacity="0.6" />
+      {/* Texture grain */}
+      <div className="absolute inset-0 opacity-[0.04]"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")`,
+          backgroundSize: "200px 200px",
+        }}
+      />
 
-      {/* Diagonale structurante */}
-      <line x1="0" y1="220" x2="320" y2="0" stroke="#B99A5F" strokeWidth="0.4" opacity="0.12" />
+      {/* Grille fine */}
+      <div className="absolute inset-0 opacity-[0.03]"
+        style={{
+          backgroundImage: "linear-gradient(#111 1px, transparent 1px), linear-gradient(90deg, #111 1px, transparent 1px)",
+          backgroundSize: "60px 60px",
+        }}
+      />
 
-      {/* Grand M blanc — très grand, partiellement visible */}
-      <text x="230" y="240" textAnchor="middle"
-        fontFamily="Georgia, serif" fontSize="220" fontWeight="300" fontStyle="italic"
-        fill="#F7F3EC" opacity="0.06" letterSpacing="-6">
+      {/* Grand M fantôme */}
+      <div className="absolute -bottom-8 -right-4 font-serif font-light leading-none text-noir-marquise/[0.055] select-none"
+        style={{ fontSize: "clamp(14rem, 35vw, 22rem)" }}>
         M
-      </text>
+      </div>
 
-      {/* Rectangle éditorial */}
-      <rect x="18" y="18" width="200" height="3" fill="#B99A5F" opacity="0.35" />
-      <rect x="18" y="18" width="3"   height="60" fill="#B99A5F" opacity="0.35" />
+      {/* Carré noir premium — coin haut gauche */}
+      <div className="absolute top-8 left-8 w-24 h-24 md:w-32 md:h-32 bg-noir-marquise/90" />
 
-      {/* Lignes scan */}
-      {[60, 80, 100, 120, 140].map((y) => (
-        <line key={y} x1="24" y1={y} x2="200" y2={y}
-          stroke="#F7F3EC" strokeWidth="0.3" opacity="0.06" />
-      ))}
+      {/* Filet or horizontal */}
+      <div className="absolute top-20 md:top-24 left-8 right-8"
+        style={{ height: "1px", background: "linear-gradient(90deg, #B99A5F, transparent)" }}
+      />
 
-      {/* Point fort or */}
-      <circle cx="40" cy="180" r="6" fill="#B99A5F" opacity="0.40" />
-      <circle cx="280" cy="40" r="4" fill="#B99A5F" opacity="0.30" />
-    </svg>
+      {/* Filet vertical */}
+      <div className="absolute top-8 bottom-8 left-36 md:left-44"
+        style={{ width: "1px", background: "linear-gradient(180deg, #B99A5F/0, #B99A5F, transparent)" }}
+      />
+
+      {/* Signature script */}
+      <div className="absolute top-10 left-44 md:left-52 font-serif font-light italic text-noir-marquise/20 leading-none"
+        style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)" }}>
+        Maison
+      </div>
+
+      {/* Label typographique */}
+      <div className="absolute bottom-12 left-8 font-sans font-medium tracking-[0.3em] uppercase text-noir-marquise/25"
+        style={{ fontSize: "0.55rem" }}>
+        BIEN PLUS QU'UNE BOULANGERIE
+      </div>
+
+      {/* Ligne or bas */}
+      <div className="absolute bottom-8 left-8 w-24"
+        style={{ height: "1px", background: "#B99A5F", opacity: 0.4 }}
+      />
+
+      {/* Pastille or */}
+      <div className="absolute top-8 right-12 w-3 h-3 rounded-full bg-or-champagne/50" />
+      <div className="absolute top-8 right-20 w-1.5 h-1.5 rounded-full bg-or-champagne/30" />
+    </div>
   );
 }
 
+// ── Scène Gourmand — chaleur, texture, rondeur ───────────────────────────────
+function SceneGourmand() {
+  return (
+    <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
+      {/* Fond brun profond */}
+      <div className="absolute inset-0" style={{ backgroundColor: "#1C0E04" }} />
+
+      {/* Dégradé radial caramel */}
+      <div className="absolute inset-0"
+        style={{ background: "radial-gradient(ellipse 80% 70% at 30% 60%, rgba(199,132,62,0.35) 0%, transparent 70%)" }}
+      />
+      <div className="absolute inset-0"
+        style={{ background: "radial-gradient(ellipse 60% 50% at 80% 30%, rgba(166,25,46,0.20) 0%, transparent 60%)" }}
+      />
+
+      {/* Grain */}
+      <div className="absolute inset-0 opacity-[0.07]"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")`,
+          backgroundSize: "200px 200px",
+        }}
+      />
+
+      {/* Grand cercle caramel */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+        w-64 h-64 md:w-80 md:h-80 rounded-full border"
+        style={{ borderColor: "rgba(199,132,62,0.25)" }}
+      />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+        w-44 h-44 md:w-56 md:h-56 rounded-full border"
+        style={{ borderColor: "rgba(199,132,62,0.12)" }}
+      />
+
+      {/* Pastilles couleur flottantes */}
+      <div className="absolute top-10 right-16 w-10 h-10 md:w-14 md:h-14 rounded-full"
+        style={{ backgroundColor: "#C7843E", opacity: 0.7 }}
+      />
+      <div className="absolute top-16 right-10 w-5 h-5 rounded-full"
+        style={{ backgroundColor: "#A6192E", opacity: 0.65 }}
+      />
+      <div className="absolute bottom-14 left-12 w-8 h-8 rounded-full"
+        style={{ backgroundColor: "#9A9B55", opacity: 0.55 }}
+      />
+      <div className="absolute bottom-10 left-6 w-3.5 h-3.5 rounded-full"
+        style={{ backgroundColor: "#C7843E", opacity: 0.50 }}
+      />
+
+      {/* Texture bandes horizontales subtiles */}
+      <div className="absolute bottom-0 left-0 right-0 h-24 md:h-32"
+        style={{ background: "linear-gradient(0deg, rgba(199,132,62,0.12) 0%, transparent 100%)" }}
+      />
+
+      {/* Mot signature */}
+      <div className="absolute bottom-10 right-8 font-script text-ivoire-maison/15 leading-none"
+        style={{ fontSize: "clamp(3.5rem, 8vw, 6rem)" }}>
+        Gourmand
+      </div>
+    </div>
+  );
+}
+
+// ── Scène Signature — noir, contraste, or ────────────────────────────────────
+function SceneSignature() {
+  return (
+    <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
+      {/* Fond noir */}
+      <div className="absolute inset-0 bg-noir-marquise" />
+
+      {/* Grain très léger */}
+      <div className="absolute inset-0 opacity-[0.03]"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")`,
+          backgroundSize: "200px 200px",
+        }}
+      />
+
+      {/* Halo or */}
+      <div className="absolute inset-0"
+        style={{ background: "radial-gradient(ellipse 70% 60% at 75% 35%, rgba(185,154,95,0.12) 0%, transparent 65%)" }}
+      />
+
+      {/* Halo framboise */}
+      <div className="absolute inset-0"
+        style={{ background: "radial-gradient(ellipse 40% 35% at 20% 70%, rgba(166,25,46,0.15) 0%, transparent 60%)" }}
+      />
+
+      {/* Bande or verticale */}
+      <div className="absolute top-0 bottom-0"
+        style={{ left: "38%", width: "1px", background: "linear-gradient(180deg, transparent, #B99A5F 30%, #B99A5F 70%, transparent)" }}
+      />
+
+      {/* Grand M or */}
+      <div className="absolute -top-4 left-6 md:left-10 font-serif font-light leading-none"
+        style={{ fontSize: "clamp(10rem, 26vw, 18rem)", color: "rgba(185,154,95,0.08)" }}>
+        M
+      </div>
+
+      {/* Bloc texte éditorial */}
+      <div className="absolute top-10 right-8 md:right-12 text-right space-y-1">
+        <div className="font-sans text-[0.55rem] tracking-[0.3em] uppercase text-ivoire-maison/25">
+          Édition Limitée
+        </div>
+        <div className="font-serif font-light italic text-ivoire-maison/50 leading-tight"
+          style={{ fontSize: "clamp(1.5rem, 4vw, 2.5rem)" }}>
+          Signature
+        </div>
+      </div>
+
+      {/* Pastille framboise */}
+      <div className="absolute bottom-14 right-10 w-8 h-8 rounded-full"
+        style={{ backgroundColor: "#A6192E", opacity: 0.7 }}
+      />
+      <div className="absolute bottom-20 right-20 w-2.5 h-2.5 rounded-full"
+        style={{ backgroundColor: "#B99A5F", opacity: 0.6 }}
+      />
+
+      {/* Ligne or bas */}
+      <div className="absolute bottom-10 left-8 right-8"
+        style={{ height: "1px", background: "linear-gradient(90deg, transparent, #B99A5F 20%, #B99A5F 80%, transparent)", opacity: 0.4 }}
+      />
+    </div>
+  );
+}
+
+const SCENE_MAP = {
+  maison:    SceneMaison,
+  gourmand:  SceneGourmand,
+  signature: SceneSignature,
+} as const;
+
 // ─────────────────────────────────────────────────────────────────────────────
-// UniversCard — carte d'univers individuelle
+// UniversCard — grande carte immersive
 // ─────────────────────────────────────────────────────────────────────────────
 
-function UniversCard({ univers, index }: { univers: typeof UNIVERS[number]; index: number }) {
-  const ref    = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-60px 0px" });
-  const [hovered, setHovered] = useState(false);
-
-  const isDark = univers.id === "signature";
+function UniversCard({
+  univers,
+  index,
+}: {
+  univers: typeof UNIVERS[number];
+  index:   number;
+}) {
+  const ref        = useRef<HTMLDivElement>(null);
+  const inView     = useInView(ref, { once: true, margin: "-80px 0px" });
+  const [hovered, setHovered] = useState<string | null>(null);
+  const Scene      = SCENE_MAP[univers.id as keyof typeof SCENE_MAP];
+  const isDark     = univers.dark;
 
   return (
     <motion.article
       ref={ref}
-      className="relative rounded-[3px] overflow-hidden flex flex-col cursor-default"
-      style={{
-        background: univers.bgGradient,
-        boxShadow: isDark
-          ? "0 8px 40px rgba(17,17,17,0.25), 0 0 0 1px rgba(185,154,95,0.15)"
-          : "0 4px 24px rgba(17,17,17,0.08), 0 0 0 1px rgba(17,17,17,0.06)",
-      }}
+      className={cn(
+        "relative rounded-[3px] overflow-hidden",
+        "border",
+        isDark ? "border-or-champagne/15" : "border-gris-marbre",
+      )}
       initial={{ opacity: 0, y: 32 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.85, delay: index * 0.14, ease: EASE_SPRING }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      transition={{ duration: 0.9, delay: index * 0.15, ease: EASE_SPRING }}
       aria-label={`${univers.name} — ${univers.tagline}`}
     >
-      {/* ── Zone visuelle décorative ────────────────────────────────── */}
-      <div className="relative h-48 md:h-56 overflow-hidden">
-        <div className="absolute inset-0">
-          <UniversDecor id={univers.id} />
-        </div>
+      {/* ── Zone atmosphérique ──────────────────────────────────────── */}
+      <div className="relative h-52 md:h-64 lg:h-72 overflow-hidden">
+        <Scene />
 
-        {/* Grain texture */}
+        {/* Overlay dégradé vers le bas pour lisibilité */}
         <div
-          className="absolute inset-0 pointer-events-none"
+          className="absolute inset-x-0 bottom-0 h-20 pointer-events-none"
           style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E")`,
-            backgroundSize: "200px 200px",
+            background: isDark
+              ? `linear-gradient(to top, ${univers.id === "gourmand" ? "rgba(28,14,4,0.95)" : "rgba(17,17,17,0.92)"} 0%, transparent 100%)`
+              : "linear-gradient(to top, rgba(247,243,236,0.90) 0%, transparent 100%)",
           }}
           aria-hidden="true"
         />
 
-        {/* Numéro romain flottant */}
-        <motion.span
-          className="absolute top-5 right-6 font-serif font-light leading-none select-none"
-          style={{
-            fontSize: "clamp(1.5rem, 4vw, 2.5rem)",
-            color: univers.accentColor,
-            opacity: 0.35,
-            letterSpacing: "0.04em",
-          }}
-          animate={{ opacity: hovered ? 0.55 : 0.35 }}
-          transition={{ duration: 0.4 }}
+        {/* Index positionné en absolu sur la scène */}
+        <div
+          className={cn(
+            "absolute top-5 left-6",
+            "font-sans text-[0.6rem] font-medium tracking-[0.2em] uppercase",
+            isDark ? "text-or-champagne/50" : "text-gris-texte/50",
+          )}
           aria-hidden="true"
         >
-          {univers.number}
-        </motion.span>
-
-        {/* Tagline grande taille — positionnée en bas de la zone déco */}
-        <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-          <motion.p
-            className="font-serif font-light italic leading-none text-balance"
-            style={{
-              fontSize: "clamp(1.5rem, 4vw, 2.25rem)",
-              color: univers.textColor,
-              opacity: 0.82,
-            }}
-            initial={{ opacity: 0, y: 12 }}
-            animate={inView ? { opacity: 0.82, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: index * 0.14 + 0.3, ease: EASE_SPRING }}
-          >
-            {univers.tagline}
-          </motion.p>
+          {univers.index}
         </div>
 
-        {/* Dégradé de fondu vers la zone inférieure */}
-        <div
-          className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none"
-          style={{ background: `linear-gradient(to bottom, transparent, ${univers.bg})` }}
-          aria-hidden="true"
-        />
+        {/* Mots-clés d'ambiance en bas de la scène */}
+        <div className="absolute bottom-4 left-6 flex flex-wrap gap-1.5">
+          {univers.mood.map((m) => (
+            <span
+              key={m}
+              className={cn(
+                "inline-flex items-center px-2 py-0.5 rounded-[2px]",
+                "font-sans text-[0.55rem] font-medium tracking-[0.15em] uppercase",
+                isDark
+                  ? "bg-ivoire-maison/8 text-ivoire-maison/55 border border-ivoire-maison/10"
+                  : "bg-noir-marquise/6 text-noir-marquise/45 border border-noir-marquise/8",
+              )}
+            >
+              {m}
+            </span>
+          ))}
+        </div>
       </div>
 
-      {/* ── Contenu informatif ──────────────────────────────────────── */}
-      <div className="flex flex-col gap-6 p-6 md:p-8 flex-1">
+      {/* ── Corps de la carte ────────────────────────────────────────── */}
+      <div className={cn(
+        "p-6 md:p-8 space-y-6",
+        isDark
+          ? univers.id === "gourmand" ? "bg-[#1C0E04]" : "bg-noir-marquise"
+          : "bg-blanc-marbre",
+      )}>
 
-        {/* Nom + index */}
-        <div className="flex items-start justify-between gap-3">
-          <div>
-            <span
-              className="label-mm"
-              style={{ color: univers.accentColor, opacity: 0.8 }}
-            >
-              {univers.index} — Univers
-            </span>
-            <h3
-              className="font-serif font-light leading-tight mt-1"
-              style={{
-                fontSize: "clamp(1.5rem, 3vw, 2rem)",
-                color: univers.textColor,
-              }}
-            >
-              {univers.name.replace("Univers ", "")}
-            </h3>
-          </div>
-
-          {/* Mots ambiance */}
-          <div className="flex flex-wrap justify-end gap-1.5 max-w-[140px]">
-            {univers.ambiance.slice(0, 2).map((word) => (
-              <span
-                key={word}
-                className="chip-mm text-[0.55rem]"
-                style={{
-                  borderColor: `${univers.accentColor}35`,
-                  color: univers.accentColor,
-                  opacity: 0.8,
-                }}
-              >
-                {word}
-              </span>
-            ))}
-          </div>
+        {/* Titre + tagline */}
+        <div className="space-y-1.5">
+          <h3 className={cn(
+            "font-serif font-light leading-tight",
+            "text-d-md",
+            isDark ? "text-ivoire-maison" : "text-noir-marquise",
+          )}>
+            {univers.name}
+          </h3>
+          <p className={cn(
+            "font-serif italic",
+            "text-body-lg",
+            isDark ? "text-or-champagne/70" : "text-or-champagne",
+          )}>
+            {univers.tagline}
+          </p>
         </div>
 
         {/* Description */}
-        <p
-          className="font-sans text-ui-lg leading-relaxed"
-          style={{ color: univers.muteColor }}
-        >
+        <p className={cn(
+          "font-sans text-ui-lg leading-relaxed",
+          isDark ? "text-gris-marbre/70" : "text-gris-texte",
+        )}>
           {univers.desc}
         </p>
 
         {/* Séparateur */}
         <div
-          className="h-px w-full"
-          style={{ background: `linear-gradient(90deg, ${univers.accentColor}40, transparent)` }}
+          className="h-px"
+          style={{
+            background: isDark
+              ? "linear-gradient(90deg, rgba(185,154,95,0.25), transparent)"
+              : "linear-gradient(90deg, rgba(17,17,17,0.08), transparent)",
+          }}
           aria-hidden="true"
         />
 
-        {/* Palette + usages côte à côte */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-
-          {/* Mini-palette */}
-          <div className="space-y-2.5">
-            <p className="label-mm" style={{ color: univers.muteColor, opacity: 0.55 }}>
-              Palette
-            </p>
-            <div className="flex items-center gap-2 flex-wrap">
-              {univers.palette.map((c, i) => (
-                <motion.div
-                  key={c.hex}
-                  className="flex flex-col items-center gap-1.5"
-                  initial={{ opacity: 0, scale: 0.85 }}
-                  animate={inView ? { opacity: 1, scale: 1 } : {}}
-                  transition={{ delay: index * 0.14 + 0.4 + i * 0.06, duration: 0.45, ease: EASE_SPRING }}
-                  title={c.label}
-                >
-                  <div
-                    className="w-7 h-7 rounded-full transition-transform duration-300 hover:scale-110"
-                    style={{
-                      backgroundColor: c.hex,
-                      border: `1px solid ${c.border}`,
-                      boxShadow: isDark ? "0 0 0 1px rgba(255,255,255,0.04)" : "0 1px 3px rgba(17,17,17,0.08)",
-                    }}
-                  />
-                </motion.div>
-              ))}
-            </div>
-            <div className="space-y-1 mt-1">
-              {univers.palette.slice(0, 3).map((c) => (
-                <div key={c.hex} className="flex items-center gap-2">
-                  <div className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: c.hex, border: `1px solid ${c.border}` }} />
-                  <span className="font-sans text-[0.6rem] tracking-wide" style={{ color: univers.muteColor, opacity: 0.65 }}>
-                    {c.label}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Usages */}
-          <div className="space-y-2.5">
-            <p className="label-mm" style={{ color: univers.muteColor, opacity: 0.55 }}>
-              Usages
-            </p>
-            <ul className="space-y-1.5" role="list">
-              {univers.usages.map((usage, i) => (
-                <motion.li
-                  key={usage}
-                  className="flex items-center gap-2"
-                  initial={{ opacity: 0, x: -6 }}
-                  animate={inView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ delay: index * 0.14 + 0.45 + i * 0.05, duration: 0.4, ease: EASE }}
-                >
-                  <span
-                    className="w-1 h-1 rounded-full shrink-0"
-                    style={{ backgroundColor: univers.accentColor, opacity: 0.7 }}
-                    aria-hidden="true"
-                  />
-                  <span
-                    className="font-sans text-ui leading-tight"
-                    style={{ color: univers.muteColor, opacity: 0.85 }}
-                  >
-                    {usage}
-                  </span>
-                </motion.li>
-              ))}
-            </ul>
+        {/* Palette interactive */}
+        <div className="space-y-3">
+          <p className={cn("label-mm", isDark ? "text-gris-marbre/40" : "text-gris-texte/50")}>
+            Palette
+          </p>
+          <div className="flex flex-wrap items-start gap-3">
+            {univers.palette.map((color) => (
+              <button
+                key={color.hex}
+                className="flex flex-col items-center gap-1.5 group"
+                onMouseEnter={() => setHovered(color.hex)}
+                onMouseLeave={() => setHovered(null)}
+                aria-label={`${color.label} — ${color.hex}`}
+                title={`${color.label} (${color.hex})`}
+              >
+                <div
+                  className={cn(
+                    "w-8 h-8 rounded-full border transition-transform duration-200",
+                    "group-hover:scale-110",
+                  )}
+                  style={{
+                    backgroundColor: color.hex,
+                    borderColor: isDark
+                      ? "rgba(255,255,255,0.08)"
+                      : "rgba(17,17,17,0.10)",
+                    boxShadow: hovered === color.hex
+                      ? `0 0 0 2px ${color.hex}50, 0 4px 12px ${color.hex}30`
+                      : undefined,
+                  }}
+                />
+                <AnimatePresence>
+                  {hovered === color.hex && (
+                    <motion.span
+                      className={cn(
+                        "font-mono text-[0.55rem] leading-none whitespace-nowrap",
+                        isDark ? "text-ivoire-maison/50" : "text-gris-texte/60",
+                      )}
+                      initial={{ opacity: 0, y: -2 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.15 }}
+                    >
+                      {color.hex}
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </button>
+            ))}
           </div>
         </div>
 
-        {/* Tous les mots ambiance */}
-        <div className="flex flex-wrap gap-2 pt-1">
-          {univers.ambiance.map((word) => (
-            <span
-              key={word}
-              className="font-sans text-[0.6rem] font-medium tracking-[0.15em] uppercase"
-              style={{ color: univers.accentColor, opacity: 0.45 }}
-            >
-              {word}
-            </span>
-          ))}
+        {/* Usages */}
+        <div className="space-y-2.5">
+          <p className={cn("label-mm", isDark ? "text-gris-marbre/40" : "text-gris-texte/50")}>
+            Usages
+          </p>
+          <ul className="space-y-1.5" role="list">
+            {univers.usages.map((usage) => (
+              <li
+                key={usage}
+                className={cn(
+                  "flex items-center gap-2.5 font-sans text-ui",
+                  isDark ? "text-gris-marbre/65" : "text-gris-texte",
+                )}
+              >
+                <span
+                  className="w-1 h-1 rounded-full shrink-0"
+                  style={{ backgroundColor: isDark ? "#B99A5F" : "#111111", opacity: 0.4 }}
+                  aria-hidden="true"
+                />
+                {usage}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </motion.article>
@@ -442,82 +496,78 @@ function UniversCard({ univers, index }: { univers: typeof UNIVERS[number]; inde
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Panneau comparatif — les 3 univers côte à côte, version compacte
+// Bande de synthèse — les 3 univers côte à côte
 // ─────────────────────────────────────────────────────────────────────────────
 
-function ComparativePanel() {
+function SyntheseBande() {
   const ref    = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px 0px" });
 
   return (
     <motion.div
       ref={ref}
-      className="rounded-[3px] border border-gris-marbre bg-blanc-marbre overflow-hidden"
+      className="rounded-[3px] overflow-hidden border border-gris-marbre"
       initial={{ opacity: 0, y: 16 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.7, ease: EASE }}
     >
       {/* En-tête */}
       <div className="px-6 py-4 border-b border-gris-marbre bg-ivoire-maison flex items-center justify-between">
-        <div>
-          <span className="label-mm text-gris-texte">Vue comparative</span>
-          <h3 className="font-serif text-d-sm font-light text-noir-marquise mt-1">
-            Quand utiliser quel univers ?
-          </h3>
-        </div>
+        <span className="label-mm text-gris-texte">Guide de sélection</span>
+        <span className="font-script text-2xl text-or-champagne/30 select-none" aria-hidden="true">M</span>
       </div>
 
-      {/* Tableau comparatif */}
-      <div className="divide-y divide-gris-marbre/40">
-        {/* Headers */}
-        <div className="grid grid-cols-4 divide-x divide-gris-marbre/40">
-          <div className="px-4 py-3 bg-ivoire-maison/50">
-            <span className="label-mm text-gris-texte/50">Critère</span>
-          </div>
-          {UNIVERS.map((u) => (
-            <div key={u.id} className="px-4 py-3">
-              <div className="flex items-center gap-2">
-                <div className="w-2 h-2 rounded-full" style={{ backgroundColor: u.accentColor }} aria-hidden="true" />
-                <span className="label-mm text-gris-texte">{u.name.replace("Univers ", "")}</span>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Lignes */}
+      {/* Grille 3 colonnes */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 divide-y sm:divide-y-0 sm:divide-x divide-gris-marbre">
         {[
           {
-            label:  "Ton",
-            values: ["Sobre, maîtrisé", "Chaleureux, généreux", "Fort, éditorial"],
+            name:   "Maison",
+            when:   "Pour toute communication de fond — la base permanente.",
+            always: true,
+            color:  "#111111",
+            bgDot:  "#B99A5F",
           },
           {
-            label:  "Fréquence",
-            values: ["Quotidien", "Régulier", "Ponctuel"],
+            name:   "Gourmand",
+            when:   "Pour les produits, les saisons, les réseaux. La chaleur accessible.",
+            always: false,
+            color:  "#C7843E",
+            bgDot:  "#C7843E",
           },
           {
-            label:  "Supports",
-            values: ["Officiel", "Produit & digital", "Événementiel"],
+            name:   "Signature",
+            when:   "Pour les moments forts uniquement. À employer avec parcimonie.",
+            always: false,
+            color:  "#B99A5F",
+            bgDot:  "#111111",
           },
-          {
-            label:  "Photo",
-            values: ["Lumière douce, précise", "Texture, appétence", "Contraste fort, pose"],
-          },
-        ].map((row, i) => (
+        ].map((col, i) => (
           <motion.div
-            key={row.label}
-            className={cn("grid grid-cols-4 divide-x divide-gris-marbre/40", i % 2 !== 0 && "bg-ivoire-maison/30")}
-            initial={{ opacity: 0, x: -8 }}
-            animate={inView ? { opacity: 1, x: 0 } : {}}
-            transition={{ delay: 0.15 + i * 0.07, duration: 0.5, ease: EASE }}
+            key={col.name}
+            className="p-5 md:p-6 bg-blanc-marbre space-y-3"
+            initial={{ opacity: 0, y: 10 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.15 + i * 0.1, duration: 0.6, ease: EASE }}
           >
-            <div className="px-4 py-3 bg-ivoire-maison/30">
-              <span className="font-sans text-ui font-medium text-gris-texte">{row.label}</span>
+            <div className="flex items-center gap-2.5">
+              <div
+                className="w-3 h-3 rounded-full shrink-0"
+                style={{ backgroundColor: col.bgDot }}
+                aria-hidden="true"
+              />
+              <span
+                className="font-sans text-ui-lg font-medium"
+                style={{ color: col.color }}
+              >
+                Univers {col.name}
+              </span>
+              {col.always && (
+                <span className="chip-mm text-[0.5rem] ml-auto">Base</span>
+              )}
             </div>
-            {row.values.map((val, j) => (
-              <div key={j} className="px-4 py-3">
-                <span className="font-sans text-ui text-gris-texte leading-snug">{val}</span>
-              </div>
-            ))}
+            <p className="font-sans text-ui text-gris-texte leading-relaxed">
+              {col.when}
+            </p>
           </motion.div>
         ))}
       </div>
@@ -541,10 +591,10 @@ export function UniversSection() {
     >
       <div className="line-gold w-full" aria-hidden="true" />
 
-      {/* Fond subtil */}
+      {/* M fantôme fond */}
       <div
-        className="absolute inset-0 pointer-events-none"
-        style={{ background: "radial-gradient(ellipse 80% 60% at 50% 0%, rgba(185,154,95,0.04) 0%, transparent 70%)" }}
+        className="absolute -top-16 -right-8 font-serif font-light leading-none select-none pointer-events-none"
+        style={{ fontSize: "clamp(14rem, 32vw, 40rem)", color: "rgba(216,214,209,0.10)", lineHeight: 1 }}
         aria-hidden="true"
       />
 
@@ -600,19 +650,14 @@ export function UniversSection() {
             animate={headerIn ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.25, ease: EASE }}
           >
-            Chaque univers a sa palette, son énergie, son contexte.
-            Ensemble, ils couvrent l'intégralité du territoire de marque Maison Marquise.
+            Chaque univers a sa palette, son énergie, son contexte d'usage.
+            Ils forment ensemble le territoire visuel complet de Maison Marquise.
           </motion.p>
         </div>
 
-        {/* ══ GRILLE 3 UNIVERS ═════════════════════════════════════════ */}
-        {/*
-          Mobile : 1 colonne empilée
-          MD     : 1 colonne pleine largeur (cartes larges)
-          LG     : 3 colonnes égales
-        */}
+        {/* ══ GRILLE DES UNIVERS ═══════════════════════════════════════ */}
         <div
-          className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-14 md:mb-20"
+          className="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-10 md:mb-14"
           role="list"
           aria-label="Les trois univers visuels de Maison Marquise"
         >
@@ -623,8 +668,8 @@ export function UniversSection() {
           ))}
         </div>
 
-        {/* ══ TABLEAU COMPARATIF ══════════════════════════════════════ */}
-        <ComparativePanel />
+        {/* ══ SYNTHÈSE ════════════════════════════════════════════════ */}
+        <SyntheseBande />
 
       </div>
 

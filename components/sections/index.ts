@@ -8,3 +8,4 @@ export { CouleursSection } from "./CouleursSection";
 export { TypographiesSection } from "./TypographiesSection";
 export { PackagingSection } from "./PackagingSection";
 export { UniversSection } from "./UniversSection";
+export { ApplicationsSection } from "./ApplicationsSection";

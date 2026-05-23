@@ -2,6 +2,7 @@
 
 import { useRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import { ArrowDown, BookOpen, Package } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { HeroLogo } from "@/components/brand/HeroLogo";
@@ -86,15 +87,20 @@ export function HeroSection({ className }: HeroSectionProps) {
       aria-label="Accueil du brandbook Maison Marquise"
     >
 
-      {/* ── Fond : grain papier ────────────────────────────────────────────── */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.028'/%3E%3C/svg%3E")`,
-          backgroundSize: "400px 400px",
-        }}
-        aria-hidden="true"
-      />
+      {/* ── Fond : texture marbre officielle ──────────────────────────────── */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <Image
+          src="/assets/texture-marble-white.jpg"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover opacity-[0.35]"
+          quality={60}
+          priority
+        />
+        {/* Overlay ivoire pour adoucir */}
+        <div className="absolute inset-0 bg-ivoire-maison/70" />
+      </div>
 
       {/* ── Fond : vignette radiale très subtile ──────────────────────────── */}
       <div

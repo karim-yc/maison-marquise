@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -102,16 +103,17 @@ const UNIVERS = [
 function SceneMaison() {
   return (
     <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
-      {/* Fond ivoire */}
-      <div className="absolute inset-0 bg-ivoire-maison" />
-
-      {/* Texture grain */}
-      <div className="absolute inset-0 opacity-[0.04]"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")`,
-          backgroundSize: "200px 200px",
-        }}
+      {/* Texture marbre officielle */}
+      <Image
+        src="/assets/texture-marble-veined.jpg"
+        alt=""
+        fill
+        sizes="(max-width: 1024px) 100vw, 33vw"
+        className="object-cover opacity-25"
+        quality={50}
       />
+      {/* Overlay ivoire pour adoucir la texture */}
+      <div className="absolute inset-0 bg-ivoire-maison/75" />
 
       {/* Grille fine */}
       <div className="absolute inset-0 opacity-[0.03]"

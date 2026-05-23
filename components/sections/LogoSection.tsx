@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import {
@@ -140,7 +141,9 @@ function VariantCard({
           )}
           aria-label="Logo sur fond clair"
         >
-          <div className={cn("w-full", isMonogram ? "max-w-[64px] mx-auto" : "max-w-[200px] md:max-w-[240px] mx-auto")}>
+          {/* Texture marbre discrète sous le logo clair */}
+          <Image src="/assets/texture-marble-white.jpg" alt="" fill sizes="200px" className="object-cover opacity-10" quality={40} />
+          <div className={cn("relative w-full", isMonogram ? "max-w-[64px] mx-auto" : "max-w-[200px] md:max-w-[240px] mx-auto")}>
             {/* Zone de respiration visualisée — toujours visible, subtile */}
             <div className="relative">
               <div

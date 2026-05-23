@@ -366,11 +366,25 @@
     border-radius: inherit;
   }
 
-  /* Fond marbre discret (overlay SVG) */
+  /* Fond marbre discret — radial + texture image si disponible */
   .bg-marble-subtle {
     background-image:
       radial-gradient(ellipse at 30% 20%, rgba(216, 214, 209, 0.25) 0%, transparent 60%),
       radial-gradient(ellipse at 75% 70%, rgba(185, 154, 95, 0.06) 0%, transparent 50%);
+  }
+
+  /* Texture marbre officielle (utiliser avec next/image ou en bg CSS) */
+  .bg-texture-marble {
+    background-image: url("/assets/texture-marble-white.jpg");
+    background-size: cover;
+    background-position: center;
+  }
+
+  /* Texture marbre veiné — plus caractérisé */
+  .bg-texture-marble-veined {
+    background-image: url("/assets/texture-marble-veined.jpg");
+    background-size: cover;
+    background-position: center;
   }
 }
 

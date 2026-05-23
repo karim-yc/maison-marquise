@@ -7,7 +7,7 @@ import {
   Ban, Maximize2, SunDim, Layers, Shrink, Info,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { LogoFull, LogoVariant, LogoMonogram, LOGO_FULL_MARGINS, LOGO_MONOGRAM_MARGINS } from "@/components/brand/LogoSvg";
+import { LogoFull, LogoVariant, LogoMonogram } from "@/components/brand/LogoSvg";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // LogoSection — Système logo Maison Marquise
@@ -84,25 +84,12 @@ const COLORWAYS = [
 // Adaptateurs locaux — branche sur les SVG officiels via couleur CSS
 // ─────────────────────────────────────────────────────────────────────────────
 
-// Marges importées depuis LogoSvg.tsx
 
 function LogoFullAdapter({ fill, className }: { fill: string; className?: string }) {
-  return (
-    <div className={cn("w-full overflow-hidden", className)}>
-      <div style={LOGO_FULL_MARGINS}>
-        <LogoFull className="w-full h-auto" style={{ color: fill }} aria-hidden={true} />
-      </div>
-    </div>
-  );
+  return <LogoFull className={cn("w-full h-auto", className)} style={{ color: fill }} aria-hidden={true} />;
 }
 function LogoNoBaseline({ fill, className }: { fill: string; className?: string }) {
-  return (
-    <div className={cn("w-full overflow-hidden", className)}>
-      <div style={LOGO_FULL_MARGINS}>
-        <LogoVariant className="w-full h-auto" style={{ color: fill }} aria-hidden={true} />
-      </div>
-    </div>
-  );
+  return <LogoVariant className={cn("w-full h-auto", className)} style={{ color: fill }} aria-hidden={true} />;
 }
 function LogoMonogramAdapter({ fill, className }: { fill: string; className?: string }) {
   return <LogoMonogram className={cn("h-full w-auto", className)} style={{ color: fill }} aria-hidden={true} />;
@@ -363,8 +350,8 @@ function ClearSpaceDemo() {
                 aria-hidden="true"
               >
                 <div className="w-px h-8 border-l border-dashed border-or-champagne/50" />
-                <div className="w-10 md:w-12 text-or-champagne/70 overflow-hidden">
-                  <div style={LOGO_MONOGRAM_MARGINS}><LogoMonogram aria-hidden={true} /></div>
+                <div className="w-10 md:w-12 text-or-champagne/70">
+                  <LogoMonogram aria-hidden={true} />
                 </div>
                 <div className="w-px h-8 border-l border-dashed border-or-champagne/50" />
                 <span className="font-sans text-[0.45rem] tracking-[0.14em] uppercase text-or-champagne/55 [writing-mode:vertical-rl] rotate-180 mt-1">zone libre</span>
@@ -401,9 +388,9 @@ function ClearSpaceDemo() {
               )}
             </AnimatePresence>
             <div className="overflow-hidden">
-              <div style={LOGO_FULL_MARGINS}>
+              
                 <LogoFull style={{ color: "#111111" }} aria-hidden={true} />
-              </div>
+              
             </div>
           </div>
 
@@ -433,8 +420,8 @@ function ClearSpaceDemo() {
                 aria-hidden="true"
               >
                 <div className="w-px h-8 border-l border-dashed border-or-champagne/50" />
-                <div className="w-10 md:w-12 text-or-champagne/70 overflow-hidden">
-                  <div style={LOGO_MONOGRAM_MARGINS}><LogoMonogram aria-hidden={true} /></div>
+                <div className="w-10 md:w-12 text-or-champagne/70">
+                  <LogoMonogram aria-hidden={true} />
                 </div>
                 <div className="w-px h-8 border-l border-dashed border-or-champagne/50" />
                 <span className="font-sans text-[0.45rem] tracking-[0.14em] uppercase text-or-champagne/55 [writing-mode:vertical-rl] mt-1">zone libre</span>
@@ -457,7 +444,7 @@ function ClearSpaceDemo() {
                 aria-hidden="true"
               >
                 <div className="h-px w-8 border-t border-dashed border-or-champagne/35" />
-                <div className="w-5 text-or-champagne/55 overflow-hidden"><div style={LOGO_MONOGRAM_MARGINS}><LogoMonogram aria-hidden={true} /></div></div>
+                <div className="w-5 text-or-champagne/55"><LogoMonogram aria-hidden={true} /></div>
                 <div className="h-px w-8 border-t border-dashed border-or-champagne/35" />
               </motion.div>
               <motion.div
@@ -469,7 +456,7 @@ function ClearSpaceDemo() {
                 aria-hidden="true"
               >
                 <div className="h-px w-8 border-t border-dashed border-or-champagne/35" />
-                <div className="w-5 text-or-champagne/55 overflow-hidden"><div style={LOGO_MONOGRAM_MARGINS}><LogoMonogram aria-hidden={true} /></div></div>
+                <div className="w-5 text-or-champagne/55"><LogoMonogram aria-hidden={true} /></div>
                 <div className="h-px w-8 border-t border-dashed border-or-champagne/35" />
               </motion.div>
             </>

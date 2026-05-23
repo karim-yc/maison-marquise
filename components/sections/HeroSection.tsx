@@ -218,8 +218,8 @@ export function HeroSection({ className }: HeroSectionProps) {
           >
             <HeroLogo
               variant="full"
-              width={440}
-              className="mx-auto"
+              colorClass="text-noir-marquise"
+              className="mx-auto max-w-[320px] sm:max-w-sm md:max-w-md"
             />
           </motion.div>
 

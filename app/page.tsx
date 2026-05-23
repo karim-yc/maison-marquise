@@ -13,6 +13,7 @@ import { TypographySample }   from "@/components/brand/TypographySample";
 import { FormulaCard }        from "@/components/brand/FormulaCard";
 import { GuidelineCard }      from "@/components/brand/GuidelineCard";
 import { PackagingMockupCard } from "@/components/brand/PackagingMockupCard";
+import { LogoFull, LogoVariant, LogoMonogram } from "@/components/brand/LogoSvg";
 import { premiumColors, gourmandColors, menuExamples, packaging } from "@/lib/tokens";
 
 export default function HomePage() {

@@ -6,6 +6,7 @@ import {
   Ban, Maximize2, SunDim, Layers, Shrink, Info,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { LogoFull, LogoVariant, LogoMonogram } from "@/components/brand/LogoSvg";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // LogoSection — Système logo Maison Marquise
@@ -79,82 +80,26 @@ const COLORWAYS = [
 ] as const;
 
 // ─────────────────────────────────────────────────────────────────────────────
-// SVG LOGOS INLINE
-// ⚠️  PLACEHOLDER — Remplacer chaque <LogoSvg*> par un <Image> next/image
-// pointant vers les fichiers officiels reçus du graphiste :
-//   /public/assets/logo-full.svg
-//   /public/assets/logo-no-baseline.svg
-//   /public/assets/logo-monogram.svg
-//   /public/assets/logo-horizontal.svg
+// Adaptateurs locaux — branche sur les SVG officiels via couleur CSS
 // ─────────────────────────────────────────────────────────────────────────────
 
-function LogoFull({ fill, className }: { fill: string; className?: string }) {
-  return (
-    // ⚠️ PLACEHOLDER — remplacer par : <Image src="/assets/logo-full.svg" ... />
-    <svg viewBox="0 0 340 110" className={cn("w-full h-auto", className)} aria-label="Maison Marquise — logo complet">
-      <text x="170" y="66" textAnchor="middle"
-        fontFamily="Georgia, 'Times New Roman', serif" fontSize="54"
-        fontWeight="400" fontStyle="italic" letterSpacing="-1" fill={fill}>
-        Maison Marquise
-      </text>
-      <line x1="40" y1="77" x2="300" y2="77" stroke={fill} strokeWidth="0.7" opacity="0.45"/>
-      <text x="170" y="96" textAnchor="middle"
-        fontFamily="Arial, sans-serif" fontSize="7.5" fontWeight="500" letterSpacing="3.5" fill={fill} opacity="0.65">
-        BIEN PLUS QU'UNE BOULANGERIE
-      </text>
-    </svg>
-  );
+function LogoFullAdapter({ fill, className }: { fill: string; className?: string }) {
+  return <LogoFull className={cn("w-full h-auto", className)} style={{ color: fill }} aria-hidden={true} />;
 }
-
 function LogoNoBaseline({ fill, className }: { fill: string; className?: string }) {
-  return (
-    // ⚠️ PLACEHOLDER — remplacer par : <Image src="/assets/logo-no-baseline.svg" ... />
-    <svg viewBox="0 0 300 72" className={cn("w-full h-auto", className)} aria-label="Maison Marquise">
-      <text x="150" y="56" textAnchor="middle"
-        fontFamily="Georgia, 'Times New Roman', serif" fontSize="52"
-        fontWeight="400" fontStyle="italic" letterSpacing="-1" fill={fill}>
-        Maison Marquise
-      </text>
-    </svg>
-  );
+  return <LogoVariant className={cn("w-full h-auto", className)} style={{ color: fill }} aria-hidden={true} />;
 }
-
-function LogoMonogram({ fill, className }: { fill: string; className?: string }) {
-  return (
-    // ⚠️ PLACEHOLDER — remplacer par : <Image src="/assets/logo-monogram.svg" ... />
-    <svg viewBox="0 0 72 80" className={cn("h-full w-auto", className)} aria-label="M — Maison Marquise">
-      <text x="36" y="68" textAnchor="middle"
-        fontFamily="Georgia, 'Times New Roman', serif" fontSize="74"
-        fontWeight="300" fontStyle="italic" fill={fill}>
-        M
-      </text>
-    </svg>
-  );
+function LogoMonogramAdapter({ fill, className }: { fill: string; className?: string }) {
+  return <LogoMonogram className={cn("h-full w-auto", className)} style={{ color: fill }} aria-hidden={true} />;
 }
-
 function LogoHorizontal({ fill, className }: { fill: string; className?: string }) {
-  return (
-    // ⚠️ PLACEHOLDER — remplacer par : <Image src="/assets/logo-horizontal.svg" ... />
-    <svg viewBox="0 0 440 68" className={cn("w-full h-auto", className)} aria-label="Maison Marquise — version horizontale">
-      <text x="30" y="52" fontFamily="Georgia, serif" fontSize="48"
-        fontWeight="300" fontStyle="italic" fill={fill}>M</text>
-      <line x1="66" y1="12" x2="66" y2="56" stroke={fill} strokeWidth="0.7" opacity="0.4"/>
-      <text x="80" y="37" fontFamily="Georgia, serif" fontSize="24"
-        fontWeight="400" fontStyle="italic" letterSpacing="-0.5" fill={fill}>
-        Maison Marquise
-      </text>
-      <text x="82" y="55" fontFamily="Arial, sans-serif" fontSize="6.5"
-        fontWeight="500" letterSpacing="3" fill={fill} opacity="0.6">
-        BIEN PLUS QU'UNE BOULANGERIE
-      </text>
-    </svg>
-  );
+  return <LogoVariant className={cn("w-full h-auto", className)} style={{ color: fill }} aria-hidden={true} />;
 }
 
-const LOGO_COMPONENTS: Record<VariantId, typeof LogoFull> = {
-  "full":        LogoFull,
+const LOGO_COMPONENTS: Record<VariantId, (p: { fill: string; className?: string }) => React.JSX.Element> = {
+  "full":        LogoFullAdapter,
   "no-baseline": LogoNoBaseline,
-  "monogram":    LogoMonogram,
+  "monogram":    LogoMonogramAdapter,
   "horizontal":  LogoHorizontal,
 };
 
@@ -433,7 +378,7 @@ function ClearSpaceDemo() {
 
         {/* Logo centré */}
         <div className="relative z-raised w-full max-w-[220px] mx-auto">
-          <LogoFull fill="#111111" />
+          <LogoFull style={{ color: "#111111" }} aria-hidden />
         </div>
       </div>
 

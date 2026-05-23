@@ -19,3 +19,4 @@ export { PackagingMockupCard }  from "./PackagingMockupCard";
 
 export { FormulaCard }          from "./FormulaCard";
 export { HeroLogo } from "./HeroLogo";
+export { LogoFull, LogoVariant, LogoMonogram } from "./LogoSvg";

@@ -596,7 +596,7 @@ export function CouleursSection() {
         {/* Séparateur éditorial */}
         <div className="relative mb-12 md:mb-16 flex items-center gap-6">
           <div className="flex-1 h-px bg-gris-marbre/60" />
-          <span className="font-script text-2xl text-or-champagne/40 select-none" aria-hidden="true">M</span>
+          <div className="w-4 h-px bg-or-champagne/40" aria-hidden="true" />
           <div className="flex-1 h-px bg-gris-marbre/60" />
         </div>
 

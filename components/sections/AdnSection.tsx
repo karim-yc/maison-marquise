@@ -176,14 +176,7 @@ export function AdnSection() {
       {/* Filet or supérieur */}
       <div className="line-gold w-full" aria-hidden="true" />
 
-      {/* ── Fond décoratif : M fantôme ──────────────────────────────────── */}
-      <div
-        className="absolute -bottom-16 -left-8 font-serif font-light leading-none select-none pointer-events-none text-gris-marbre/8"
-        style={{ fontSize: "clamp(16rem, 35vw, 42rem)" }}
-        aria-hidden="true"
-      >
-        M
-      </div>
+        {/* M fantôme supprimé */}
 
       <div className="container-mm py-section relative">
 
@@ -340,14 +333,7 @@ export function AdnSection() {
             </div>
 
             {/* Monogramme M */}
-            <motion.span
-              className="font-script text-4xl text-or-champagne/30 leading-none select-none"
-              initial={{ opacity: 0 }}
-              animate={bandeIn ? { opacity: 1 } : {}}
-              transition={{ delay: 0.5, duration: 0.8, ease: EASE }}
-            >
-              M
-            </motion.span>
+            {/* monogramme retiré */}
           </motion.div>
         </div>
       </div>

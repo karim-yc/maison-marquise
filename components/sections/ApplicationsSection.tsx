@@ -132,7 +132,7 @@ function VisualPackaging() {
         <div className="w-16 h-3 bg-gris-marbre/30 border-b border-gris-marbre/50" style={{ transform: "perspective(80px) rotateX(-20deg)" }} />
         <div className="w-16 h-10 bg-ivoire-maison border border-gris-marbre relative overflow-hidden">
           <div className="absolute inset-1 border border-or-champagne/25" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-script text-noir-marquise text-base leading-none">M</div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-5 h-5 text-noir-marquise"><LogoMonogram aria-hidden={true} /></div>
         </div>
       </div>
     </div>
@@ -243,7 +243,7 @@ function VisualFavicon() {
       {/* Fond ivoire */}
       <div className="flex flex-col items-center gap-1">
         <div className="w-8 h-8 bg-ivoire-maison border border-gris-marbre flex items-center justify-center rounded-[2px]">
-          <span className="font-script text-noir-marquise text-base leading-none">M</span>
+          <div className="w-5 h-5 text-noir-marquise"><LogoMonogram aria-hidden={true} /></div>
         </div>
         <span className="font-sans text-[0.38rem] text-gris-texte/50">Alt</span>
       </div>
@@ -403,14 +403,7 @@ function ClosingPrinciple() {
       />
 
       <div className="px-6 md:px-10 py-10 md:py-12 relative overflow-hidden">
-        {/* M fantôme */}
-        <div
-          className="absolute -right-4 -top-4 font-serif font-light leading-none select-none pointer-events-none text-or-champagne/5"
-          style={{ fontSize: "clamp(10rem, 22vw, 16rem)" }}
-          aria-hidden="true"
-        >
-          M
-        </div>
+          {/* M fantôme supprimé */}
 
         <div className="relative grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
           {/* Citation */}

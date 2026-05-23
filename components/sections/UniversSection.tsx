@@ -123,11 +123,7 @@ function SceneMaison() {
         }}
       />
 
-      {/* Grand M fantôme */}
-      <div className="absolute -bottom-8 -right-4 font-serif font-light leading-none text-noir-marquise/[0.055] select-none"
-        style={{ fontSize: "clamp(14rem, 35vw, 22rem)" }}>
-        M
-      </div>
+        {/* M fantôme supprimé */}
 
       {/* Carré noir premium — coin haut gauche */}
       <div className="absolute top-8 left-8 w-24 h-24 md:w-32 md:h-32 bg-noir-marquise/90" />

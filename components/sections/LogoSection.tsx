@@ -415,14 +415,7 @@ export function LogoSection() {
     >
       <div className="line-gold w-full" aria-hidden="true" />
 
-      {/* M fantôme — coin haut droit */}
-      <div
-        className="absolute -top-20 -right-12 font-serif font-light leading-none select-none pointer-events-none text-gris-marbre/6"
-        style={{ fontSize: "clamp(18rem, 38vw, 46rem)" }}
-        aria-hidden="true"
-      >
-        M
-      </div>
+        {/* M fantôme supprimé */}
 
       <div className="container-mm py-section relative">
 

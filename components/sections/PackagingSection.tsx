@@ -539,7 +539,7 @@ function BoxPatisserieMockup() {
         fill="#B99A5F"
         opacity="0.08"
       >
-        M
+        ◆
       </text>
 
       {/* ── Dessus de la boîte (perspective) */}

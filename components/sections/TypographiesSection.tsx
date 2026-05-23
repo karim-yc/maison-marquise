@@ -593,14 +593,7 @@ export function TypographiesSection() {
     >
       <div className="line-gold w-full" aria-hidden="true" />
 
-      {/* M fantôme */}
-      <div
-        className="absolute top-0 right-0 font-serif font-light leading-none select-none pointer-events-none"
-        style={{ fontSize: "clamp(14rem, 32vw, 40rem)", color: "rgba(216,214,209,0.12)", lineHeight: 1 }}
-        aria-hidden="true"
-      >
-        M
-      </div>
+        {/* M fantôme supprimé */}
 
       <div className="container-mm py-section relative">
 

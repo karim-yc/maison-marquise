@@ -6,7 +6,6 @@ import { TypographiesSection }    from "@/components/sections/TypographiesSectio
 import { SupportsVenteSection }  from "@/components/sections/SupportsVenteSection";
 import { PackagingSection }       from "@/components/sections/PackagingSection";
 import { UniversSection }         from "@/components/sections/UniversSection";
-import { ApplicationsSection }    from "@/components/sections/ApplicationsSection";
 import { BrandSection }       from "@/components/brand/BrandSection";
 import { BrandCard }          from "@/components/brand/BrandCard";
 import { ColorSwatch }        from "@/components/brand/ColorSwatch";
@@ -40,8 +39,6 @@ export default function HomePage() {
       {/* 07 — UNIVERS */}
       <UniversSection />
 
-      {/* 08 — APPLICATIONS */}
-      <ApplicationsSection />
     </>
   );
 }

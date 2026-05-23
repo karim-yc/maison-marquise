@@ -2,137 +2,93 @@
 
 import { useRef, useState, useCallback } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { Check, Copy } from "lucide-react";
+import { Check, Copy, ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-// ─────────────────────────────────────────────────────────────────────────────
-// CouleursSection — Palette officielle Maison Marquise
-//
-// Structure :
-//   · En-tête (index 03, titre, intro)
-//   · Règle 80 / 20 — barre de proportion animée
-//   · Grille premium (6 couleurs × grande carte)
-//   · Grille gourmande (4 couleurs × grande carte)
-//   · Panneau usage contextuel (tableau de correspondances)
-// ─────────────────────────────────────────────────────────────────────────────
 
 const EASE        = [0.25, 0.46, 0.45, 0.94] as const;
 const EASE_SPRING = [0.16, 1, 0.3, 1]        as const;
 
-// ── Palette complète (avec usages enrichis du brief) ─────────────────────────
+// ── Palette avec RGB calculé ──────────────────────────────────────────────────
 const PREMIUM = [
   {
-    name:    "Noir Marquise",
-    token:   "noir-marquise",
-    hex:     "#111111",
-    usage:   "Logo, titres, contraste, premium",
-    cmyk:    "C0 M0 Y0 K93",
-    pantone: "Black 6 C",
-    light:   false,
+    name: "Noir Marquise",   token: "noir-marquise",
+    hex: "#111111", rgb: "R17 G17 B17",
+    cmyk: "C0 M0 Y0 K93",    pantone: "Black 6 C",
+    usage: "Logo, titres, contraste, premium", light: false,
   },
   {
-    name:    "Ivoire Maison",
-    token:   "ivoire-maison",
-    hex:     "#F7F3EC",
-    usage:   "Fonds chaleureux, menus, packaging clair",
-    cmyk:    "C2 M2 Y6 K0",
-    pantone: "9183 C",
-    light:   true,
+    name: "Ivoire Maison",   token: "ivoire-maison",
+    hex: "#F7F3EC", rgb: "R247 G243 B236",
+    cmyk: "C2 M2 Y6 K0",     pantone: "9183 C",
+    usage: "Fonds chaleureux, menus, packaging clair", light: true,
   },
   {
-    name:    "Blanc Marbre",
-    token:   "blanc-marbre",
-    hex:     "#FAFAF8",
-    usage:   "Fonds lumineux, façade, supports clairs",
-    cmyk:    "C1 M0 Y2 K0",
-    pantone: "White",
-    light:   true,
+    name: "Blanc Marbre",    token: "blanc-marbre",
+    hex: "#FAFAF8", rgb: "R250 G250 B248",
+    cmyk: "C1 M0 Y2 K0",     pantone: "White",
+    usage: "Fonds lumineux, façade, supports clairs", light: true,
   },
   {
-    name:    "Or Champagne",
-    token:   "or-champagne",
-    hex:     "#B99A5F",
-    usage:   "Détails premium, filets, dorure, pictogrammes",
-    cmyk:    "C15 M30 Y60 K25",
-    pantone: "7508 C",
-    light:   false,
+    name: "Or Champagne",    token: "or-champagne",
+    hex: "#B99A5F", rgb: "R185 G154 B95",
+    cmyk: "C15 M30 Y60 K25", pantone: "7508 C",
+    usage: "Détails premium, filets, dorure", light: false,
   },
   {
-    name:    "Gris Marbre",
-    token:   "gris-marbre",
-    hex:     "#D8D6D1",
-    usage:   "Lignes, fonds secondaires, texture",
-    cmyk:    "C4 M3 Y5 K15",
-    pantone: "9224 C",
-    light:   false,
+    name: "Gris Marbre",     token: "gris-marbre",
+    hex: "#D8D6D1", rgb: "R216 G214 B209",
+    cmyk: "C4 M3 Y5 K15",   pantone: "9224 C",
+    usage: "Lignes, fonds secondaires, texture", light: false,
   },
   {
-    name:    "Gris Texte",
-    token:   "gris-texte",
-    hex:     "#4A4A4A",
-    usage:   "Descriptions, textes secondaires",
-    cmyk:    "C0 M0 Y0 K71",
-    pantone: "Cool Gray 10 C",
-    light:   false,
+    name: "Gris Texte",      token: "gris-texte",
+    hex: "#4A4A4A", rgb: "R74 G74 B74",
+    cmyk: "C0 M0 Y0 K71",    pantone: "Cool Gray 10 C",
+    usage: "Descriptions, textes secondaires", light: false,
   },
 ] as const;
 
 const GOURMAND = [
   {
-    name:    "Brun Marquis",
-    token:   "brun-marquis",
-    hex:     "#6F5A2E",
-    usage:   "Chaleur, pâtisserie, café, bandeaux",
-    cmyk:    "C25 M40 Y80 K40",
-    pantone: "7530 C",
-    light:   false,
+    name: "Brun Marquis",       token: "brun-marquis",
+    hex: "#6F5A2E", rgb: "R111 G90 B46",
+    cmyk: "C25 M40 Y80 K40",  pantone: "7530 C",
+    usage: "Chaleur, pâtisserie, café, bandeaux", light: false,
   },
   {
-    name:    "Caramel Pâtissier",
-    token:   "caramel",
-    hex:     "#C7843E",
-    usage:   "Coffee time, viennoiserie, gourmandise",
-    cmyk:    "C10 M45 Y75 K10",
-    pantone: "7513 C",
-    light:   false,
+    name: "Caramel Pâtissier",  token: "caramel",
+    hex: "#C7843E", rgb: "R199 G132 B62",
+    cmyk: "C10 M45 Y75 K10",  pantone: "7513 C",
+    usage: "Coffee time, viennoiserie, gourmandise", light: false,
   },
   {
-    name:    "Framboise Signature",
-    token:   "framboise",
-    hex:     "#A6192E",
-    usage:   "Fruits rouges, émotion, événements",
-    cmyk:    "C10 M90 Y65 K30",
-    pantone: "200 C",
-    light:   false,
+    name: "Framboise Signature",token: "framboise",
+    hex: "#A6192E", rgb: "R166 G25 B46",
+    cmyk: "C10 M90 Y65 K30",  pantone: "200 C",
+    usage: "Fruits rouges, émotion, événements", light: false,
   },
   {
-    name:    "Pistache Fine",
-    token:   "pistache",
-    hex:     "#9A9B55",
-    usage:   "Fraîcheur, créations pistache, accents",
-    cmyk:    "C30 M20 Y65 K20",
-    pantone: "7492 C",
-    light:   false,
+    name: "Pistache Fine",      token: "pistache",
+    hex: "#9A9B55", rgb: "R154 G155 B85",
+    cmyk: "C30 M20 Y65 K20",  pantone: "7492 C",
+    usage: "Fraîcheur, créations pistache, accents", light: false,
   },
 ] as const;
 
 type ColorEntry = (typeof PREMIUM)[number] | (typeof GOURMAND)[number];
 
-// ── Usages contextuels ────────────────────────────────────────────────────────
 const USAGE_ROWS = [
-  { context: "Fond principal",     colors: ["#FAFAF8", "#F7F3EC"] },
-  { context: "Texte courant",      colors: ["#111111", "#4A4A4A"] },
-  { context: "Accent or",          colors: ["#B99A5F"] },
-  { context: "Filets & bordures",  colors: ["#D8D6D1", "#B99A5F"] },
-  { context: "Packaging café",     colors: ["#6F5A2E", "#C7843E"] },
-  { context: "Événementiel",       colors: ["#A6192E", "#9A9B55"] },
+  { context: "Fond principal",    colors: ["#FAFAF8", "#F7F3EC"] },
+  { context: "Texte courant",     colors: ["#111111", "#4A4A4A"] },
+  { context: "Accent or",         colors: ["#B99A5F"] },
+  { context: "Filets & bordures", colors: ["#D8D6D1", "#B99A5F"] },
+  { context: "Packaging café",    colors: ["#6F5A2E", "#C7843E"] },
+  { context: "Événementiel",      colors: ["#A6192E", "#9A9B55"] },
 ] as const;
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Helpers
 // ─────────────────────────────────────────────────────────────────────────────
-
-/** Retourne true si le contraste blanc est lisible sur ce fond */
 function needsLightText(hex: string): boolean {
   const r = parseInt(hex.slice(1, 3), 16);
   const g = parseInt(hex.slice(3, 5), 16);
@@ -141,138 +97,198 @@ function needsLightText(hex: string): boolean {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// ColorCard — carte couleur individuelle avec copie hex
+// CopyChip — bouton copie inline pour un code
 // ─────────────────────────────────────────────────────────────────────────────
-
-interface ColorCardProps {
-  color:      ColorEntry;
-  size?:      "md" | "lg";
-  animDelay?: number;
-}
-
-function ColorCard({ color, size = "md", animDelay = 0 }: ColorCardProps) {
-  const ref    = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-50px 0px" });
+function CopyChip({
+  value,
+  label,
+  muted = false,
+}: {
+  value: string;
+  label?: string;
+  muted?: boolean;
+}) {
   const [copied, setCopied] = useState(false);
-  const onLight  = !needsLightText(color.hex); // texte sombre sur fond clair
 
   const handleCopy = useCallback(async () => {
     try {
-      await navigator.clipboard.writeText(color.hex);
+      await navigator.clipboard.writeText(value);
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      setTimeout(() => setCopied(false), 1800);
     } catch { /* silencieux */ }
-  }, [color.hex]);
+  }, [value]);
 
-  const swatchH = size === "lg" ? "h-40 md:h-48" : "h-28 md:h-32";
+  return (
+    <button
+      onClick={handleCopy}
+      className={cn(
+        "group/chip inline-flex items-center gap-1.5 rounded-[2px] px-2 py-1",
+        "border transition-all duration-200",
+        "font-mono text-[0.62rem] tracking-wide",
+        muted
+          ? "border-gris-marbre/50 text-gris-texte/50 hover:border-noir-marquise/30 hover:text-noir-marquise/80 hover:bg-gris-marbre/20"
+          : "border-gris-marbre text-gris-texte hover:border-or-champagne/60 hover:text-noir-marquise hover:bg-ivoire-maison",
+      )}
+      aria-label={`Copier ${label ?? value}`}
+      title={`Cliquer pour copier : ${value}`}
+    >
+      <AnimatePresence mode="wait" initial={false}>
+        {copied ? (
+          <motion.span
+            key="ok"
+            className="flex items-center gap-1 text-pistache"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.15 }}
+          >
+            <Check size={9} strokeWidth={2.5} />
+            Copié
+          </motion.span>
+        ) : (
+          <motion.span
+            key="val"
+            className="flex items-center gap-1.5"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.1 }}
+          >
+            <Copy
+              size={9}
+              strokeWidth={1.5}
+              className="opacity-0 group-hover/chip:opacity-60 transition-opacity"
+            />
+            {value}
+          </motion.span>
+        )}
+      </AnimatePresence>
+    </button>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// ColorCard — carte couleur avec infos techniques déroulantes
+// ─────────────────────────────────────────────────────────────────────────────
+function ColorCard({ color, animDelay = 0 }: { color: ColorEntry; animDelay?: number }) {
+  const ref    = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-50px 0px" });
+  const [open, setOpen] = useState(false);
+  const light = !needsLightText(color.hex);
 
   return (
     <motion.article
       ref={ref}
       className={cn(
-        "group flex flex-col rounded-[3px] overflow-hidden",
-        "border transition-shadow duration-400",
-        "hover:shadow-md",
-        onLight ? "border-gris-marbre" : "border-transparent shadow-sm",
+        "flex flex-col rounded-[3px] overflow-hidden",
+        "border transition-shadow duration-400 hover:shadow-md",
+        light ? "border-gris-marbre" : "border-transparent shadow-sm",
       )}
-      style={{ boxShadow: onLight ? undefined : `0 0 0 1px ${color.hex}22` }}
+      style={{ boxShadow: light ? undefined : `0 0 0 1px ${color.hex}22` }}
       initial={{ opacity: 0, y: 20 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.65, delay: animDelay / 1000, ease: EASE }}
-      aria-label={`Couleur ${color.name} — ${color.hex}`}
+      transition={{ duration: 0.6, delay: animDelay / 1000, ease: EASE }}
+      aria-label={`Couleur ${color.name}`}
     >
-      {/* ── Pastille ──────────────────────────────────────────────────── */}
+      {/* ── Swatch cliquable (copie HEX) ─────────────────────────────── */}
       <button
-        className={cn("relative overflow-hidden w-full cursor-pointer", swatchH)}
+        className="relative w-full h-28 md:h-36 cursor-pointer group/sw overflow-hidden"
         style={{ backgroundColor: color.hex }}
-        onClick={handleCopy}
-        aria-label={`Copier ${color.hex}`}
-        title="Cliquer pour copier le code HEX"
+        onClick={async () => {
+          try {
+            await navigator.clipboard.writeText(color.hex);
+          } catch { /* silencieux */ }
+        }}
+        aria-label={`Copier HEX ${color.hex}`}
+        title="Cliquer pour copier le HEX"
       >
-        {/* Overlay copie au hover */}
-        <div className={cn(
-          "absolute inset-0 flex items-center justify-center gap-2",
-          "opacity-0 group-hover:opacity-100 transition-opacity duration-250",
-          "bg-black/10 backdrop-blur-[1px]",
-        )}>
-          <Copy
-            size={13}
-            strokeWidth={1.5}
-            className={needsLightText(color.hex) ? "text-white/80" : "text-black/50"}
-          />
-          <span className={cn(
-            "font-sans text-[0.6rem] font-medium tracking-[0.15em] uppercase",
-            needsLightText(color.hex) ? "text-white/80" : "text-black/50",
-          )}>
-            Copier
+        {/* Overlay hover */}
+        <div className="absolute inset-0 flex items-center justify-center gap-1.5 opacity-0 group-hover/sw:opacity-100 transition-opacity duration-200 bg-black/10 backdrop-blur-[1px]">
+          <Copy size={12} strokeWidth={1.5} className={needsLightText(color.hex) ? "text-white/80" : "text-black/50"} />
+          <span className={cn("font-sans text-[0.58rem] font-medium tracking-[0.15em] uppercase", needsLightText(color.hex) ? "text-white/80" : "text-black/50")}>
+            Copier HEX
           </span>
         </div>
-
-        {/* Confirmation copie */}
-        <AnimatePresence>
-          {copied && (
-            <motion.div
-              className="absolute inset-0 flex items-center justify-center gap-2 bg-black/20"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              <Check
-                size={14}
-                strokeWidth={2.5}
-                className={needsLightText(color.hex) ? "text-white" : "text-black/70"}
-              />
-              <span className={cn(
-                "font-sans text-[0.6rem] font-medium tracking-[0.15em] uppercase",
-                needsLightText(color.hex) ? "text-white" : "text-black/70",
-              )}>
-                Copié
-              </span>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        {/* Hex flottant dans le swatch (visible sans hover) */}
+        {/* HEX en bas à droite */}
         <span className={cn(
-          "absolute bottom-3 right-3",
-          "font-mono text-[0.6rem] tracking-wide",
-          "transition-opacity duration-250 group-hover:opacity-0",
-          needsLightText(color.hex) ? "text-white/50" : "text-black/30",
+          "absolute bottom-2.5 right-3 font-mono text-[0.58rem] tracking-wide transition-opacity duration-200 group-hover/sw:opacity-0",
+          needsLightText(color.hex) ? "text-white/45" : "text-black/25",
         )}>
           {color.hex.toUpperCase()}
         </span>
       </button>
 
-      {/* ── Infos ─────────────────────────────────────────────────────── */}
-      <div className="flex-1 flex flex-col gap-2.5 p-4 bg-blanc-marbre border-t border-gris-marbre/60">
+      {/* ── Infos principales ────────────────────────────────────────── */}
+      <div className="flex-1 flex flex-col bg-blanc-marbre border-t border-gris-marbre/60">
+        <div className="px-4 pt-3.5 pb-3 space-y-2">
 
-        {/* Nom */}
-        <div>
-          <p className="font-sans text-ui-lg font-medium text-noir-marquise leading-tight">
+          {/* Nom */}
+          <p className="font-sans text-[0.8rem] font-medium text-noir-marquise leading-tight">
             {color.name}
           </p>
-          <p className="font-mono text-[0.65rem] text-gris-texte/70 tracking-wide mt-0.5">
-            {color.hex.toUpperCase()}
+
+          {/* HEX copiable */}
+          <div className="flex items-center gap-1.5 flex-wrap">
+            <span className="label-mm text-gris-texte/40 w-8">HEX</span>
+            <CopyChip value={color.hex.toUpperCase()} />
+          </div>
+
+          {/* Usage */}
+          <p className="font-sans text-[0.68rem] text-gris-texte/70 leading-snug">
+            {color.usage}
           </p>
         </div>
 
-        {/* Usage */}
-        <p className="font-sans text-ui text-gris-texte leading-snug flex-1">
-          {color.usage}
-        </p>
+        {/* ── Zone déroulante — infos techniques ─────────────────────── */}
+        <div className="border-t border-gris-marbre/50 mt-auto">
+          <button
+            className="w-full flex items-center justify-between px-4 py-2.5 text-left group/tog hover:bg-gris-marbre/20 transition-colors duration-150"
+            onClick={() => setOpen(v => !v)}
+            aria-expanded={open}
+            aria-label={`${open ? "Masquer" : "Voir"} les codes techniques pour ${color.name}`}
+          >
+            <span className="label-mm text-gris-texte/40 group-hover/tog:text-gris-texte/70 transition-colors">
+              RGB · CMYK · Pantone
+            </span>
+            <ChevronDown
+              size={12}
+              strokeWidth={1.5}
+              className={cn(
+                "text-gris-texte/30 group-hover/tog:text-gris-texte/60 transition-all duration-200",
+                open && "rotate-180",
+              )}
+            />
+          </button>
 
-        {/* Métadonnées techniques */}
-        <div className={cn(
-          "pt-2.5 border-t border-gris-marbre/50",
-          "flex items-center justify-between gap-2",
-        )}>
-          <span className="label-mm text-gris-texte/40 text-[0.55rem]">
-            {"cmyk" in color ? color.cmyk : ""}
-          </span>
-          <span className="label-mm text-gris-texte/40 text-[0.55rem] text-right">
-            {"pantone" in color ? color.pantone : ""}
-          </span>
+          <AnimatePresence initial={false}>
+            {open && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.22, ease: EASE }}
+                className="overflow-hidden"
+              >
+                <div className="px-4 pb-3.5 pt-1 space-y-2 bg-ivoire-maison/50">
+                  {/* RGB */}
+                  <div className="flex items-center gap-1.5">
+                    <span className="label-mm text-gris-texte/40 w-8">RGB</span>
+                    <CopyChip value={color.rgb} muted />
+                  </div>
+                  {/* CMYK */}
+                  <div className="flex items-center gap-1.5">
+                    <span className="label-mm text-gris-texte/40 w-8">CMYK</span>
+                    <CopyChip value={color.cmyk} muted />
+                  </div>
+                  {/* Pantone */}
+                  <div className="flex items-center gap-1.5">
+                    <span className="label-mm text-gris-texte/40 w-8">PMS</span>
+                    <CopyChip value={color.pantone} muted />
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </div>
     </motion.article>
@@ -280,9 +296,8 @@ function ColorCard({ color, size = "md", animDelay = 0 }: ColorCardProps) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Règle 80/20 — barre de proportion animée
+// ProportionRule — règle 80/20
 // ─────────────────────────────────────────────────────────────────────────────
-
 function ProportionRule() {
   const ref    = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px 0px" });
@@ -296,25 +311,18 @@ function ProportionRule() {
       transition={{ duration: 0.7, ease: EASE }}
     >
       <div className="p-6 md:p-8 space-y-6">
-
-        {/* Titre */}
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <span className="label-mm text-gris-texte">Règle d&apos;usage fondamentale</span>
-            <h3 className="font-serif text-d-md font-light text-noir-marquise mt-1">
-              La règle 80 / 20
-            </h3>
+            <h3 className="font-serif text-d-md font-light text-noir-marquise mt-1">La règle 80 / 20</h3>
           </div>
           <p className="font-sans text-ui text-gris-texte max-w-sm leading-relaxed">
-            Toute composition Maison Marquise respecte
-            cette proportion entre couleurs sobre et accent gourmand.
+            Toute composition Maison Marquise respecte cette proportion entre couleurs sobres et accents gourmands.
           </p>
         </div>
 
-        {/* Barre de proportion */}
         <div className="space-y-3">
           <div className="relative h-12 md:h-14 rounded-[2px] overflow-hidden flex">
-            {/* 80% premium */}
             <motion.div
               className="h-full flex items-center justify-start pl-4 md:pl-6"
               style={{ backgroundColor: "#111111", flexShrink: 0 }}
@@ -331,8 +339,6 @@ function ProportionRule() {
                 80 %
               </motion.span>
             </motion.div>
-
-            {/* 20% gourmand */}
             <motion.div
               className="h-full flex items-center justify-end pr-4 md:pr-6 flex-1"
               style={{ backgroundColor: "#C7843E" }}
@@ -351,58 +357,32 @@ function ProportionRule() {
             </motion.div>
           </div>
 
-          {/* Légendes */}
           <div className="flex">
             <div className="flex items-center gap-2 flex-[4]">
               <span className="w-2.5 h-2.5 rounded-full bg-noir-marquise shrink-0" aria-hidden="true" />
-              <span className="font-sans text-ui text-gris-texte">
-                Sobre et premium — ivoire, blanc, noir, or
-              </span>
+              <span className="font-sans text-ui text-gris-texte">Sobre et premium — ivoire, blanc, noir, or</span>
             </div>
             <div className="flex items-center gap-2 flex-[1] justify-end">
               <span className="w-2.5 h-2.5 rounded-full bg-caramel shrink-0" aria-hidden="true" />
-              <span className="font-sans text-ui text-gris-texte whitespace-nowrap">
-                Gourmand
-              </span>
+              <span className="font-sans text-ui text-gris-texte whitespace-nowrap">Gourmand</span>
             </div>
           </div>
         </div>
 
-        {/* Pastilles couleur groupées */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 border-t border-gris-marbre/50">
-          {/* Groupe premium */}
           <div className="space-y-2">
-            <span className="label-mm text-gris-texte/50">Groupe sobre & premium</span>
+            <span className="label-mm text-gris-texte/50">Groupe sobre &amp; premium</span>
             <div className="flex flex-wrap gap-2">
               {PREMIUM.map((c) => (
-                <div
-                  key={c.hex}
-                  className="flex items-center gap-1.5 group/dot"
-                  title={c.name}
-                >
-                  <div
-                    className="w-5 h-5 rounded-full border border-black/10 shrink-0 transition-transform duration-200 group-hover/dot:scale-110"
-                    style={{ backgroundColor: c.hex }}
-                  />
-                </div>
+                <div key={c.hex} className="w-5 h-5 rounded-full border border-black/10 shrink-0" style={{ backgroundColor: c.hex }} title={c.name} />
               ))}
             </div>
           </div>
-          {/* Groupe gourmand */}
           <div className="space-y-2">
-            <span className="label-mm text-gris-texte/50">Groupe gourmand & chaleureux</span>
+            <span className="label-mm text-gris-texte/50">Groupe gourmand &amp; chaleureux</span>
             <div className="flex flex-wrap gap-2">
               {GOURMAND.map((c) => (
-                <div
-                  key={c.hex}
-                  className="flex items-center gap-1.5 group/dot"
-                  title={c.name}
-                >
-                  <div
-                    className="w-5 h-5 rounded-full border border-black/10 shrink-0 transition-transform duration-200 group-hover/dot:scale-110"
-                    style={{ backgroundColor: c.hex }}
-                  />
-                </div>
+                <div key={c.hex} className="w-5 h-5 rounded-full border border-black/10 shrink-0" style={{ backgroundColor: c.hex }} title={c.name} />
               ))}
             </div>
           </div>
@@ -413,9 +393,8 @@ function ProportionRule() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Tableau correspondances contextuelles
+// UsageTable — correspondances contextuelles
 // ─────────────────────────────────────────────────────────────────────────────
-
 function UsageTable() {
   const ref    = useRef<HTMLDivElement>(null);
   const inView = useInView(ref, { once: true, margin: "-60px 0px" });
@@ -430,16 +409,10 @@ function UsageTable() {
       role="table"
       aria-label="Correspondances couleurs par contexte d'usage"
     >
-      {/* En-tête tableau */}
-      <div
-        className="grid grid-cols-[1fr_auto] gap-4 px-5 py-3 bg-ivoire-maison border-b border-gris-marbre"
-        role="row"
-      >
+      <div className="grid grid-cols-[1fr_auto] gap-4 px-5 py-3 bg-ivoire-maison border-b border-gris-marbre" role="row">
         <span className="label-mm text-gris-texte" role="columnheader">Contexte d&apos;usage</span>
         <span className="label-mm text-gris-texte" role="columnheader">Couleurs associées</span>
       </div>
-
-      {/* Lignes */}
       {USAGE_ROWS.map((row, i) => (
         <motion.div
           key={row.context}
@@ -453,21 +426,10 @@ function UsageTable() {
           animate={inView ? { opacity: 1, x: 0 } : {}}
           transition={{ delay: 0.1 + i * 0.07, duration: 0.5, ease: EASE }}
         >
-          <span
-            className="font-sans text-ui-lg text-noir-marquise"
-            role="cell"
-          >
-            {row.context}
-          </span>
+          <span className="font-sans text-ui-lg text-noir-marquise" role="cell">{row.context}</span>
           <div className="flex items-center gap-1.5" role="cell">
             {row.colors.map((hex) => (
-              <div
-                key={hex}
-                className="w-6 h-6 rounded-full border border-black/10 shrink-0"
-                style={{ backgroundColor: hex }}
-                title={hex}
-                aria-label={hex}
-              />
+              <div key={hex} className="w-6 h-6 rounded-full border border-black/10 shrink-0" style={{ backgroundColor: hex }} title={hex} aria-label={hex} />
             ))}
           </div>
         </motion.div>
@@ -479,7 +441,6 @@ function UsageTable() {
 // ─────────────────────────────────────────────────────────────────────────────
 // SECTION PRINCIPALE
 // ─────────────────────────────────────────────────────────────────────────────
-
 export function CouleursSection() {
   const headerRef = useRef<HTMLDivElement>(null);
   const headerIn  = useInView(headerRef, { once: true, margin: "-80px 0px" });
@@ -491,13 +452,6 @@ export function CouleursSection() {
       aria-labelledby="couleurs-title"
     >
       <div className="line-gold w-full" aria-hidden="true" />
-
-      {/* M fantôme — haut droit */}
-      <div
-        className="absolute -top-24 -right-16 font-serif font-light leading-none select-none pointer-events-none"
-        style={{ fontSize: "clamp(16rem, 36vw, 44rem)", color: "rgba(185,154,95,0.06)" }}
-        aria-hidden="true"
-      />
 
       <div className="container-mm py-section relative">
 
@@ -551,10 +505,37 @@ export function CouleursSection() {
             animate={headerIn ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.25, ease: EASE }}
           >
-            Dix couleurs pensées ensemble. Six sobres et premium,
-            quatre gourmandes et chaleureuses. Cliquez sur chaque
-            carte pour copier le code HEX.
+            Dix couleurs officielles — cliquez sur chaque pastille pour copier le code HEX.
+            Les codes RGB, CMYK et Pantone sont disponibles en dépliant chaque carte.
           </motion.p>
+
+          {/* Bouton téléchargement palette */}
+          <motion.div
+            className="mt-6"
+            initial={{ opacity: 0 }}
+            animate={headerIn ? { opacity: 1 } : {}}
+            transition={{ duration: 0.5, delay: 0.4, ease: EASE }}
+          >
+            <button
+              disabled
+              className="inline-flex items-center gap-2.5 px-5 py-3 rounded-[2px] border border-gris-marbre bg-blanc-marbre text-gris-texte/45 cursor-not-allowed font-sans text-[0.65rem] font-medium tracking-[0.14em] uppercase"
+              title="Téléchargement disponible prochainement"
+              aria-label="Télécharger la palette couleurs — bientôt disponible"
+            >
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+                <path d="M6.5 1v7M3.5 5.5l3 3.5 3-3.5M1 10.5h11" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
+              </svg>
+              Télécharger la palette couleurs
+              <span className="inline-flex gap-1 ml-1">
+                {["PDF", "ASE", "CSS"].map((f) => (
+                  <span key={f} className="px-1.5 py-0.5 bg-gris-marbre/50 rounded-[2px] text-[0.5rem] font-medium tracking-wide normal-case text-gris-texte/40">
+                    {f}
+                  </span>
+                ))}
+              </span>
+              <span className="text-[0.5rem] text-gris-texte/30 normal-case tracking-normal">— bientôt disponible</span>
+            </button>
+          </motion.div>
         </div>
 
         {/* ══ RÈGLE 80 / 20 ════════════════════════════════════════════ */}
@@ -573,27 +554,19 @@ export function CouleursSection() {
           >
             <div>
               <span className="label-mm text-gris-texte">Groupe principal</span>
-              <h3 className="font-serif text-d-md font-light text-noir-marquise mt-1">
-                Sobre &amp; premium
-              </h3>
+              <h3 className="font-serif text-d-md font-light text-noir-marquise mt-1">Sobre &amp; premium</h3>
             </div>
-            {/* Badge proportion */}
             <span className="chip-mm mb-1">80 %</span>
           </motion.div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-4">
             {PREMIUM.map((color, i) => (
-              <ColorCard
-                key={color.token}
-                color={color}
-                size="lg"
-                animDelay={i * 75}
-              />
+              <ColorCard key={color.token} color={color} animDelay={i * 65} />
             ))}
           </div>
         </div>
 
-        {/* Séparateur éditorial */}
+        {/* Séparateur */}
         <div className="relative mb-12 md:mb-16 flex items-center gap-6">
           <div className="flex-1 h-px bg-gris-marbre/60" />
           <div className="w-4 h-px bg-or-champagne/40" aria-hidden="true" />
@@ -611,21 +584,14 @@ export function CouleursSection() {
           >
             <div>
               <span className="label-mm text-gris-texte">Groupe accent</span>
-              <h3 className="font-serif text-d-md font-light text-noir-marquise mt-1">
-                Gourmand &amp; chaleureux
-              </h3>
+              <h3 className="font-serif text-d-md font-light text-noir-marquise mt-1">Gourmand &amp; chaleureux</h3>
             </div>
             <span className="chip-mm mb-1">20 %</span>
           </motion.div>
 
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4">
             {GOURMAND.map((color, i) => (
-              <ColorCard
-                key={color.token}
-                color={color}
-                size="lg"
-                animDelay={i * 90}
-              />
+              <ColorCard key={color.token} color={color} animDelay={i * 80} />
             ))}
           </div>
         </div>
@@ -640,16 +606,9 @@ export function CouleursSection() {
             transition={{ duration: 0.6, ease: EASE }}
           >
             <span className="label-mm text-gris-texte">Guide pratique</span>
-            <h3 className="font-serif text-d-md font-light text-noir-marquise mt-1">
-              Quelle couleur, quel usage ?
-            </h3>
-            <div
-              className="h-px mt-4 w-14"
-              style={{ background: "linear-gradient(90deg, #B99A5F, transparent)" }}
-              aria-hidden="true"
-            />
+            <h3 className="font-serif text-d-md font-light text-noir-marquise mt-1">Quelle couleur, quel usage ?</h3>
+            <div className="h-px mt-4 w-14" style={{ background: "linear-gradient(90deg, #B99A5F, transparent)" }} aria-hidden="true" />
           </motion.div>
-
           <UsageTable />
         </div>
 

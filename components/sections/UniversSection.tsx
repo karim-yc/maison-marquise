@@ -2,7 +2,6 @@
 
 import { useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -103,17 +102,8 @@ const UNIVERS = [
 function SceneMaison() {
   return (
     <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
-      {/* Texture marbre officielle */}
-      <Image
-        src="/assets/texture-marble-veined.jpg"
-        alt=""
-        fill
-        sizes="(max-width: 1024px) 100vw, 33vw"
-        className="object-cover opacity-25"
-        quality={50}
-      />
-      {/* Overlay ivoire pour adoucir la texture */}
-      <div className="absolute inset-0 bg-ivoire-maison/75" />
+      {/* Fond ivoire — texture supprimée (pixelisation sur petits formats) */}
+      <div className="absolute inset-0 bg-ivoire-maison" />
 
       {/* Grille fine */}
       <div className="absolute inset-0 opacity-[0.03]"

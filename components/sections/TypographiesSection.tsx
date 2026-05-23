@@ -437,7 +437,7 @@ export function TypographiesSection() {
             <button
               disabled
               className="inline-flex items-center gap-2 px-4 py-2.5 rounded-[2px] border border-gris-marbre bg-ivoire-maison/60 text-gris-texte/45 cursor-not-allowed font-sans text-[0.6rem] font-medium tracking-[0.12em] uppercase"
-              title="Bientôt disponible"
+              title="Téléchargement bientôt disponible"
               aria-label="Télécharger les règles typographiques — bientôt disponible"
             >
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">

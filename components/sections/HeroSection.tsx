@@ -132,10 +132,10 @@ export function HeroSection({ className }: { className?: string }) {
           <button
             onClick={scrollToPackaging}
             className="btn-mm-gold w-full md:flex-1 flex items-center justify-center gap-2"
-            aria-label="Voir le système packaging"
+            aria-label="Explorer la charte graphique complète"
           >
             <Package size={12} strokeWidth={1.5} aria-hidden="true" />
-            <span>Voir le packaging</span>
+            <span>Explorer la charte</span>
           </button>
         </motion.div>
 

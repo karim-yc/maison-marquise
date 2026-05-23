@@ -519,7 +519,7 @@ export function CouleursSection() {
             <button
               disabled
               className="inline-flex items-center gap-2.5 px-5 py-3 rounded-[2px] border border-gris-marbre bg-blanc-marbre text-gris-texte/45 cursor-not-allowed font-sans text-[0.65rem] font-medium tracking-[0.14em] uppercase"
-              title="Téléchargement disponible prochainement"
+              title="Téléchargement bientôt disponible"
               aria-label="Télécharger la palette couleurs — bientôt disponible"
             >
               <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">

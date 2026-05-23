@@ -141,6 +141,3 @@ export function LogoMonogram({ className, style, ...aria }: LogoSvgProps) {
   );
 }
 
-// Pas de marges négatives — les SVG sont parfaitement collés.
-export const LOGO_FULL_MARGINS     = {} as const;
-export const LOGO_MONOGRAM_MARGINS = {} as const;

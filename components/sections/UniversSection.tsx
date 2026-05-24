@@ -390,8 +390,8 @@ function SyntheseBande() {
     >
       {/* En-tête */}
       <div className="px-6 py-4 border-b border-gris-marbre bg-ivoire-maison flex items-center justify-between">
-        <span className="label-mm text-gris-texte">Guide de sélection</span>
-        <span className="font-script text-2xl text-or-champagne/30 select-none" aria-hidden="true">M</span>
+        <span className="label-mm text-gris-texte">Usage par contexte</span>
+
       </div>
 
       {/* Grille 3 colonnes */}

@@ -258,7 +258,7 @@ export function PackagingSection() {
             animate={headerIn ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, ease: EASE }}
           >
-            L&apos;objet Maison Marquise
+            Packaging officiel
           </motion.span>
 
           <div className="flex items-start gap-4 mt-3">

@@ -73,7 +73,7 @@ function BlockTitle({ children }: { children: React.ReactNode }) {
     <>
       <h3
         className="font-serif font-light text-noir-marquise leading-tight"
-        style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)" }}
+        style={{ fontSize: "clamp(1.375rem, 2.5vw, 1.875rem)" }}
       >
         {children}
       </h3>
@@ -175,6 +175,7 @@ export function ArchitectureSection() {
           </motion.span>
 
           <div className="flex items-start gap-5">
+            {/* Numéro 06 — grand sur sm+, petit inline sur mobile */}
             <motion.span
               className="font-serif font-light text-gris-marbre/25 leading-none shrink-0 select-none hidden sm:block"
               style={{ fontSize: "clamp(5rem, 12vw, 9rem)" }}
@@ -187,6 +188,17 @@ export function ArchitectureSection() {
             </motion.span>
 
             <div className="flex-1 pt-1 md:pt-3">
+              {/* Numéro visible sur mobile uniquement */}
+              <motion.span
+                className="font-serif font-light text-gris-marbre/30 leading-none select-none block sm:hidden mb-2"
+                style={{ fontSize: "clamp(3rem, 10vw, 4rem)" }}
+                initial={{ opacity: 0 }}
+                animate={headerIn ? { opacity: 1 } : {}}
+                transition={{ duration: 0.6, ease: EASE }}
+                aria-hidden="true"
+              >
+                06
+              </motion.span>
               <motion.h2
                 id="archi-title"
                 className="font-serif font-light text-noir-marquise leading-none text-balance"
@@ -261,6 +273,7 @@ export function ArchitectureSection() {
               src="/assets/archi/facade-2.jpg"
               alt="Façade principale Maison Marquise — vue frontale"
               aspect="16/9"
+              label="Façade · Vue frontale"
             />
             <ArchPhoto
               src="/assets/archi/facade-1.jpg"
@@ -485,7 +498,7 @@ export function ArchitectureSection() {
             src="/assets/archi/etage-2.jpg"
             alt="Signalétique salon de thé — étage Maison Marquise"
             aspect="4/3"
-            label="Signalétique · Salon de thé"
+            label="Étage 1 · Espace salon de thé"
           />
         </motion.div>
 
@@ -505,7 +518,7 @@ export function ArchitectureSection() {
             <span className="label-mm text-gris-texte">Règles essentielles</span>
             <h3
               className="font-serif font-light text-noir-marquise mt-1"
-              style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)" }}
+              style={{ fontSize: "clamp(1.375rem, 2.5vw, 1.875rem)" }}
             >
               À faire &amp; à éviter
             </h3>

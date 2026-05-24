@@ -22,7 +22,6 @@ export function HeroSection({ className }: { className?: string }) {
   useEffect(() => setMounted(true), []);
 
   const scrollToContent   = () => document.getElementById("adn")?.scrollIntoView({ behavior: "smooth" });
-  const scrollToPackaging = () => document.getElementById("packaging")?.scrollIntoView({ behavior: "smooth" });
 
   return (
     <motion.section

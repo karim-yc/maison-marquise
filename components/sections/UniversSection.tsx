@@ -508,7 +508,7 @@ export function UniversSection() {
                 animate={headerIn ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.9, delay: 0.12, ease: EASE_SPRING }}
               >
-                Trois univers, un territoire
+                Les trois univers de marque
               </motion.h2>
               <motion.div
                 className="h-px mt-4"
@@ -527,8 +527,8 @@ export function UniversSection() {
             animate={headerIn ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.25, ease: EASE }}
           >
-            Chaque univers a sa palette, son énergie, son contexte d'usage.
-            Ils forment ensemble le territoire visuel complet de Maison Marquise.
+            Chaque univers a sa palette, son énergie et ses contextes d'usage.
+            Ils définissent comment appliquer la marque selon le support et le moment.
           </motion.p>
         </div>
 

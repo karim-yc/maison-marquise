@@ -3,7 +3,6 @@ import { AdnSection }         from "@/components/sections/AdnSection";
 import { LogoSection }        from "@/components/sections/LogoSection";
 import { CouleursSection }        from "@/components/sections/CouleursSection";
 import { TypographiesSection }    from "@/components/sections/TypographiesSection";
-import { SupportsVenteSection }  from "@/components/sections/SupportsVenteSection";
 import { PackagingSection }       from "@/components/sections/PackagingSection";
 import { UniversSection }         from "@/components/sections/UniversSection";
 import { BrandSection }       from "@/components/brand/BrandSection";
@@ -30,8 +29,6 @@ export default function HomePage() {
       {/* 04 — TYPOGRAPHIES */}
       <TypographiesSection />
 
-      {/* 05 — SUPPORTS DE VENTE */}
-      <SupportsVenteSection />
 
       {/* 06 — PACKAGING */}
       <PackagingSection />

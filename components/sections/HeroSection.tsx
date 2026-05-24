@@ -100,7 +100,7 @@ export function HeroSection({ className }: { className?: string }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.75, duration: 0.6, ease: EASE }}
         >
-          Pâtisserie fine, généreuse et accessible.
+          Maison Marquise — Brandbook officiel.
         </motion.p>
 
         {/* Phrase secondaire */}
@@ -110,8 +110,8 @@ export function HeroSection({ className }: { className?: string }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.9, duration: 0.6, ease: EASE }}
         >
-          Une maison gourmande, élégante et proche —
-          bien plus qu&apos;une boulangerie.
+          Charte graphique à l&apos;usage des graphistes,
+          imprimeurs et prestataires.
         </motion.p>
 
         {/* CTAs — empilés sur mobile (<640px), côte à côte au-delà */}

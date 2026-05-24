@@ -27,7 +27,7 @@ const VARIANTS = [
     minSize:   "120 px de largeur minimum",
     fondOk:    "Ivoire · Blanc marbre · Noir Marquise",
     fondEviter: "Fond photographique · Fond coloré non approuvé",
-    files:     ["SVG (complet)", "PNG (blanc)", "PNG (transparent)", "PDF"],
+    files:     ["SVG (complet)", "PNG (blanc)", "PNG (transparent)"],
   },
   {
     id:        "no-baseline",
@@ -120,8 +120,6 @@ const LOGO_FILE_URLS: Record<string, string | null> = {
   "PNG (blanc)":          null, // géré par variante
   // PNG — fond transparent
   "PNG (transparent)":    null,
-  // PDF — à produire
-  "PDF":                  null,
 };
 
 // URLs PNG par variante

@@ -219,7 +219,7 @@ export function AdnSection() {
             transition={{ duration: 0.7, delay: 0.32, ease: EASE }}
           >
             Entre savoir-faire artisanal, créations gourmandes, coffee time et pause salée,
-            Maison Marquise propose bien plus qu&apos;une boulangerie : une maison de goût,
+            Maison Marquise se définit comme une maison de goût,
             de plaisir et d&apos;élégance au quotidien.
           </motion.p>
         </div>

@@ -431,136 +431,92 @@ function ClearSpaceDemo() {
         </button>
       </div>
 
-      {/* Démonstration visuelle */}
-      <div className="relative bg-ivoire-maison py-10 px-6 md:px-10 overflow-hidden">
-        <div className="flex items-center justify-center gap-0">
-
-          {/* Monogramme gauche — unité de mesure visuelle */}
+      {/* Démonstration visuelle — grille 3×3 */}
+      <div className="bg-ivoire-maison px-4 py-8 md:px-8">
+        <div
+          className="grid mx-auto"
+          style={{ gridTemplateColumns: "auto 1fr auto", maxWidth: 560 }}
+          aria-hidden="true"
+        >
+          {/* Ligne haute — M centré sur le bord supérieur */}
+          <div />
           <AnimatePresence>
-            {showZone && (
-              <motion.div
-                className="flex flex-col items-center gap-1.5 shrink-0"
-                initial={{ opacity: 0, x: -8 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -8 }}
-                transition={{ duration: 0.35 }}
-                aria-hidden="true"
-              >
-                <div className="w-px h-8 border-l border-dashed border-or-champagne/50" />
-                <div className="w-10 md:w-12 text-or-champagne/70">
-                  <LogoMonogram aria-hidden={true} />
-                </div>
-                <div className="w-px h-8 border-l border-dashed border-or-champagne/50" />
-                <span className="font-sans text-[0.45rem] tracking-[0.14em] uppercase text-or-champagne/55 [writing-mode:vertical-rl] rotate-180 mt-1">zone libre</span>
+            {showZone ? (
+              <motion.div className="flex flex-col items-center justify-end pb-1"
+                initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -6 }} transition={{ duration: 0.3 }}>
+                <div className="w-7 md:w-9 text-or-champagne/70"><LogoMonogram aria-hidden /></div>
+                <div className="w-px h-4 md:h-5 bg-or-champagne/40" />
               </motion.div>
-            )}
+            ) : <div className="h-8" />}
           </AnimatePresence>
+          <div />
 
-          {/* Trait pointillé gauche */}
+          {/* Ligne centrale — M gauche · Logo · M droit */}
           <AnimatePresence>
-            {showZone && (
-              <motion.div
-                className="w-8 md:w-12 h-px border-t border-dashed border-or-champagne/40 shrink-0"
-                initial={{ opacity: 0, scaleX: 0 }}
-                animate={{ opacity: 1, scaleX: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                aria-hidden="true"
-              />
-            )}
+            {showZone ? (
+              <motion.div className="flex flex-row items-center justify-end pr-1"
+                initial={{ opacity: 0, x: -6 }} animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -6 }} transition={{ duration: 0.3 }}>
+                <div className="h-px w-4 md:w-5 bg-or-champagne/40 shrink-0" />
+                <div className="w-7 md:w-9 text-or-champagne/70 shrink-0"><LogoMonogram aria-hidden /></div>
+              </motion.div>
+            ) : <div className="w-4" />}
           </AnimatePresence>
 
-          {/* Logo — agrandi, avec cadre pointillé */}
-          <div className="relative shrink-0 w-44 md:w-60 lg:w-72">
+          {/* Logo avec cadre pointillé */}
+          <div className="relative flex items-center justify-center py-5">
             <AnimatePresence>
               {showZone && (
                 <motion.div
-                  className="absolute -inset-3 border border-dashed border-or-champagne/30 rounded-[2px] pointer-events-none"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                  aria-hidden="true"
+                  className="absolute inset-0 border border-dashed border-or-champagne/50 rounded-[2px] pointer-events-none"
+                  initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                  transition={{ duration: 0.25 }}
                 />
               )}
             </AnimatePresence>
-            <div className="overflow-hidden">
-              
-                <LogoFull style={{ color: "#111111" }} aria-hidden={true} />
-              
-            </div>
+            <LogoFull style={{ color: "#111111" }} aria-hidden />
           </div>
 
-          {/* Trait pointillé droit */}
           <AnimatePresence>
-            {showZone && (
-              <motion.div
-                className="w-8 md:w-12 h-px border-t border-dashed border-or-champagne/40 shrink-0"
-                initial={{ opacity: 0, scaleX: 0 }}
-                animate={{ opacity: 1, scaleX: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                aria-hidden="true"
-              />
-            )}
-          </AnimatePresence>
-
-          {/* Monogramme droit */}
-          <AnimatePresence>
-            {showZone && (
-              <motion.div
-                className="flex flex-col items-center gap-1.5 shrink-0"
-                initial={{ opacity: 0, x: 8 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: 8 }}
-                transition={{ duration: 0.35 }}
-                aria-hidden="true"
-              >
-                <div className="w-px h-8 border-l border-dashed border-or-champagne/50" />
-                <div className="w-10 md:w-12 text-or-champagne/70">
-                  <LogoMonogram aria-hidden={true} />
-                </div>
-                <div className="w-px h-8 border-l border-dashed border-or-champagne/50" />
-                <span className="font-sans text-[0.45rem] tracking-[0.14em] uppercase text-or-champagne/55 [writing-mode:vertical-rl] mt-1">zone libre</span>
+            {showZone ? (
+              <motion.div className="flex flex-row items-center justify-start pl-1"
+                initial={{ opacity: 0, x: 6 }} animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 6 }} transition={{ duration: 0.3 }}>
+                <div className="w-7 md:w-9 text-or-champagne/70 shrink-0"><LogoMonogram aria-hidden /></div>
+                <div className="h-px w-4 md:w-5 bg-or-champagne/40 shrink-0" />
               </motion.div>
-            )}
+            ) : <div className="w-4" />}
           </AnimatePresence>
 
+          {/* Ligne basse — M centré sur le bord inférieur */}
+          <div />
+          <AnimatePresence>
+            {showZone ? (
+              <motion.div className="flex flex-col items-center justify-start pt-1"
+                initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 6 }} transition={{ duration: 0.3 }}>
+                <div className="w-px h-4 md:h-5 bg-or-champagne/40" />
+                <div className="w-7 md:w-9 text-or-champagne/70"><LogoMonogram aria-hidden /></div>
+              </motion.div>
+            ) : <div className="h-8" />}
+          </AnimatePresence>
+          <div />
         </div>
 
-        {/* M en haut et bas */}
+        {/* Légende */}
         <AnimatePresence>
           {showZone && (
-            <>
-              <motion.div
-                className="absolute top-3 left-1/2 -translate-x-1/2 flex items-center gap-2"
-                initial={{ opacity: 0, y: -4 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                aria-hidden="true"
-              >
-                <div className="h-px w-8 border-t border-dashed border-or-champagne/35" />
-                <div className="w-5 text-or-champagne/55"><LogoMonogram aria-hidden={true} /></div>
-                <div className="h-px w-8 border-t border-dashed border-or-champagne/35" />
-              </motion.div>
-              <motion.div
-                className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2"
-                initial={{ opacity: 0, y: 4 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                aria-hidden="true"
-              >
-                <div className="h-px w-8 border-t border-dashed border-or-champagne/35" />
-                <div className="w-5 text-or-champagne/55"><LogoMonogram aria-hidden={true} /></div>
-                <div className="h-px w-8 border-t border-dashed border-or-champagne/35" />
-              </motion.div>
-            </>
+            <motion.p
+              className="text-center font-sans text-[0.58rem] text-or-champagne/55 tracking-[0.1em] mt-5"
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+              transition={{ duration: 0.3, delay: 0.2 }} aria-hidden="true"
+            >
+              = hauteur du M sur chaque côté
+            </motion.p>
           )}
         </AnimatePresence>
       </div>
-
       <div className="px-5 py-4 border-t border-gris-marbre">
         <p className="font-sans text-ui text-gris-texte leading-relaxed max-w-reading">
           L'espace minimum tout autour du logo correspond à la hauteur du M.

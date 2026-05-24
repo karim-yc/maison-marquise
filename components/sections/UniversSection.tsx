@@ -151,7 +151,7 @@ function SceneSignature() {
         alt=""
         fill
         sizes="(max-width: 1024px) 100vw, 33vw"
-        className="object-cover object-top"
+        className="object-cover object-[center_65%]"
         quality={80}
       />
       {/* Overlay sombre — renforce le côté éditorial noir */}
@@ -211,6 +211,8 @@ function UniversCard({
           style={{
             background: isDark
               ? `linear-gradient(to top, ${univers.id === "gourmand" ? "rgba(28,14,4,0.95)" : "rgba(17,17,17,0.92)"} 0%, transparent 100%)`
+              : univers.id === "maison"
+              ? "linear-gradient(to top, rgba(17,17,17,0.55) 0%, transparent 100%)"
               : "linear-gradient(to top, rgba(247,243,236,0.90) 0%, transparent 100%)",
           }}
           aria-hidden="true"
@@ -236,7 +238,7 @@ function UniversCard({
               className={cn(
                 "inline-flex items-center px-2 py-0.5 rounded-[2px]",
                 "font-sans text-[0.55rem] font-medium tracking-[0.15em] uppercase",
-                isDark
+                isDark || univers.id === "maison"
                   ? "bg-ivoire-maison/8 text-ivoire-maison/55 border border-ivoire-maison/10"
                   : "bg-noir-marquise/6 text-noir-marquise/45 border border-noir-marquise/8",
               )}

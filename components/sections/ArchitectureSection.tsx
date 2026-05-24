@@ -6,125 +6,127 @@ import Image from "next/image";
 import { Check, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-// ─────────────────────────────────────────────────────────────────────────────
-// ArchitectureSection — Charte architecturale Maison Marquise
-// Usage : architectes, décorateurs, agenceurs, signalétique, prestataires boutique
-// Source : MAISON_MARQUISE_CHARTE.pdf — Création Artesia Studio
-// ─────────────────────────────────────────────────────────────────────────────
-
 const EASE        = [0.25, 0.46, 0.45, 0.94] as const;
 const EASE_SPRING = [0.16, 1, 0.3, 1]        as const;
 
-// ── Matières architecturales ─────────────────────────────────────────────────
+// ── Matières ──────────────────────────────────────────────────────────────────
 const MATIERES = [
-  { name: "Ivoire · Pierre claire",  hex: "#F7F3EC", note: "Luminosité, douceur, premium" },
-  { name: "Bois nervuré",            hex: "#8B6347", note: "Chaleur, artisanat, naturel" },
-  { name: "Noir",                    hex: "#111111", note: "Contraste, structure, stores" },
-  { name: "Or Champagne",            hex: "#B99A5F", note: "Accent premium, à utiliser avec retenue" },
-  { name: "Terre cuite",             hex: "#C45D2A", note: "Chaleur architecturale, plafond, murs" },
-  { name: "Végétal",                 hex: "#6B7A3D", note: "Fraîcheur, respiration, confort" },
+  { name: "Ivoire & pierre", hex: "#F7F3EC", desc: "Luminosité, douceur, premium" },
+  { name: "Bois nervuré",    hex: "#8B6347", desc: "Chaleur, artisanat, naturel" },
+  { name: "Noir profond",    hex: "#111111", desc: "Contraste, structure, stores" },
+  { name: "Or champagne",    hex: "#B99A5F", desc: "Accent premium — avec retenue" },
+  { name: "Terre cuite",     hex: "#C45D2A", desc: "Plafond, murs, chaleur arch." },
+  { name: "Végétal",         hex: "#6B7A3D", desc: "Fraîcheur, respiration" },
 ] as const;
 
-const AFAIRE   = [
-  "Garder une ambiance chaude et premium.",
-  "Mettre les produits au centre de l'expérience.",
-  "Utiliser la lumière pour valoriser vitrines et comptoirs.",
-  "Garder une circulation client simple.",
-  "Harmoniser façade, packaging, menus et intérieur.",
-  "Utiliser le monogramme M comme repère architectural.",
+const AFAIRE = [
+  "Ambiance chaude et premium.",
+  "Produits au centre de l'expérience.",
+  "Lumière pour valoriser vitrines et comptoirs.",
+  "Circulation client simple et fluide.",
+  "Harmonie façade, packaging, menus, intérieur.",
+  "Monogramme M comme repère architectural.",
 ] as const;
 
-const AEVITER  = [
-  "Trop charger les murs.",
-  "Multiplier les logos partout.",
-  "Utiliser des matériaux froids sans bois ou lumière.",
-  "Créer une boutique trop showroom.",
-  "Rendre les menu boards illisibles.",
-  "Utiliser des couleurs hors charte sans justification.",
+const AEVITER = [
+  "Murs trop chargés.",
+  "Logos multipliés partout.",
+  "Matériaux froids sans chaleur ni lumière.",
+  "Boutique trop showroom.",
+  "Menu boards illisibles.",
+  "Couleurs hors charte sans justification.",
 ] as const;
 
 // ─────────────────────────────────────────────────────────────────────────────
-// PhotoCard — image avec label hover
+// Composant — Séparateur de bloc
 // ─────────────────────────────────────────────────────────────────────────────
-function PhotoCard({
-  src, alt, label, tall = false,
-}: {
-  src: string; alt: string; label: string; tall?: boolean;
-}) {
-  const ref    = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-60px 0px" });
-
+function BlockDivider() {
   return (
-    <motion.div
-      ref={ref}
-      className={cn(
-        "relative overflow-hidden rounded-[3px] group",
-        tall ? "row-span-2" : "row-span-1",
-      )}
-      style={{ minHeight: tall ? 400 : 200 }}
-      initial={{ opacity: 0, scale: 0.98 }}
-      animate={inView ? { opacity: 1, scale: 1 } : {}}
-      transition={{ duration: 0.7, ease: EASE_SPRING }}
-    >
-      <Image
-        src={src}
-        alt={alt}
-        fill
-        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-        className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
-        quality={80}
-      />
-      {/* Label overlay au bas */}
-      <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-noir-marquise/70 to-transparent" />
-      <div className="absolute bottom-3 left-4">
-        <span className="font-sans text-[0.55rem] font-medium tracking-[0.16em] uppercase text-ivoire-maison/80">
-          {label}
-        </span>
-      </div>
-    </motion.div>
+    <div className="flex items-center gap-4 py-2" aria-hidden="true">
+      <div className="flex-1 h-px bg-gris-marbre/50" />
+      <div className="w-1 h-1 rotate-45 bg-or-champagne/40" />
+      <div className="flex-1 h-px bg-gris-marbre/50" />
+    </div>
   );
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// RuleBlock — bloc de règles avec titre, texte, liste
+// Composant — Numéro discret
 // ─────────────────────────────────────────────────────────────────────────────
-function RuleBlock({
-  index, title, text, rules,
-}: {
-  index: string; title: string; text: string; rules: readonly string[];
-}) {
-  const ref    = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-60px 0px" });
-
+function BlockNumber({ n }: { n: string }) {
   return (
-    <motion.div
-      ref={ref}
-      className="flex flex-col gap-4"
-      initial={{ opacity: 0, y: 20 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.65, ease: EASE_SPRING }}
+    <span
+      className="font-serif font-light text-gris-marbre/35 leading-none select-none"
+      style={{ fontSize: "clamp(3.5rem, 8vw, 5.5rem)" }}
+      aria-hidden="true"
     >
-      <div className="flex items-baseline gap-3">
-        <span className="font-serif font-light text-2xl text-gris-marbre/40 select-none" aria-hidden="true">
-          {index}
-        </span>
-        <div>
-          <h3 className="font-serif font-light text-noir-marquise" style={{ fontSize: "clamp(1.25rem, 2.5vw, 1.75rem)" }}>
-            {title}
-          </h3>
-          <div className="h-px mt-1.5 w-10" style={{ background: "linear-gradient(90deg, #B99A5F, transparent)" }} aria-hidden="true" />
-        </div>
+      {n}
+    </span>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Composant — Titre de bloc
+// ─────────────────────────────────────────────────────────────────────────────
+function BlockTitle({ children }: { children: React.ReactNode }) {
+  return (
+    <>
+      <h3
+        className="font-serif font-light text-noir-marquise leading-tight"
+        style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)" }}
+      >
+        {children}
+      </h3>
+      <div
+        className="h-px w-12 mt-3"
+        style={{ background: "linear-gradient(90deg, #B99A5F, transparent)" }}
+        aria-hidden="true"
+      />
+    </>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Composant — Liste de règles
+// ─────────────────────────────────────────────────────────────────────────────
+function RuleList({ rules }: { rules: readonly string[] }) {
+  return (
+    <ul className="space-y-2.5" role="list">
+      {rules.map((r) => (
+        <li key={r} className="flex items-start gap-3">
+          <span className="mt-2 w-1 h-1 rounded-full bg-or-champagne/70 shrink-0" aria-hidden="true" />
+          <span className="font-sans text-ui text-gris-texte leading-snug">{r}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Composant — Image cadrée avec légende
+// ─────────────────────────────────────────────────────────────────────────────
+function ArchPhoto({
+  src, alt, label, aspect = "16/9", className,
+}: {
+  src: string; alt: string; label?: string;
+  aspect?: string; className?: string;
+}) {
+  return (
+    <div className={cn("relative overflow-hidden rounded-[3px] group", className)}>
+      <div style={{ aspectRatio: aspect }} className="relative">
+        <Image
+          src={src} alt={alt} fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 60vw, 50vw"
+          className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+          quality={82}
+        />
       </div>
-      <p className="font-sans text-body-lg text-gris-texte leading-relaxed">{text}</p>
-      <ul className="space-y-1.5" role="list">
-        {rules.map((r) => (
-          <li key={r} className="flex items-start gap-2.5">
-            <span className="mt-1.5 w-1 h-1 rounded-full bg-or-champagne/70 shrink-0" aria-hidden="true" />
-            <span className="font-sans text-ui text-gris-texte">{r}</span>
-          </li>
-        ))}
-      </ul>
-    </motion.div>
+      {label && (
+        <p className="mt-2 font-sans text-[0.55rem] font-medium tracking-[0.18em] uppercase text-gris-texte/50">
+          {label}
+        </p>
+      )}
+    </div>
   );
 }
 
@@ -133,11 +135,20 @@ function RuleBlock({
 // ─────────────────────────────────────────────────────────────────────────────
 export function ArchitectureSection() {
   const headerRef = useRef<HTMLDivElement>(null);
-  const headerIn  = useInView(headerRef, { once: true, margin: "-80px 0px" });
-  const matRef    = useRef<HTMLDivElement>(null);
-  const matIn     = useInView(matRef, { once: true, margin: "-60px 0px" });
-  const doRef     = useRef<HTMLDivElement>(null);
-  const doIn      = useInView(doRef, { once: true, margin: "-60px 0px" });
+  const b1Ref     = useRef<HTMLDivElement>(null);
+  const b2Ref     = useRef<HTMLDivElement>(null);
+  const b3Ref     = useRef<HTMLDivElement>(null);
+  const b4Ref     = useRef<HTMLDivElement>(null);
+  const b5Ref     = useRef<HTMLDivElement>(null);
+  const b6Ref     = useRef<HTMLDivElement>(null);
+
+  const headerIn = useInView(headerRef, { once: true, margin: "-80px 0px" });
+  const b1In     = useInView(b1Ref, { once: true, margin: "-60px 0px" });
+  const b2In     = useInView(b2Ref, { once: true, margin: "-60px 0px" });
+  const b3In     = useInView(b3Ref, { once: true, margin: "-60px 0px" });
+  const b4In     = useInView(b4Ref, { once: true, margin: "-60px 0px" });
+  const b5In     = useInView(b5Ref, { once: true, margin: "-60px 0px" });
+  const b6In     = useInView(b6Ref, { once: true, margin: "-60px 0px" });
 
   return (
     <section
@@ -147,12 +158,15 @@ export function ArchitectureSection() {
     >
       <div className="line-gold w-full" aria-hidden="true" />
 
-      <div className="container-mm py-section relative">
+      <div className="container-mm py-section space-y-20 md:space-y-28">
 
-        {/* ══ EN-TÊTE ══════════════════════════════════════════════════ */}
-        <div ref={headerRef} className="mb-14 md:mb-20 max-w-2xl">
+        {/* ══════════════════════════════════════════════════════════════
+            EN-TÊTE
+        ══════════════════════════════════════════════════════════════ */}
+        <div ref={headerRef}>
+          {/* Numéro décoratif + titre */}
           <motion.span
-            className="label-mm text-gris-texte"
+            className="label-mm text-gris-texte block mb-4"
             initial={{ opacity: 0, y: -8 }}
             animate={headerIn ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.6, ease: EASE }}
@@ -160,245 +174,357 @@ export function ArchitectureSection() {
             Façade · Boutique · Salon de thé · Signalétique
           </motion.span>
 
-          <div className="flex items-start gap-4 mt-3">
+          <div className="flex items-start gap-5">
             <motion.span
-              className="font-serif font-light text-gris-marbre/35 leading-none shrink-0 select-none"
-              style={{ fontSize: "clamp(4rem, 10vw, 7rem)" }}
-              initial={{ opacity: 0, x: -20 }}
+              className="font-serif font-light text-gris-marbre/25 leading-none shrink-0 select-none hidden sm:block"
+              style={{ fontSize: "clamp(5rem, 12vw, 9rem)" }}
+              initial={{ opacity: 0, x: -24 }}
               animate={headerIn ? { opacity: 1, x: 0 } : {}}
-              transition={{ duration: 0.8, delay: 0.05, ease: EASE }}
+              transition={{ duration: 0.9, delay: 0.05, ease: EASE }}
               aria-hidden="true"
             >
               06
             </motion.span>
-            <div className="pt-1 md:pt-2">
+
+            <div className="flex-1 pt-1 md:pt-3">
               <motion.h2
                 id="archi-title"
-                className="font-serif font-light text-noir-marquise text-balance leading-none"
-                style={{ fontSize: "clamp(2rem, 5vw, 3.75rem)" }}
-                initial={{ opacity: 0, y: 16 }}
+                className="font-serif font-light text-noir-marquise leading-none text-balance"
+                style={{ fontSize: "clamp(2.25rem, 6vw, 4.5rem)" }}
+                initial={{ opacity: 0, y: 18 }}
                 animate={headerIn ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.9, delay: 0.12, ease: EASE_SPRING }}
+                transition={{ duration: 0.9, delay: 0.1, ease: EASE_SPRING }}
               >
                 Charte architecturale
               </motion.h2>
+
               <motion.div
-                className="h-px mt-4"
+                className="h-px mt-5"
                 style={{ background: "linear-gradient(90deg, #B99A5F, transparent)", transformOrigin: "left" }}
                 initial={{ scaleX: 0 }}
                 animate={headerIn ? { scaleX: 1 } : {}}
-                transition={{ duration: 1, delay: 0.3, ease: EASE_SPRING }}
+                transition={{ duration: 1.1, delay: 0.3, ease: EASE_SPRING }}
                 aria-hidden="true"
               />
+
+              <motion.p
+                className="mt-6 font-sans text-body-lg text-gris-texte leading-relaxed max-w-lg"
+                initial={{ opacity: 0, y: 12 }}
+                animate={headerIn ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.7, delay: 0.25, ease: EASE }}
+              >
+                L&apos;identité Maison Marquise se prolonge dans l&apos;espace : une architecture
+                chaleureuse, premium et lisible, pensée pour mettre en valeur les produits,
+                guider le client et créer une expérience cohérente du trottoir jusqu&apos;au salon de thé.
+              </motion.p>
+
+              <motion.div
+                className="mt-8"
+                initial={{ opacity: 0 }}
+                animate={headerIn ? { opacity: 1 } : {}}
+                transition={{ delay: 0.45, duration: 0.5 }}
+              >
+                <a
+                  href="/assets/charte-architecturale.pdf"
+                  download="Maison-Marquise-Charte-Architecturale.pdf"
+                  className="inline-flex items-center gap-2.5 px-5 py-3 rounded-[2px] border border-or-champagne/40 bg-ivoire-maison text-noir-marquise font-sans text-[0.65rem] font-medium tracking-[0.14em] uppercase hover:border-or-champagne hover:bg-or-champagne/5 transition-colors duration-200"
+                >
+                  <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+                    <path d="M6.5 1v7M3.5 5.5l3 3.5 3-3.5M1 10.5h11" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
+                  </svg>
+                  Télécharger la charte architecturale
+                  <span className="px-1.5 py-0.5 bg-or-champagne/15 rounded-[2px] text-[0.5rem] normal-case tracking-normal text-or-champagne/80 font-medium">
+                    PDF · 20 Mo
+                  </span>
+                </a>
+              </motion.div>
             </div>
           </div>
-
-          <motion.p
-            className="mt-6 font-sans text-body-lg text-gris-texte leading-relaxed max-w-reading"
-            initial={{ opacity: 0, y: 12 }}
-            animate={headerIn ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.25, ease: EASE }}
-          >
-            L&apos;identité Maison Marquise ne s&apos;arrête pas au logo ou au packaging.
-            Elle se prolonge dans l&apos;espace : une architecture chaleureuse, premium et lisible,
-            pensée pour mettre en valeur les produits, guider le client et créer une expérience
-            cohérente du trottoir jusqu&apos;au salon de thé.
-          </motion.p>
-
-          {/* Bouton téléchargement PDF */}
-          <motion.div
-            className="mt-6"
-            initial={{ opacity: 0 }}
-            animate={headerIn ? { opacity: 1 } : {}}
-            transition={{ delay: 0.4, duration: 0.5 }}
-          >
-            <a
-              href="/assets/charte-architecturale.pdf"
-              download="Maison-Marquise-Charte-Architecturale.pdf"
-              className="inline-flex items-center gap-2.5 px-5 py-3 rounded-[2px] border border-or-champagne/40 bg-ivoire-maison text-noir-marquise font-sans text-[0.65rem] font-medium tracking-[0.14em] uppercase hover:border-or-champagne hover:bg-or-champagne/5 transition-colors duration-200"
-              aria-label="Télécharger la charte architecturale PDF"
-            >
-              <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
-                <path d="M6.5 1v7M3.5 5.5l3 3.5 3-3.5M1 10.5h11" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/>
-              </svg>
-              Télécharger la charte architecturale
-              <span className="px-1.5 py-0.5 bg-or-champagne/15 rounded-[2px] text-[0.5rem] normal-case tracking-normal text-or-champagne/80 font-medium">
-                PDF · 20 Mo
-              </span>
-            </a>
-          </motion.div>
         </div>
 
-        {/* ══ FAÇADE ══════════════════════════════════════════════════ */}
-        <div className="mb-16 md:mb-20 grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-start">
-          {/* Grille images façade */}
-          <div className="grid grid-cols-2 gap-3 h-72 md:h-80">
-            <PhotoCard src="/assets/archi/facade-1.jpg" alt="Façade Maison Marquise — vue angle" label="Façade · Vue angle" tall />
-            <PhotoCard src="/assets/archi/facade-2.jpg" alt="Façade Maison Marquise — vue frontale" label="Façade · Vue frontale" />
+        <BlockDivider />
+
+        {/* ══════════════════════════════════════════════════════════════
+            BLOC 01 — FAÇADE & VISIBILITÉ
+            Image grande à gauche · Texte + règles à droite
+        ══════════════════════════════════════════════════════════════ */}
+        <motion.div
+          ref={b1Ref}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start"
+          initial={{ opacity: 0, y: 28 }}
+          animate={b1In ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, ease: EASE_SPRING }}
+        >
+          {/* Colonne gauche — images */}
+          <div className="space-y-3">
+            <ArchPhoto
+              src="/assets/archi/facade-2.jpg"
+              alt="Façade principale Maison Marquise — vue frontale"
+              aspect="16/9"
+            />
+            <ArchPhoto
+              src="/assets/archi/facade-1.jpg"
+              alt="Façade Maison Marquise — vue angle"
+              aspect="16/9"
+              label="Façade · Vue angle de rue"
+            />
           </div>
-          {/* Règles */}
-          <RuleBlock
-            index="01"
-            title="Façade & visibilité"
-            text="La façade doit être claire, élégante et immédiatement identifiable. L'enseigne reste lisible à distance, avec une présence sobre du noir, de l'ivoire et du monogramme M."
-            rules={[
+
+          {/* Colonne droite — texte */}
+          <div className="space-y-6 lg:pt-2">
+            <div className="flex items-end gap-3">
+              <BlockNumber n="01" />
+              <BlockTitle>Façade &amp; visibilité</BlockTitle>
+            </div>
+            <p className="font-sans text-body-lg text-gris-texte leading-relaxed">
+              La façade doit être claire, élégante et identifiable depuis la rue.
+              L&apos;enseigne reste lisible à distance avec une présence sobre du noir,
+              de l&apos;ivoire et du monogramme M.
+            </p>
+            <RuleList rules={[
               "Enseigne lisible depuis la rue.",
               "Stores noirs avec marquage discret.",
               "Vitrines ouvertes sur les produits et l'intérieur.",
               "Logo utilisé avec sobriété.",
               "Terrasse cohérente avec l'univers boutique.",
-            ]}
-          />
-        </div>
+            ]} />
+          </div>
+        </motion.div>
 
-        {/* ══ RDC ══════════════════════════════════════════════════════ */}
-        <div className="mb-16 md:mb-20 grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-start">
-          {/* Règles — à gauche sur desktop */}
-          <div className="order-2 lg:order-1">
-            <RuleBlock
-              index="02"
-              title="RDC — Espace de vente"
-              text="Le rez-de-chaussée concentre l'expérience de vente : vitrines gourmandes, comptoir, coffee bar et signalétique. L'espace doit rester lumineux, généreux et lisible."
-              rules={[
+        <BlockDivider />
+
+        {/* ══════════════════════════════════════════════════════════════
+            BLOC 02 — RDC — ESPACE DE VENTE
+            Grande image panoramique · Texte + 2 images secondaires
+        ══════════════════════════════════════════════════════════════ */}
+        <motion.div
+          ref={b2Ref}
+          className="space-y-8"
+          initial={{ opacity: 0, y: 28 }}
+          animate={b2In ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, ease: EASE_SPRING }}
+        >
+          {/* Grande image panoramique */}
+          <ArchPhoto
+            src="/assets/archi/rdc-1.jpg"
+            alt="RDC Maison Marquise — vue panoramique espace de vente"
+            aspect="21/9"
+            label="RDC · Vue panoramique"
+          />
+
+          {/* Texte + 2 images secondaires */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
+            {/* Texte + règles */}
+            <div className="space-y-6">
+              <div className="flex items-end gap-3">
+                <BlockNumber n="02" />
+                <BlockTitle>RDC — Espace de vente</BlockTitle>
+              </div>
+              <p className="font-sans text-body-lg text-gris-texte leading-relaxed">
+                Le rez-de-chaussée concentre l&apos;expérience de vente : vitrines gourmandes,
+                comptoir, coffee bar et signalétique. L&apos;espace doit rester lumineux,
+                généreux et immédiatement lisible.
+              </p>
+              <RuleList rules={[
                 "Vitrines produits généreuses et bien éclairées.",
                 "Comptoir clair, premium et fonctionnel.",
-                "Coffee bar identifiable.",
+                "Coffee bar identifiable et distinct.",
                 "Parcours client fluide.",
-                "Signalétique simple, lisible et intégrée.",
-              ]}
-            />
-          </div>
-          {/* Grille images RDC */}
-          <div className="order-1 lg:order-2 grid grid-cols-2 gap-3" style={{ gridTemplateRows: "1fr 1fr" }}>
-            <div className="col-span-2 relative rounded-[3px] overflow-hidden h-48 md:h-56 group">
-              <Image src="/assets/archi/rdc-1.jpg" alt="RDC Maison Marquise — vue panoramique" fill className="object-cover transition-transform duration-700 group-hover:scale-[1.03]" sizes="(max-width: 1024px) 100vw, 50vw" quality={80} />
-              <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-noir-marquise/60 to-transparent" />
-              <span className="absolute bottom-3 left-4 font-sans text-[0.55rem] font-medium tracking-[0.16em] uppercase text-ivoire-maison/80">RDC · Vue panoramique</span>
+                "Signalétique simple et intégrée.",
+              ]} />
             </div>
-            <PhotoCard src="/assets/archi/rdc-2.jpg" alt="Comptoir barista Maison Marquise" label="Comptoir · Barista" />
-            <PhotoCard src="/assets/archi/rdc-3.jpg" alt="Coffee Bar Maison Marquise" label="Coffee Bar" />
-          </div>
-        </div>
 
-        {/* ══ ÉTAGE 1 — SALON DE THÉ ══════════════════════════════════ */}
-        <div className="mb-16 md:mb-20 grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-start">
-          {/* Grille images étage */}
-          <div className="grid grid-cols-2 gap-3 h-72 md:h-80">
-            <PhotoCard src="/assets/archi/etage-1.jpg" alt="Étage 1 — salon de thé vue large" label="Étage 1 · Vue large" tall />
-            <PhotoCard src="/assets/archi/ambiance.jpg" alt="Alcôve M lumineux — ambiance bois" label="Alcôve · M lumineux" />
+            {/* 2 images secondaires */}
+            <div className="space-y-3">
+              <ArchPhoto
+                src="/assets/archi/rdc-2.jpg"
+                alt="Comptoir barista Maison Marquise"
+                aspect="16/9"
+                label="Comptoir · Espace barista"
+              />
+              <ArchPhoto
+                src="/assets/archi/rdc-3.jpg"
+                alt="Coffee Bar Maison Marquise"
+                aspect="16/9"
+                label="Coffee Bar"
+              />
+            </div>
           </div>
-          {/* Règles */}
-          <RuleBlock
-            index="03"
-            title="Salon de thé & étage"
-            text="L'étage prolonge l'expérience avec un salon de thé chaleureux et confortable. Les assises, alcôves, miroirs et plantes créent une ambiance plus intime, cohérente avec l'identité premium."
-            rules={[
+        </motion.div>
+
+        <BlockDivider />
+
+        {/* ══════════════════════════════════════════════════════════════
+            BLOC 03 — SALON DE THÉ & ÉTAGE
+            Image principale · 2 images secondaires · Texte
+        ══════════════════════════════════════════════════════════════ */}
+        <motion.div
+          ref={b3Ref}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start"
+          initial={{ opacity: 0, y: 28 }}
+          animate={b3In ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, ease: EASE_SPRING }}
+        >
+          {/* Colonne gauche — texte */}
+          <div className="space-y-6 lg:pt-2 order-2 lg:order-1">
+            <div className="flex items-end gap-3">
+              <BlockNumber n="03" />
+              <BlockTitle>Salon de thé &amp; étage</BlockTitle>
+            </div>
+            <p className="font-sans text-body-lg text-gris-texte leading-relaxed">
+              L&apos;étage prolonge l&apos;expérience avec un salon de thé chaleureux.
+              Assises, alcôves, miroirs et végétal créent une ambiance plus intime,
+              cohérente avec l&apos;identité premium de la marque.
+            </p>
+            <RuleList rules={[
               "Assises confortables et élégantes.",
               "Espaces plus calmes et chaleureux.",
               "Présence végétale maîtrisée.",
               "Miroirs et arches pour créer de la profondeur.",
-              "Signalétique étage claire.",
               "Ambiance premium mais accueillante.",
-            ]}
-          />
-        </div>
+            ]} />
+          </div>
 
-        {/* ══ MATIÈRES & COULEURS ══════════════════════════════════════ */}
-        <div ref={matRef} className="mb-16 md:mb-20">
-          <motion.div
-            className="mb-8"
-            initial={{ opacity: 0, y: 10 }}
-            animate={matIn ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, ease: EASE }}
-          >
-            <div className="flex items-baseline gap-3 mb-1">
-              <span className="font-serif font-light text-2xl text-gris-marbre/40 select-none" aria-hidden="true">04</span>
-              <h3 className="font-serif font-light text-noir-marquise" style={{ fontSize: "clamp(1.25rem, 2.5vw, 1.75rem)" }}>
-                Matières &amp; couleurs architecturales
-              </h3>
+          {/* Colonne droite — images */}
+          <div className="space-y-3 order-1 lg:order-2">
+            <ArchPhoto
+              src="/assets/archi/etage-1.jpg"
+              alt="Salon de thé Maison Marquise — vue large étage"
+              aspect="16/9"
+              label="Étage 1 · Vue large"
+            />
+            <ArchPhoto
+              src="/assets/archi/ambiance.jpg"
+              alt="Alcôve M lumineux — bois et lumière douce"
+              aspect="16/9"
+              label="Alcôve · Monogramme M rétroéclairé"
+            />
+          </div>
+        </motion.div>
+
+        <BlockDivider />
+
+        {/* ══════════════════════════════════════════════════════════════
+            BLOC 04 — MATIÈRES & COULEURS ARCHITECTURALES
+        ══════════════════════════════════════════════════════════════ */}
+        <motion.div
+          ref={b4Ref}
+          className="space-y-10"
+          initial={{ opacity: 0, y: 28 }}
+          animate={b4In ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, ease: EASE_SPRING }}
+        >
+          <div className="flex items-end gap-3">
+            <BlockNumber n="04" />
+            <div>
+              <BlockTitle>Matières &amp; couleurs architecturales</BlockTitle>
+              <p className="mt-4 font-sans text-body-lg text-gris-texte leading-relaxed max-w-xl">
+                L&apos;architecture reprend les codes de la marque, mais les rend plus sensoriels.
+                Ces matières créent une boutique premium sans devenir froide.
+              </p>
             </div>
-            <div className="h-px w-10 ml-10" style={{ background: "linear-gradient(90deg, #B99A5F, transparent)" }} aria-hidden="true" />
-            <p className="mt-3 font-sans text-body-lg text-gris-texte leading-relaxed max-w-reading ml-10">
-              L&apos;architecture reprend les codes de la marque, mais les rend plus sensoriels.
-              Ces matières doivent créer une boutique premium sans devenir froide.
-            </p>
-          </motion.div>
+          </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-            {MATIERES.map((m, i) => (
-              <motion.div
+          {/* 6 cartes matières — même hauteur, grille propre */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+            {MATIERES.map((m) => (
+              <div
                 key={m.name}
-                className="rounded-[3px] overflow-hidden border border-gris-marbre bg-blanc-marbre"
-                initial={{ opacity: 0, y: 16 }}
-                animate={matIn ? { opacity: 1, y: 0 } : {}}
-                transition={{ delay: i * 0.07, duration: 0.5, ease: EASE_SPRING }}
+                className="flex flex-col rounded-[3px] overflow-hidden border border-gris-marbre bg-blanc-marbre"
               >
-                {/* Swatch */}
-                <div className="h-14 md:h-16" style={{ backgroundColor: m.hex }} aria-hidden="true" />
-                <div className="p-3 space-y-1">
-                  <p className="font-sans text-[0.65rem] font-medium text-noir-marquise leading-tight">{m.name}</p>
-                  <p className="font-sans text-[0.6rem] text-gris-texte/60 leading-snug">{m.note}</p>
+                {/* Swatch couleur */}
+                <div className="h-16 w-full shrink-0" style={{ backgroundColor: m.hex }} aria-hidden="true" />
+                {/* Texte */}
+                <div className="flex-1 p-3 space-y-1.5">
+                  <p className="font-sans text-[0.68rem] font-semibold text-noir-marquise leading-snug">
+                    {m.name}
+                  </p>
+                  <p className="font-sans text-[0.6rem] text-gris-texte/65 leading-snug">
+                    {m.desc}
+                  </p>
                 </div>
-              </motion.div>
+              </div>
             ))}
           </div>
-        </div>
+        </motion.div>
 
-        {/* ══ SIGNALÉTIQUE ═════════════════════════════════════════════ */}
-        <div className="mb-16 md:mb-20">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 items-start">
-            <RuleBlock
-              index="05"
-              title="Signalétique boutique"
-              text="La signalétique doit guider sans surcharger. Elle doit rester visible, courte et cohérente avec les typographies et couleurs de la charte graphique."
-              rules={[
-                "Textes courts, très bonne lisibilité.",
-                "Contraste suffisant sur fond ivoire ou noir.",
-                "Usage du logo limité aux zones clés.",
-                "Monogramme M possible en repère mural, vitrine ou comptoir.",
-                "Menu boards intégrés naturellement à l'architecture.",
-              ]}
-            />
-            {/* Image étage 2 */}
-            <div className="relative rounded-[3px] overflow-hidden h-56 md:h-64 group">
-              <Image src="/assets/archi/etage-2.jpg" alt="Signalétique étage — salon de thé Maison Marquise" fill className="object-cover transition-transform duration-700 group-hover:scale-[1.03]" sizes="(max-width: 1024px) 100vw, 50vw" quality={80} />
-              <div className="absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-noir-marquise/60 to-transparent" />
-              <span className="absolute bottom-3 left-4 font-sans text-[0.55rem] font-medium tracking-[0.16em] uppercase text-ivoire-maison/80">Signalétique · Salon de thé</span>
+        <BlockDivider />
+
+        {/* ══════════════════════════════════════════════════════════════
+            BLOC 05 — SIGNALÉTIQUE BOUTIQUE
+            Texte à gauche · Grande image à droite
+        ══════════════════════════════════════════════════════════════ */}
+        <motion.div
+          ref={b5Ref}
+          className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center"
+          initial={{ opacity: 0, y: 28 }}
+          animate={b5In ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, ease: EASE_SPRING }}
+        >
+          {/* Gauche — texte */}
+          <div className="space-y-6">
+            <div className="flex items-end gap-3">
+              <BlockNumber n="05" />
+              <BlockTitle>Signalétique boutique</BlockTitle>
             </div>
+            <p className="font-sans text-body-lg text-gris-texte leading-relaxed">
+              La signalétique doit guider sans surcharger. Elle doit rester visible,
+              courte et cohérente avec les typographies et couleurs de la charte graphique.
+            </p>
+            <RuleList rules={[
+              "Textes courts et très lisibles.",
+              "Contraste fort sur fond ivoire ou noir.",
+              "Logo réservé aux zones clés.",
+              "Monogramme M en repère mural ou vitrine.",
+              "Menu boards intégrés à l'architecture.",
+            ]} />
           </div>
-        </div>
 
-        {/* ══ À FAIRE / À ÉVITER ═══════════════════════════════════════ */}
-        <div ref={doRef}>
-          <motion.div
-            className="mb-7"
-            initial={{ opacity: 0, y: 10 }}
-            animate={doIn ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, ease: EASE }}
-          >
+          {/* Droite — grande image */}
+          <ArchPhoto
+            src="/assets/archi/etage-2.jpg"
+            alt="Signalétique salon de thé — étage Maison Marquise"
+            aspect="4/3"
+            label="Signalétique · Salon de thé"
+          />
+        </motion.div>
+
+        <BlockDivider />
+
+        {/* ══════════════════════════════════════════════════════════════
+            BLOC 06 — À FAIRE / À ÉVITER
+        ══════════════════════════════════════════════════════════════ */}
+        <motion.div
+          ref={b6Ref}
+          className="space-y-8"
+          initial={{ opacity: 0, y: 24 }}
+          animate={b6In ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, ease: EASE }}
+        >
+          <div>
             <span className="label-mm text-gris-texte">Règles essentielles</span>
-            <h3 className="font-serif font-light text-noir-marquise mt-1" style={{ fontSize: "clamp(1.25rem, 2.5vw, 1.75rem)" }}>
+            <h3
+              className="font-serif font-light text-noir-marquise mt-1"
+              style={{ fontSize: "clamp(1.5rem, 3vw, 2.25rem)" }}
+            >
               À faire &amp; à éviter
             </h3>
-            <div className="h-px mt-2 w-14" style={{ background: "linear-gradient(90deg, #B99A5F, transparent)" }} aria-hidden="true" />
-          </motion.div>
+            <div className="h-px w-12 mt-3" style={{ background: "linear-gradient(90deg, #B99A5F, transparent)" }} aria-hidden="true" />
+          </div>
 
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-2 gap-4"
-            initial={{ opacity: 0, y: 16 }}
-            animate={doIn ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.7, delay: 0.1, ease: EASE }}
-          >
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {/* À faire */}
-            <div className="rounded-[3px] border-l-2 border-l-pistache/50 border border-pistache/15 bg-blanc-marbre p-5 space-y-3">
-              <div className="flex items-center gap-2">
-                <Check size={13} strokeWidth={2} className="text-pistache" />
-                <span className="label-mm text-pistache">À faire</span>
+            <div className="flex flex-col gap-5 rounded-[3px] border border-or-champagne/25 border-l-2 border-l-or-champagne/60 bg-ivoire-maison/60 p-6 md:p-8">
+              <div className="flex items-center gap-2.5">
+                <Check size={14} strokeWidth={2} className="text-pistache shrink-0" />
+                <span className="font-sans text-[0.65rem] font-semibold tracking-[0.18em] uppercase text-pistache">
+                  À faire
+                </span>
               </div>
-              <ul className="space-y-2" role="list">
+              <ul className="space-y-3" role="list">
                 {AFAIRE.map((r) => (
-                  <li key={r} className="flex items-start gap-2.5">
-                    <span className="mt-1.5 w-1 h-1 rounded-full bg-pistache/60 shrink-0" aria-hidden="true" />
+                  <li key={r} className="flex items-start gap-3">
+                    <span className="mt-2 w-1 h-1 rounded-full bg-pistache/60 shrink-0" aria-hidden="true" />
                     <span className="font-sans text-ui text-gris-texte leading-snug">{r}</span>
                   </li>
                 ))}
@@ -406,22 +532,24 @@ export function ArchitectureSection() {
             </div>
 
             {/* À éviter */}
-            <div className="rounded-[3px] border-l-2 border-l-framboise/40 border border-framboise/15 bg-blanc-marbre p-5 space-y-3">
-              <div className="flex items-center gap-2">
-                <X size={13} strokeWidth={2} className="text-framboise" />
-                <span className="label-mm text-framboise">À éviter</span>
+            <div className="flex flex-col gap-5 rounded-[3px] border border-framboise/15 border-l-2 border-l-framboise/40 bg-blanc-marbre p-6 md:p-8">
+              <div className="flex items-center gap-2.5">
+                <X size={14} strokeWidth={2} className="text-framboise shrink-0" />
+                <span className="font-sans text-[0.65rem] font-semibold tracking-[0.18em] uppercase text-framboise">
+                  À éviter
+                </span>
               </div>
-              <ul className="space-y-2" role="list">
+              <ul className="space-y-3" role="list">
                 {AEVITER.map((r) => (
-                  <li key={r} className="flex items-start gap-2.5">
-                    <span className="mt-1.5 w-1 h-1 rounded-full bg-framboise/40 shrink-0" aria-hidden="true" />
+                  <li key={r} className="flex items-start gap-3">
+                    <span className="mt-2 w-1 h-1 rounded-full bg-framboise/40 shrink-0" aria-hidden="true" />
                     <span className="font-sans text-ui text-gris-texte leading-snug">{r}</span>
                   </li>
                 ))}
               </ul>
             </div>
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
 
       </div>
 

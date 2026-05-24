@@ -221,7 +221,6 @@ function VariantCard({
           aria-label="Logo sur fond clair"
         >
           <div className={cn("relative w-full", isMonogram ? "max-w-[64px] mx-auto" : "max-w-[200px] md:max-w-[240px] mx-auto")}>
-            {/* Zone de respiration visualisée — toujours visible, subtile */}
             <div className="relative">
               <div
                 className="absolute -inset-[clamp(0.5rem,2vw,1rem)] border border-dashed border-or-champagne/15 rounded-[2px] pointer-events-none"

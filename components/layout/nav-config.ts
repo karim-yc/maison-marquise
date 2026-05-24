@@ -14,8 +14,8 @@ export const NAV_ITEMS: NavItem[] = [
   { id: "logo",         label: "Logo",         index: "02" },
   { id: "couleurs",     label: "Couleurs",     index: "03" },
   { id: "typographies", label: "Typographies", index: "04" },
-  { id: "packaging",    label: "Packaging",    index: "06" },
-  { id: "univers",      label: "Univers",      index: "07" },
+  { id: "packaging",    label: "Packaging",    index: "05" },
+  { id: "univers",      label: "Univers",      index: "06" },
 ];
 
 export const BRAND = {

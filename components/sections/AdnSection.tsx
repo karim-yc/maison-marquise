@@ -208,7 +208,7 @@ export function AdnSection() {
             animate={headerIn ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.2, ease: EASE }}
           >
-            Maison Marquise réinvente la boulangerie-pâtisserie en une expérience premium, généreuse et accessible.
+            Maison Marquise est une boulangerie-pâtisserie premium, généreuse et accessible, portée par un univers visuel fort et cohérent.
           </motion.p>
 
           {/* Texte d'introduction */}

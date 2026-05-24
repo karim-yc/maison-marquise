@@ -270,7 +270,7 @@ export function PackagingSection() {
               transition={{ duration: 0.8, delay: 0.05, ease: EASE }}
               aria-hidden="true"
             >
-              06
+              05
             </motion.span>
             <div className="pt-1 md:pt-2">
               <motion.h2

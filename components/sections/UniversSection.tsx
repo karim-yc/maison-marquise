@@ -104,13 +104,11 @@ function SceneMaison() {
   return (
     <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
       {/* Photo officielle — façade intérieure Maison Marquise */}
-      <Image
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
         src="/assets/univers-maison.jpg"
         alt=""
-        fill
-        sizes="(max-width: 1024px) 100vw, 33vw"
-        className="object-cover object-center"
-        quality={80}
+        className="absolute inset-0 w-full h-full object-cover object-center"
       />
       {/* Overlay sombre en bas pour lisibilité des chips */}
       <div

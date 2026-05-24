@@ -2,6 +2,7 @@
 
 import { useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -102,52 +103,20 @@ const UNIVERS = [
 function SceneMaison() {
   return (
     <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
-      {/* Fond ivoire — texture supprimée (pixelisation sur petits formats) */}
-      <div className="absolute inset-0 bg-ivoire-maison" />
-
-      {/* Grille fine */}
-      <div className="absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage: "linear-gradient(#111 1px, transparent 1px), linear-gradient(90deg, #111 1px, transparent 1px)",
-          backgroundSize: "60px 60px",
-        }}
+      {/* Photo officielle — façade intérieure Maison Marquise */}
+      <Image
+        src="/assets/univers-maison.jpg"
+        alt=""
+        fill
+        sizes="(max-width: 1024px) 100vw, 33vw"
+        className="object-cover object-center"
+        quality={80}
       />
-
-        {/* M fantôme supprimé */}
-
-      {/* Carré noir premium — coin haut gauche */}
-      <div className="absolute top-8 left-8 w-24 h-24 md:w-32 md:h-32 bg-noir-marquise/90" />
-
-      {/* Filet or horizontal */}
-      <div className="absolute top-20 md:top-24 left-8 right-8"
-        style={{ height: "1px", background: "linear-gradient(90deg, #B99A5F, transparent)" }}
+      {/* Overlay sombre en bas pour lisibilité des chips */}
+      <div
+        className="absolute inset-x-0 bottom-0 h-28"
+        style={{ background: "linear-gradient(to top, rgba(17,17,17,0.60) 0%, transparent 100%)" }}
       />
-
-      {/* Filet vertical */}
-      <div className="absolute top-8 bottom-8 left-36 md:left-44"
-        style={{ width: "1px", background: "linear-gradient(180deg, #B99A5F/0, #B99A5F, transparent)" }}
-      />
-
-      {/* Signature script */}
-      <div className="absolute top-10 left-44 md:left-52 font-serif font-light italic text-noir-marquise/20 leading-none"
-        style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)" }}>
-        Maison
-      </div>
-
-      {/* Label typographique */}
-      <div className="absolute bottom-12 left-8 font-sans font-medium tracking-[0.3em] uppercase text-noir-marquise/25"
-        style={{ fontSize: "0.55rem" }}>
-        BIEN PLUS QU'UNE BOULANGERIE
-      </div>
-
-      {/* Ligne or bas */}
-      <div className="absolute bottom-8 left-8 w-24"
-        style={{ height: "1px", background: "#B99A5F", opacity: 0.4 }}
-      />
-
-      {/* Pastille or */}
-      <div className="absolute top-8 right-12 w-3 h-3 rounded-full bg-or-champagne/50" />
-      <div className="absolute top-8 right-20 w-1.5 h-1.5 rounded-full bg-or-champagne/30" />
     </div>
   );
 }

@@ -121,125 +121,45 @@ function SceneMaison() {
   );
 }
 
-// ── Scène Gourmand — chaleur, texture, rondeur ───────────────────────────────
+// ── Scène Gourmand — photo officielle ────────────────────────────────────────
 function SceneGourmand() {
   return (
     <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
-      {/* Fond brun profond */}
-      <div className="absolute inset-0" style={{ backgroundColor: "#1C0E04" }} />
-
-      {/* Dégradé radial caramel */}
-      <div className="absolute inset-0"
-        style={{ background: "radial-gradient(ellipse 80% 70% at 30% 60%, rgba(199,132,62,0.35) 0%, transparent 70%)" }}
+      <Image
+        src="/assets/univers-gourmand.avif"
+        alt=""
+        fill
+        sizes="(max-width: 1024px) 100vw, 33vw"
+        className="object-cover object-center"
+        quality={85}
       />
-      <div className="absolute inset-0"
-        style={{ background: "radial-gradient(ellipse 60% 50% at 80% 30%, rgba(166,25,46,0.20) 0%, transparent 60%)" }}
+      {/* Overlay sombre en bas */}
+      <div
+        className="absolute inset-x-0 bottom-0 h-28"
+        style={{ background: "linear-gradient(to top, rgba(28,14,4,0.70) 0%, transparent 100%)" }}
       />
-
-      {/* Grain */}
-      <div className="absolute inset-0 opacity-[0.07]"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")`,
-          backgroundSize: "200px 200px",
-        }}
-      />
-
-      {/* Grand cercle caramel */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-        w-64 h-64 md:w-80 md:h-80 rounded-full border"
-        style={{ borderColor: "rgba(199,132,62,0.25)" }}
-      />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-        w-44 h-44 md:w-56 md:h-56 rounded-full border"
-        style={{ borderColor: "rgba(199,132,62,0.12)" }}
-      />
-
-      {/* Pastilles couleur flottantes */}
-      <div className="absolute top-10 right-16 w-10 h-10 md:w-14 md:h-14 rounded-full"
-        style={{ backgroundColor: "#C7843E", opacity: 0.7 }}
-      />
-      <div className="absolute top-16 right-10 w-5 h-5 rounded-full"
-        style={{ backgroundColor: "#A6192E", opacity: 0.65 }}
-      />
-      <div className="absolute bottom-14 left-12 w-8 h-8 rounded-full"
-        style={{ backgroundColor: "#9A9B55", opacity: 0.55 }}
-      />
-      <div className="absolute bottom-10 left-6 w-3.5 h-3.5 rounded-full"
-        style={{ backgroundColor: "#C7843E", opacity: 0.50 }}
-      />
-
-      {/* Texture bandes horizontales subtiles */}
-      <div className="absolute bottom-0 left-0 right-0 h-24 md:h-32"
-        style={{ background: "linear-gradient(0deg, rgba(199,132,62,0.12) 0%, transparent 100%)" }}
-      />
-
-      {/* Mot signature */}
-      <div className="absolute bottom-10 right-8 font-script text-ivoire-maison/15 leading-none"
-        style={{ fontSize: "clamp(3.5rem, 8vw, 6rem)" }}>
-        Gourmand
-      </div>
     </div>
   );
 }
 
-// ── Scène Signature — noir, contraste, or ────────────────────────────────────
+// ── Scène Signature — photo collab officielle ────────────────────────────────
 function SceneSignature() {
   return (
     <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
-      {/* Fond noir */}
-      <div className="absolute inset-0 bg-noir-marquise" />
-
-      {/* Grain très léger */}
-      <div className="absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")`,
-          backgroundSize: "200px 200px",
-        }}
+      <Image
+        src="/assets/univers-signature.jpg"
+        alt=""
+        fill
+        sizes="(max-width: 1024px) 100vw, 33vw"
+        className="object-cover object-top"
+        quality={80}
       />
-
-      {/* Halo or */}
-      <div className="absolute inset-0"
-        style={{ background: "radial-gradient(ellipse 70% 60% at 75% 35%, rgba(185,154,95,0.12) 0%, transparent 65%)" }}
-      />
-
-      {/* Halo framboise */}
-      <div className="absolute inset-0"
-        style={{ background: "radial-gradient(ellipse 40% 35% at 20% 70%, rgba(166,25,46,0.15) 0%, transparent 60%)" }}
-      />
-
-      {/* Bande or verticale */}
-      <div className="absolute top-0 bottom-0"
-        style={{ left: "38%", width: "1px", background: "linear-gradient(180deg, transparent, #B99A5F 30%, #B99A5F 70%, transparent)" }}
-      />
-
-      {/* Grand M or */}
-      <div className="absolute -top-4 left-6 md:left-10 font-serif font-light leading-none"
-        style={{ fontSize: "clamp(10rem, 26vw, 18rem)", color: "rgba(185,154,95,0.08)" }}>
-        M
-      </div>
-
-      {/* Bloc texte éditorial */}
-      <div className="absolute top-10 right-8 md:right-12 text-right space-y-1">
-        <div className="font-sans text-[0.55rem] tracking-[0.3em] uppercase text-ivoire-maison/25">
-          Édition Limitée
-        </div>
-        <div className="font-serif font-light italic text-ivoire-maison/50 leading-tight"
-          style={{ fontSize: "clamp(1.5rem, 4vw, 2.5rem)" }}>
-          Signature
-        </div>
-      </div>
-
-      {/* Pastille framboise */}
-      <div className="absolute bottom-14 right-10 w-8 h-8 rounded-full"
-        style={{ backgroundColor: "#A6192E", opacity: 0.7 }}
-      />
-      <div className="absolute bottom-20 right-20 w-2.5 h-2.5 rounded-full"
-        style={{ backgroundColor: "#B99A5F", opacity: 0.6 }}
-      />
-
-      {/* Ligne or bas */}
-      <div className="absolute bottom-10 left-8 right-8"
-        style={{ height: "1px", background: "linear-gradient(90deg, transparent, #B99A5F 20%, #B99A5F 80%, transparent)", opacity: 0.4 }}
+      {/* Overlay sombre — renforce le côté éditorial noir */}
+      <div className="absolute inset-0" style={{ background: "rgba(17,17,17,0.30)" }} />
+      {/* Gradient bas */}
+      <div
+        className="absolute inset-x-0 bottom-0 h-28"
+        style={{ background: "linear-gradient(to top, rgba(17,17,17,0.70) 0%, transparent 100%)" }}
       />
     </div>
   );

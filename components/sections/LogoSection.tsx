@@ -7,7 +7,7 @@ import {
   Ban, Maximize2, SunDim, Layers, Shrink, Info,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { LogoFull, LogoVariant, LogoMonogram } from "@/components/brand/LogoSvg";
+import { LogoFull, LogoSansBaseline, LogoMonogram, LogoHorizontal as LogoHorizontalSvg } from "@/components/brand/LogoSvg";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // LogoSection — Système logo & ressources Maison Marquise
@@ -23,7 +23,7 @@ const VARIANTS = [
     label:     "Logo complet",
     badge:     "Usage principal",
     usages:    ["Façade & enseignes", "Documents officiels", "Menus & cartes", "Supports de marque"],
-    desc:      "La version de référence. Mark M, nom complet et baseline. À utiliser sur tous les supports premium.",
+    desc:      "La version de référence. Monogramme M, nom Maison Marquise et baseline. À utiliser sur tous les supports premium.",
     minSize:   "120 px de largeur minimum",
     fondOk:    "Ivoire · Blanc marbre · Noir Marquise",
     fondEviter: "Fond photographique · Fond coloré non approuvé",
@@ -34,7 +34,7 @@ const VARIANTS = [
     label:     "Sans baseline",
     badge:     "Usage secondaire",
     usages:    ["Packaging", "Réseaux sociaux", "Cartes de visite", "Supports réduits"],
-    desc:      "Version épurée sans la baseline. Idéale quand l'espace est contraint ou le contexte suffit.",
+    desc:      "Monogramme M et nom Maison Marquise uniquement, sans la baseline. Pour contextes contraints où la baseline est redondante.",
     minSize:   "80 px de largeur minimum",
     fondOk:    "Ivoire · Blanc marbre · Noir Marquise",
     fondEviter: "Fond photographique · Couleurs non approuvées",
@@ -45,7 +45,7 @@ const VARIANTS = [
     label:     "Monogramme M",
     badge:     "Usage pictogramme",
     usages:    ["Favicon & app icon", "Sticker & pastille", "Motif packaging", "Pictogramme"],
-    desc:      "L'unité minimale de la marque. Reconnaissable, polyvalent, utilisable en très petit format.",
+    desc:      "Le M seul, sans nom ni baseline. Unité minimale de la marque, utilisable en très petit format.",
     minSize:   "24 px minimum (favicon) · 30 mm pour impression",
     fondOk:    "Ivoire · Noir · Or Champagne",
     fondEviter: "Fond surchargé · Fond couleur non approuvé",
@@ -56,11 +56,11 @@ const VARIANTS = [
     label:     "Version horizontale",
     badge:     "Usage banneau",
     usages:    ["Site web header", "Enseignes longues", "Signatures email", "Bandeaux"],
-    desc:      "Le M précède le nom complet sur une seule ligne. Pour contextes à largeur contrainte.",
+    desc:      "Monogramme M à gauche, nom Maison Marquise à droite sur une seule ligne. Pour contextes à largeur contrainte.",
     minSize:   "200 px de largeur minimum",
     fondOk:    "Ivoire · Blanc marbre · Noir Marquise",
     fondEviter: "Fond photographique · Formats très étroits",
-    files:     ["SVG (complet)", "PNG (blanc)", "PNG (transparent)"],
+    files:     ["SVG (horizontal)", "PNG (blanc)", "PNG (transparent)"],
   },
 ] as const;
 
@@ -85,24 +85,27 @@ const COLORWAYS = [
 ] as const;
 
 
-function LogoFullAdapter({ fill, className }: { fill: string; className?: string }) {
+function AdapterFull({ fill, className }: { fill: string; className?: string }) {
   return <LogoFull className={cn("w-full h-auto", className)} style={{ color: fill }} aria-hidden={true} />;
 }
-function LogoNoBaseline({ fill, className }: { fill: string; className?: string }) {
-  return <LogoVariant className={cn("w-full h-auto", className)} style={{ color: fill }} aria-hidden={true} />;
+function AdapterSansBaseline({ fill, className }: { fill: string; className?: string }) {
+  // M + MAISON MARQUISE, sans baseline
+  return <LogoSansBaseline className={cn("w-full h-auto", className)} style={{ color: fill }} aria-hidden={true} />;
 }
-function LogoMonogramAdapter({ fill, className }: { fill: string; className?: string }) {
-  return <LogoMonogram className={cn("h-full w-auto", className)} style={{ color: fill }} aria-hidden={true} />;
+function AdapterMonogram({ fill, className }: { fill: string; className?: string }) {
+  // M seul
+  return <LogoMonogram className={cn("max-w-[80px] mx-auto h-auto", className)} style={{ color: fill }} aria-hidden={true} />;
 }
-function LogoHorizontal({ fill, className }: { fill: string; className?: string }) {
-  return <LogoVariant className={cn("w-full h-auto", className)} style={{ color: fill }} aria-hidden={true} />;
+function AdapterHorizontal({ fill, className }: { fill: string; className?: string }) {
+  // M + MAISON MARQUISE sur 1 ligne
+  return <LogoHorizontalSvg className={cn("w-full h-auto", className)} style={{ color: fill }} aria-hidden={true} />;
 }
 
 const LOGO_COMPONENTS: Record<VariantId, (p: { fill: string; className?: string }) => React.JSX.Element> = {
-  "full":        LogoFullAdapter,
-  "no-baseline": LogoNoBaseline,
-  "monogram":    LogoMonogramAdapter,
-  "horizontal":  LogoHorizontal,
+  "full":          AdapterFull,
+  "no-baseline":   AdapterSansBaseline,
+  "monogram":      AdapterMonogram,
+  "horizontal":    AdapterHorizontal,
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -112,22 +115,23 @@ const LOGO_COMPONENTS: Record<VariantId, (p: { fill: string; className?: string 
 // ── Boutons de téléchargement logo ───────────────────────────────────────────
 // SVG disponibles dès maintenant ; PNG/PDF à intégrer plus tard.
 const LOGO_FILE_URLS: Record<string, string | null> = {
-  // SVG officiels
-  "SVG (complet)":        "/assets/LOGO_complet.svg",
-  "SVG (sans baseline)":  "/assets/LOGO_sans_M.svg",
-  "SVG (monogramme)":     "/assets/FAVICON.svg",
-  // PNG — fond blanc
-  "PNG (blanc)":          null, // géré par variante
+  // SVG officiels — 4 déclinaisons exactes
+  "SVG (complet)":        "/assets/LOGO_complet.svg",        // M + nom + baseline
+  "SVG (sans baseline)":  "/assets/logo-sans-baseline.svg",  // M + nom seul
+  "SVG (monogramme)":     "/assets/FAVICON.svg",             // M seul
+  "SVG (horizontal)":     "/assets/logo-horizontal.svg",     // M + nom sur 1 ligne
+  // PNG — fond blanc (géré par variante via LOGO_PNG_URLS)
+  "PNG (blanc)":          null,
   // PNG — fond transparent
   "PNG (transparent)":    null,
 };
 
 // URLs PNG par variante
 const LOGO_PNG_URLS: Record<string, { blanc: string; transparent: string }> = {
-  "full":        { blanc: "/assets/LOGO_complet_fond_blanc.png",    transparent: "/assets/LOGO_complet_transparent.png" },
-  "no-baseline": { blanc: "/assets/LOGO_sans_M_fond_blanc.png",     transparent: "/assets/LOGO_sans_M_transparent.png" },
-  "monogram":    { blanc: "/assets/LOGO_monogramme_fond_blanc.png", transparent: "/assets/LOGO_monogramme_transparent.png" },
-  "horizontal":  { blanc: "/assets/LOGO_complet_fond_blanc.png",    transparent: "/assets/LOGO_complet_transparent.png" },
+  "full":        { blanc: "/assets/LOGO_complet_fond_blanc.png",       transparent: "/assets/LOGO_complet_transparent.png" },
+  "no-baseline": { blanc: "/assets/logo-sans-baseline_fond_blanc.png", transparent: "/assets/logo-sans-baseline_transparent.png" },
+  "monogram":    { blanc: "/assets/LOGO_monogramme_fond_blanc.png",    transparent: "/assets/LOGO_monogramme_transparent.png" },
+  "horizontal":  { blanc: "/assets/logo-horizontal_fond_blanc.png",    transparent: "/assets/logo-horizontal_transparent.png" },
 };
 
 function DownloadButtons({ files, variantId }: { files: readonly string[]; variantId?: string }) {
@@ -330,7 +334,7 @@ function ColorwayCard({
         style={{ backgroundColor: colorway.bg }}
       >
         <div className="w-full max-w-[160px] mx-auto">
-          <LogoNoBaseline fill={colorway.fill} />
+          <AdapterFull fill={colorway.fill} />
         </div>
       </div>
 

@@ -4,6 +4,7 @@ import { LogoSection }        from "@/components/sections/LogoSection";
 import { CouleursSection }        from "@/components/sections/CouleursSection";
 import { TypographiesSection }    from "@/components/sections/TypographiesSection";
 import { PackagingSection }       from "@/components/sections/PackagingSection";
+import { ArchitectureSection } from "@/components/sections/ArchitectureSection";
 import { UniversSection }         from "@/components/sections/UniversSection";
 import { BrandSection }       from "@/components/brand/BrandSection";
 import { BrandCard }          from "@/components/brand/BrandCard";

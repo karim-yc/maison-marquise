@@ -15,7 +15,8 @@ export const NAV_ITEMS: NavItem[] = [
   { id: "couleurs",     label: "Couleurs",     index: "03" },
   { id: "typographies", label: "Typographies", index: "04" },
   { id: "packaging",    label: "Packaging",    index: "05" },
-  { id: "univers",      label: "Univers",      index: "06" },
+  { id: "architecture", label: "Architecture", index: "06" },
+  { id: "univers",      label: "Univers",      index: "07" },
 ];
 
 export const BRAND = {

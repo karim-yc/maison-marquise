@@ -218,9 +218,9 @@ export function AdnSection() {
             animate={headerIn ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.32, ease: EASE }}
           >
-            Entre savoir-faire artisanal, créations gourmandes, coffee time et pause salée,
-            Maison Marquise se définit comme une maison de goût,
-            de plaisir et d&apos;élégance au quotidien.
+            Maison Marquise est une café-boulangerie française premium.
+            Son identité visuelle repose sur la terracotta mate, la crème douce,
+            le cuivre-or subtil et le bois chaleureux — jamais sur la surcharge.
           </motion.p>
         </div>
 
@@ -281,7 +281,7 @@ export function AdnSection() {
             transition={{ duration: 0.8, ease: EASE }}
           >
             <div className="flex flex-wrap items-center gap-3 md:gap-5">
-              {(["Premium", "Artisanal", "Généreux", "Élégant", "Gourmand", "Accessible"] as const).map((kw, i) => (
+              {(["Terracotta", "Artisanal", "Généreux", "Élégant", "Chaleureux", "Premium"] as const).map((kw, i) => (
                 <motion.span
                   key={kw}
                   className="font-sans text-[0.6rem] font-medium tracking-[0.2em] uppercase text-ivoire-maison/50"

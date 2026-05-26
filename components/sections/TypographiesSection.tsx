@@ -358,7 +358,7 @@ export function TypographiesSection() {
   return (
     <section
       id="typographies"
-      className="relative w-full scroll-mt-16 md:scroll-mt-[72px] bg-blanc-marbre overflow-hidden"
+      className="relative w-full scroll-mt-16 md:scroll-mt-[72px] bg-ivoire-maison overflow-hidden"
       aria-labelledby="typo-title"
     >
       <div className="line-gold w-full" aria-hidden="true" />

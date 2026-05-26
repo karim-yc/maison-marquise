@@ -30,16 +30,25 @@ const config: Config = {
       // ════════════════════════════════════════════════════════════════════════
       colors: {
         // ── Palette nommée (noms officiels du brief) ─────────────────────────
-        "noir-marquise":   "#111111",
-        "ivoire-maison":   "#F7F3EC",
-        "blanc-marbre":    "#FAFAF8",
-        "or-champagne":    "#B99A5F",
-        "brun-marquis":    "#6F5A2E",
-        "caramel":         "#C7843E",
-        "framboise":       "#A6192E",
-        "pistache":        "#9A9B55",
-        "gris-marbre":     "#D8D6D1",
-        "gris-texte":      "#4A4A4A",
+        // ── Palette officielle 2025 ─────────────────────────────────────────
+        "noir-marquise":      "#111111",   // noir texte (conservé)
+        "ivoire-maison":      "#F7F3EC",   // fond ivoire
+        "blanc-marbre":       "#FAFAF8",   // fond blanc-marbre
+        "or-champagne":       "#B99A5F",   // accent or (ancien)
+        "gris-marbre":        "#D8D6D1",   // bordures
+        "gris-texte":         "#4A4A4A",   // texte secondaire
+        // ── Palette packaging / couleurs officielles ─────────────────────
+        "terracotta":         "#A84F2A",   // couleur principale de marque
+        "creme-maison":       "#F4E8D6",   // crème douce
+        "beige-doux":         "#D8C3A5",   // secondaire éditorial
+        "cuivre-or":          "#B8784A",   // accent cuivre-or
+        "noyer":              "#4A2E20",   // profondeur architecturale
+        "noir-subtil":        "#1F1A17",   // contraste élégant
+        // ── Accents conservés pour rétrocompatibilité ────────────────────
+        "brun-marquis":       "#6F5A2E",
+        "caramel":            "#C7843E",
+        "framboise":          "#A6192E",
+        "pistache":           "#9A9B55",
 
         // ── Alias sémantiques (usage dans les composants) ────────────────────
         // Ces alias évitent de coupler les composants aux noms de palette.

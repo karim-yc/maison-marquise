@@ -78,10 +78,11 @@ const DONTS = [
 
 // ── Couleurs trichromie ───────────────────────────────────────────────────────
 const COLORWAYS = [
-  { label: "Noir Marquise", fill: "#111111", bg: "#F7F3EC", border: "#D8D6D1",       textOnBg: "#111111", name: "Sur ivoire" },
-  { label: "Blanc Marbre",  fill: "#FAFAF8", bg: "#111111", border: "rgba(185,154,95,0.2)", textOnBg: "#F7F3EC", name: "Sur noir" },
-  { label: "Or Champagne",  fill: "#B99A5F", bg: "#111111", border: "rgba(185,154,95,0.2)", textOnBg: "#B99A5F", name: "Or sur noir" },
-  { label: "Brun Doré",     fill: "#6F5A2E", bg: "#F7F3EC", border: "#D8D6D1",       textOnBg: "#6F5A2E", name: "Brun sur ivoire" },
+  { label: "Noir Marquise",   fill: "#111111", bg: "#F4E8D6", border: "#D8C3A5",              textOnBg: "#111111", name: "Sur crème" },
+  { label: "Blanc Marbre",    fill: "#F8F3EA", bg: "#111111", border: "rgba(184,120,74,0.2)", textOnBg: "#F8F3EA", name: "Sur noir" },
+  { label: "Cuivre-Or",       fill: "#B8784A", bg: "#1F1A17", border: "rgba(184,120,74,0.3)", textOnBg: "#B8784A", name: "Cuivre sur noir" },
+  { label: "Terracotta",      fill: "#A84F2A", bg: "#F4E8D6", border: "#D8C3A5",              textOnBg: "#A84F2A", name: "Terracotta sur crème" },
+  { label: "Crème Maison",    fill: "#F4E8D6", bg: "#4A2E20", border: "rgba(74,46,32,0.5)",   textOnBg: "#F4E8D6", name: "Crème sur noyer" },
 ] as const;
 
 

@@ -546,7 +546,6 @@ export function UniversSection() {
         </div>
 
         {/* ══ SYNTHÈSE ════════════════════════════════════════════════ */}
-        <SyntheseBande />
 
       </div>
 

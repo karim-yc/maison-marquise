@@ -99,7 +99,7 @@ export function HeroSection({ className }: { className?: string }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.75, duration: 0.6, ease: EASE }}
         >
-          Maison Marquise — Brandbook officiel.
+          Brandbook officiel · Document confidentiel prestataires.
         </motion.p>
 
         {/* Phrase secondaire */}

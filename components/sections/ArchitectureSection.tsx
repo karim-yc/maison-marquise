@@ -502,67 +502,6 @@ export function ArchitectureSection() {
           />
         </motion.div>
 
-        <BlockDivider />
-
-        {/* ══════════════════════════════════════════════════════════════
-            BLOC 06 — À FAIRE / À ÉVITER
-        ══════════════════════════════════════════════════════════════ */}
-        <motion.div
-          ref={b6Ref}
-          className="space-y-8"
-          initial={{ opacity: 0, y: 24 }}
-          animate={b6In ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, ease: EASE }}
-        >
-          <div>
-            <span className="label-mm text-gris-texte">Règles essentielles</span>
-            <h3
-              className="font-serif font-light text-noir-marquise mt-1"
-              style={{ fontSize: "clamp(1.375rem, 2.5vw, 1.875rem)" }}
-            >
-              À faire &amp; à éviter
-            </h3>
-            <div className="h-px w-12 mt-3" style={{ background: "linear-gradient(90deg, #B99A5F, transparent)" }} aria-hidden="true" />
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {/* À faire */}
-            <div className="flex flex-col gap-5 rounded-[3px] border border-or-champagne/25 border-l-2 border-l-or-champagne/60 bg-ivoire-maison/60 p-6 md:p-8">
-              <div className="flex items-center gap-2.5">
-                <Check size={14} strokeWidth={2} className="text-pistache shrink-0" />
-                <span className="font-sans text-[0.65rem] font-semibold tracking-[0.18em] uppercase text-pistache">
-                  À faire
-                </span>
-              </div>
-              <ul className="space-y-3" role="list">
-                {AFAIRE.map((r) => (
-                  <li key={r} className="flex items-start gap-3">
-                    <span className="mt-2 w-1 h-1 rounded-full bg-pistache/60 shrink-0" aria-hidden="true" />
-                    <span className="font-sans text-ui text-gris-texte leading-snug">{r}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* À éviter */}
-            <div className="flex flex-col gap-5 rounded-[3px] border border-framboise/15 border-l-2 border-l-framboise/40 bg-blanc-marbre p-6 md:p-8">
-              <div className="flex items-center gap-2.5">
-                <X size={14} strokeWidth={2} className="text-framboise shrink-0" />
-                <span className="font-sans text-[0.65rem] font-semibold tracking-[0.18em] uppercase text-framboise">
-                  À éviter
-                </span>
-              </div>
-              <ul className="space-y-3" role="list">
-                {AEVITER.map((r) => (
-                  <li key={r} className="flex items-start gap-3">
-                    <span className="mt-2 w-1 h-1 rounded-full bg-framboise/40 shrink-0" aria-hidden="true" />
-                    <span className="font-sans text-ui text-gris-texte leading-snug">{r}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-        </motion.div>
 
       </div>
 

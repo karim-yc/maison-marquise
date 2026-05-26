@@ -433,7 +433,6 @@ export function CouleursSection() {
                 animate={headerIn ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.7, delay: 0.25, ease: EASE }}
               >
-                La palette Maison Marquise est une palette de matières avant d&apos;être une palette de couleurs.
                 Cliquez sur chaque pastille pour copier le code HEX. Les codes RGB et CMYK sont disponibles en dépliant chaque carte.
               </motion.p>
             </div>
@@ -500,43 +499,19 @@ export function CouleursSection() {
           </div>
         </div>
 
-        {/* ══ RÈGLES & INTERDITS ════════════════════════════════════════ */}
+        {/* ══ RÈGLE ESSENTIELLE — synthèse en une ligne ════════════════ */}
         <motion.div
           ref={reglesRef}
-          className="grid grid-cols-1 md:grid-cols-2 gap-5"
-          initial={{ opacity: 0, y: 20 }}
+          className="rounded-[3px] border border-gris-marbre bg-blanc-marbre px-6 md:px-8 py-5 flex flex-wrap items-baseline gap-x-6 gap-y-2"
+          initial={{ opacity: 0, y: 16 }}
           animate={reglesIn ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, ease: EASE }}
+          transition={{ duration: 0.6, ease: EASE }}
         >
-          <div className="rounded-[3px] border border-or-champagne/25 border-l-2 border-l-or-champagne/60 bg-ivoire-maison/60 p-6 md:p-8 space-y-4">
-            <div>
-              <span className="label-mm text-gris-texte block mb-1">Règles d&apos;usage</span>
-              <h3 className="font-serif font-light text-noir-marquise text-xl">Ce qui ne change jamais</h3>
-            </div>
-            <ul className="space-y-2.5">
-              {REGLES.map(r => (
-                <li key={r} className="flex items-start gap-2.5">
-                  <span className="mt-2 w-1 h-1 rounded-full bg-or-champagne/70 shrink-0" aria-hidden="true" />
-                  <span className="font-sans text-ui text-gris-texte leading-snug">{r}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="rounded-[3px] border border-framboise/15 border-l-2 border-l-framboise/40 bg-blanc-marbre p-6 md:p-8 space-y-4">
-            <div>
-              <span className="label-mm text-framboise block mb-1">Interdits absolus</span>
-              <h3 className="font-serif font-light text-noir-marquise text-xl">À ne jamais faire</h3>
-            </div>
-            <ul className="space-y-2.5">
-              {JAMAIS.map(r => (
-                <li key={r} className="flex items-start gap-2.5">
-                  <X size={11} strokeWidth={2} className="text-framboise shrink-0 mt-0.5" />
-                  <span className="font-sans text-ui text-gris-texte leading-snug">{r}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
+          <span className="label-mm text-gris-texte/50 shrink-0">Règle absolue</span>
+          <p className="font-sans text-ui text-gris-texte leading-relaxed">
+            Toujours associer couleur et matière — jamais un aplat seul.
+            {" "}<span className="text-gris-texte/50">L&apos;interdit spécifique de chaque couleur est visible en dépliant sa carte.</span>
+          </p>
         </motion.div>
 
         {/* ══ CONCLUSION ════════════════════════════════════════════════ */}

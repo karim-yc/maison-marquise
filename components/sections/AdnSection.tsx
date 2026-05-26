@@ -16,35 +16,35 @@ const PILLARS = [
     index:  "01",
     icon:   Sparkles,
     title:  "Savoir-faire",
-    text:   "Des gestes précis, des recettes maîtrisées et des finitions soignées au service du goût.",
+    text:   "Recettes maîtrisées, finitions soignées, gestes précis.",
     accent: "or-champagne" as const,
   },
   {
     index:  "02",
     icon:   Heart,
     title:  "Générosité",
-    text:   "Des vitrines abondantes, des créations visuelles et une offre sucrée-salée pensée pour tous les moments de la journée.",
+    text:   "Vitrines généreuses, offre sucrée-salée complète, du café du matin au salon de thé.",
     accent: "caramel" as const,
   },
   {
     index:  "03",
     icon:   Crown,
     title:  "Élégance",
-    text:   "Un univers sobre et premium, porté par le marbre, l&apos;ivoire, le noir profond et les détails dorés.",
+    text:   "Marbre, ivoire, noir, cuivre-or. Sobre, maîtrisé, premium.",
     accent: "or-champagne" as const,
   },
   {
     index:  "04",
     icon:   Coffee,
     title:  "Expérience",
-    text:   "Un salon de thé chaleureux, des packagings soignés et une pause gourmande qui se vit autant qu&apos;elle se déguste.",
+    text:   "Packaging terracotta, salon de thé, atmosphère lifestyle premium.",
     accent: "pistache" as const,
   },
   {
     index:  "05",
     icon:   Fingerprint,
     title:  "Signature",
-    text:   "Un territoire reconnaissable : le monogramme M, les créations signatures, les boissons gourmandes et l&apos;élégance accessible.",
+    text:   "Monogramme M, terracotta, cuivre-or. Une signature reconnaissable immédiatement.",
     accent: "or-champagne" as const,
   },
 ] as const;
@@ -218,9 +218,8 @@ export function AdnSection() {
             animate={headerIn ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.32, ease: EASE }}
           >
-            Maison Marquise est une café-boulangerie française premium.
-            Son identité visuelle repose sur la terracotta mate, la crème douce,
-            le cuivre-or subtil et le bois chaleureux — jamais sur la surcharge.
+            Café-boulangerie française premium.
+            Terracotta mate · Crème douce · Cuivre-or · Bois chaleureux.
           </motion.p>
         </div>
 

@@ -439,42 +439,6 @@ export function PackagingSection() {
           </div>
         </motion.div>
 
-        <SectionDivider />
-
-        {/* ══ RÈGLES GÉNÉRALES & À NE JAMAIS FAIRE ════════════════════ */}
-        <motion.div
-          ref={reglesRef}
-          className="grid grid-cols-1 md:grid-cols-2 gap-5"
-          initial={{ opacity: 0, y: 20 }}
-          animate={reglesIn ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, ease: EASE }}
-        >
-          {/* Règles */}
-          <div className="rounded-[3px] border border-or-champagne/25 border-l-2 border-l-or-champagne/60 bg-ivoire-maison/60 p-6 md:p-8 space-y-4">
-            <div>
-              <span className="label-mm text-gris-texte block mb-1">Règles générales</span>
-              <h3 className="font-serif font-light text-noir-marquise text-xl">
-                Ce qui ne change jamais
-              </h3>
-            </div>
-            <ul className="space-y-2.5">
-              {REGLES.map(r => <RuleTag key={r} text={r} />)}
-            </ul>
-          </div>
-
-          {/* Interdits */}
-          <div className="rounded-[3px] border border-framboise/15 border-l-2 border-l-framboise/40 bg-blanc-marbre p-6 md:p-8 space-y-4">
-            <div>
-              <span className="label-mm text-framboise block mb-1">Interdits absolus</span>
-              <h3 className="font-serif font-light text-noir-marquise text-xl">
-                À ne jamais faire
-              </h3>
-            </div>
-            <ul className="space-y-2.5">
-              {JAMAIS.map(r => <RuleTag key={r} text={r} variant="red" />)}
-            </ul>
-          </div>
-        </motion.div>
 
         {/* ══ CONCLUSION ════════════════════════════════════════════ */}
         <motion.blockquote

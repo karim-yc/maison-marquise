@@ -3,7 +3,7 @@
 import { useRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
-import { ArrowDown, BookOpen, Package } from "lucide-react";
+import { ArrowDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { HeroLogo } from "@/components/brand/HeroLogo";
 
@@ -113,30 +113,6 @@ export function HeroSection({ className }: { className?: string }) {
           imprimeurs et prestataires.
         </motion.p>
 
-        {/* CTAs — empilés sur mobile (<640px), côte à côte au-delà */}
-        <motion.div
-          className="w-full flex flex-col md:flex-row gap-2.5"
-          initial={{ opacity: 0, y: 6 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.05, duration: 0.6, ease: EASE }}
-        >
-          <button
-            onClick={scrollToContent}
-            className="btn-mm w-full md:flex-1 flex items-center justify-center gap-2"
-            aria-label="Découvrir la charte graphique"
-          >
-            <BookOpen size={12} strokeWidth={1.5} aria-hidden="true" />
-            <span>Découvrir la charte</span>
-          </button>
-          <button
-            onClick={() => document.getElementById("architecture")?.scrollIntoView({ behavior: "smooth" })}
-            className="btn-mm-gold w-full md:flex-1 flex items-center justify-center gap-2"
-            aria-label="Voir la charte architecturale"
-          >
-            <Package size={12} strokeWidth={1.5} aria-hidden="true" />
-            <span>Charte architecturale</span>
-          </button>
-        </motion.div>
 
       </div>
 

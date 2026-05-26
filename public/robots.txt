@@ -1,0 +1,4 @@
+# Maison Marquise — Brandbook Digital
+# Document confidentiel — accès restreint aux prestataires autorisés.
+User-agent: *
+Disallow: /

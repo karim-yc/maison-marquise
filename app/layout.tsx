@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Navbar }         from "@/components/layout/Navbar";
+import { BrandCursor }    from "@/components/ui/BrandCursor";
 import { Footer }         from "@/components/layout/Footer";
 import { BackToTop }      from "@/components/layout/BackToTop";
 import { MotionProvider } from "@/components/layout/MotionProvider";
@@ -78,6 +79,7 @@ export default function RootLayout({
           </a>
 
           {/* Navigation sticky */}
+          <BrandCursor />
           <Navbar />
 
           {/* Contenu principal */}

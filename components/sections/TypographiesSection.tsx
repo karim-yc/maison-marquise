@@ -392,9 +392,9 @@ export function TypographiesSection() {
                 id="typo-title"
                 className="font-serif font-light text-noir-marquise text-balance leading-none"
                 style={{ fontSize: "clamp(2rem, 5vw, 3.75rem)" }}
-                initial={{ opacity: 0, y: 16 }}
-                animate={headerIn ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.9, delay: 0.12, ease: EASE_SPRING }}
+                initial={{ opacity: 0, clipPath: "inset(0 100% 0 0)" }}
+                animate={headerIn ? { opacity: 1, clipPath: "inset(0 0% 0 0)" } : {}}
+                transition={{ duration: 0.85, delay: 0.15, ease: EASE_SPRING }}
               >
                 Trois polices, une voix
               </motion.h2>

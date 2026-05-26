@@ -18,6 +18,10 @@ export function HeroSection({ className }: { className?: string }) {
     offset: ["start start", "end start"],
   });
   const sectionOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  // Parallax : le fond descend à 0.25× la vitesse → profondeur premium
+  const marbleY  = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
+  // Le contenu (logo + textes) monte légèrement plus vite → effet de lift
+  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "-8%"]);
 
   useEffect(() => setMounted(true), []);
 
@@ -35,8 +39,12 @@ export function HeroSection({ className }: { className?: string }) {
       style={mounted ? { opacity: sectionOpacity } : undefined}
       aria-label="Accueil du brandbook Maison Marquise"
     >
-      {/* Fond marbre */}
-      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+      {/* Fond marbre — parallax 0.25× la vitesse de scroll */}
+      <motion.div
+        className="absolute inset-0 pointer-events-none"
+        style={{ y: marbleY }}
+        aria-hidden="true"
+      >
         <Image
           src="/assets/texture-marble-white.jpg"
           alt="" fill sizes="100vw"
@@ -44,10 +52,13 @@ export function HeroSection({ className }: { className?: string }) {
           quality={60} priority
         />
         <div className="absolute inset-0 bg-ivoire-maison/72" />
-      </div>
+      </motion.div>
 
       {/* ── Bloc central unique — tout ensemble, bien groupé ── */}
-      <div className="relative z-raised w-full max-w-[min(420px,88vw)] mx-auto px-4 flex flex-col items-center text-center">
+      <motion.div
+        className="relative z-raised w-full max-w-[min(420px,88vw)] mx-auto px-4 flex flex-col items-center text-center"
+        style={mounted ? { y: contentY } : undefined}
+      >
 
         <h1 className="sr-only">Maison Marquise — Brandbook Digital</h1>
 
@@ -114,7 +125,7 @@ export function HeroSection({ className }: { className?: string }) {
         </motion.p>
 
 
-      </div>
+      </motion.div>
 
       {/* Scroll indicator — ancré en bas */}
       <motion.button

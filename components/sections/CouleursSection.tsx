@@ -570,9 +570,9 @@ export function CouleursSection() {
                 id="couleurs-title"
                 className="font-serif font-light text-noir-marquise leading-none text-balance"
                 style={{ fontSize: "clamp(2.25rem, 6vw, 4.5rem)" }}
-                initial={{ opacity: 0, y: 18 }}
-                animate={headerIn ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.9, delay: 0.1, ease: EASE_SPRING }}
+                initial={{ opacity: 0, clipPath: "inset(0 100% 0 0)" }}
+                animate={headerIn ? { opacity: 1, clipPath: "inset(0 0% 0 0)" } : {}}
+                transition={{ duration: 0.85, delay: 0.15, ease: EASE_SPRING }}
               >
                 Les couleurs officielles
               </motion.h2>

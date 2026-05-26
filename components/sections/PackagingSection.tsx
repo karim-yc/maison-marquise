@@ -188,6 +188,19 @@ function PackCard({
 // ─────────────────────────────────────────────────────────────────────────────
 // SECTION PRINCIPALE
 // ─────────────────────────────────────────────────────────────────────────────
+// ── Textures CSS pour la palette packaging ───────────────────────────────────
+function getPkgTextureStyle(hex: string): React.CSSProperties {
+  const MAP: Record<string, React.CSSProperties> = {
+    "#A84F2A": { backgroundImage: "linear-gradient(145deg, #B85830 0%, #A84F2A 40%, #983A18 70%, #A84F2A 100%)" },
+    "#F4E8D6": { backgroundImage: "linear-gradient(150deg, #FBF2E8 0%, #F4E8D6 45%, #EDE0CC 75%, #F4E8D6 100%)" },
+    "#F8F3EA": { backgroundImage: "linear-gradient(135deg, #F8F3EA 0%, #F0EBE0 30%, #F5F0E8 60%, #F0EBE0 100%)" },
+    "#B8784A": { background: "linear-gradient(125deg, #3D1F0A 0%, #7A4520 10%, #C87840 20%, #F0B060 28%, #E8A050 35%, #B87040 45%, #7A4520 55%, #D4924E 65%, #F5C060 72%, #D09050 80%, #8B5E35 90%, #C07838 100%)" },
+    "#4A2E20": { backgroundImage: "repeating-linear-gradient(91deg, transparent 0px, transparent 4px, rgba(0,0,0,0.06) 4px, rgba(0,0,0,0.06) 5px), linear-gradient(180deg, #5A3828 0%, #4A2E20 50%, #3E2418 100%)" },
+    "#1F1A17": { backgroundImage: "linear-gradient(135deg, #2A2420 0%, #1F1A17 50%, #151210 100%)" },
+  };
+  return MAP[hex] ?? { backgroundColor: hex };
+}
+
 export function PackagingSection() {
   const headerRef = useRef<HTMLDivElement>(null);
   const paletteRef = useRef<HTMLDivElement>(null);
@@ -428,7 +441,32 @@ export function PackagingSection() {
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
             {PALETTE.map((c) => (
               <div key={c.name} className="flex flex-col rounded-[3px] overflow-hidden border border-gris-marbre bg-blanc-marbre">
-                <div className="h-16 w-full shrink-0" style={{ backgroundColor: c.hex }} aria-hidden="true" />
+                <div
+                  className="h-16 w-full shrink-0 relative overflow-hidden"
+                  style={getPkgTextureStyle(c.hex)}
+                  aria-hidden="true"
+                >
+                  {c.hex === "#B8784A" && (
+                    <>
+                      <div className="absolute inset-0" style={{
+                        background: "linear-gradient(105deg, transparent 30%, rgba(255,220,140,0.30) 50%, transparent 70%)",
+                        animation: "shimmer-cuivre 3s ease-in-out infinite",
+                      }} />
+                    </>
+                  )}
+                  {c.hex === "#F8F3EA" && (
+                    <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                      <path d="M0,35 Q20,30 35,42 Q50,55 70,38 Q85,28 100,40" stroke="rgba(180,160,130,0.3)" strokeWidth="1" fill="none"/>
+                      <path d="M0,60 Q25,55 45,65 Q65,75 100,60" stroke="rgba(190,170,145,0.2)" strokeWidth="0.7" fill="none"/>
+                    </svg>
+                  )}
+                  {c.hex === "#4A2E20" && (
+                    <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                      <path d="M0,30 Q30,27 55,33 Q75,39 100,30" stroke="rgba(255,190,100,0.14)" strokeWidth="1.5" fill="none"/>
+                      <path d="M0,60 Q35,57 60,63 Q80,69 100,58" stroke="rgba(255,180,90,0.10)" strokeWidth="1.2" fill="none"/>
+                    </svg>
+                  )}
+                </div>
                 <div className="flex-1 p-3 space-y-1.5">
                   <p className="font-sans text-[0.65rem] font-semibold text-noir-marquise leading-snug">{c.name}</p>
                   <p className="font-mono text-[0.58rem] text-gris-texte/60">{c.hex}</p>

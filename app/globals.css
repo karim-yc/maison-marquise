@@ -453,3 +453,12 @@
     border-width: 0;
   }
 }
+
+  /* ── Animation shimmer cuivre-or ───────────────────────────────────────── */
+  @keyframes shimmer-cuivre {
+    0%   { transform: translateX(-120%) skewX(-15deg); opacity: 0; }
+    40%  { opacity: 1; }
+    60%  { opacity: 1; }
+    100% { transform: translateX(220%) skewX(-15deg); opacity: 0; }
+  }
+

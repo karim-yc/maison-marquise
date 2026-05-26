@@ -14,10 +14,134 @@ const EASE        = [0.25, 0.46, 0.45, 0.94] as const;
 const EASE_SPRING = [0.16, 1, 0.3, 1]        as const;
 
 // ── Palette complète ──────────────────────────────────────────────────────────
+// ── Rendus texture en CSS pur — chaque matière a sa signature visuelle ────────
+function getTextureStyle(type: string, hex: string): React.CSSProperties {
+  switch (type) {
+
+    case "cuivre-or":
+      // Foil cuivre-or : reflets métalliques multidirectionnels + shimmer
+      return {
+        background: `
+          linear-gradient(
+            125deg,
+            #3D1F0A 0%,
+            #7A4520 8%,
+            #C87840 16%,
+            #F0B060 22%,
+            #E8A050 28%,
+            #B87040 36%,
+            #7A4520 44%,
+            #9A5830 50%,
+            #D48840 57%,
+            #F5C060 63%,
+            #D09050 70%,
+            #A06830 78%,
+            #C07838 86%,
+            #F0B050 92%,
+            #B87840 100%
+          )
+        `,
+        position: "relative" as const,
+      };
+
+    case "noyer":
+      // Bois noyer : veinage horizontal chaleureux
+      return {
+        background: `
+          repeating-linear-gradient(
+            92deg,
+            transparent 0px,
+            transparent 3px,
+            rgba(0,0,0,0.06) 3px,
+            rgba(0,0,0,0.06) 4px,
+            transparent 4px,
+            transparent 9px,
+            rgba(0,0,0,0.04) 9px,
+            rgba(0,0,0,0.04) 10px
+          ),
+          repeating-linear-gradient(
+            88deg,
+            transparent 0px,
+            transparent 20px,
+            rgba(255,255,255,0.04) 20px,
+            rgba(255,255,255,0.04) 22px
+          ),
+          linear-gradient(
+            180deg,
+            #5A3828 0%,
+            #4A2E20 30%,
+            #3E2418 60%,
+            #4A2E20 80%,
+            #5A3828 100%
+          )
+        `,
+      };
+
+    case "marbre":
+      // Marbre clair : veines SVG inline
+      return {
+        background: `
+          radial-gradient(ellipse 80% 60% at 30% 40%, rgba(200,185,165,0.25) 0%, transparent 60%),
+          radial-gradient(ellipse 60% 80% at 70% 70%, rgba(180,165,145,0.15) 0%, transparent 50%),
+          linear-gradient(135deg,
+            #F8F3EA 0%,
+            #F0EBE0 20%,
+            #F5F0E8 40%,
+            #EDE8DE 55%,
+            #F8F3EA 70%,
+            #F0EBE0 85%,
+            #F8F3EA 100%
+          )
+        `,
+        position: "relative" as const,
+      };
+
+    case "terracotta":
+      // Papier mat terracotta : grain fin et chaleur mate
+      return {
+        backgroundImage: `
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeBlend in='SourceGraphic' mode='multiply' result='blend'/%3E%3CfeComposite in='blend' in2='SourceGraphic' operator='in'/%3E%3C/filter%3E%3Crect width='180' height='180' fill='%23A84F2A' filter='url(%23g)' opacity='0.18'/%3E%3C/svg%3E"),
+          linear-gradient(145deg, #B85830 0%, #A84F2A 35%, #983A18 65%, #A84F2A 100%)
+        `,
+      };
+
+    case "creme":
+      // Papier crème : velours doux légèrement texturé
+      return {
+        backgroundImage: `
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeBlend in='SourceGraphic' mode='multiply'/%3E%3C/filter%3E%3Crect width='200' height='200' fill='%23F4E8D6' filter='url(%23g)' opacity='0.12'/%3E%3C/svg%3E"),
+          linear-gradient(150deg, #FBF2E8 0%, #F4E8D6 40%, #EDE0CC 70%, #F4E8D6 100%)
+        `,
+      };
+
+    case "beige":
+      // Enduit mural : pierre / tadelakt
+      return {
+        backgroundImage: `
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='5' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeBlend in='SourceGraphic' mode='multiply'/%3E%3C/filter%3E%3Crect width='160' height='160' fill='%23D8C3A5' filter='url(%23g)' opacity='0.15'/%3E%3C/svg%3E"),
+          linear-gradient(120deg, #E0CDB0 0%, #D8C3A5 45%, #C8B395 70%, #D8C3A5 100%)
+        `,
+      };
+
+    case "noir-mat":
+      // Noir mat : velours profond
+      return {
+        backgroundImage: `
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeBlend in='SourceGraphic' mode='multiply'/%3E%3C/filter%3E%3Crect width='150' height='150' fill='%231F1A17' filter='url(%23g)' opacity='0.1'/%3E%3C/svg%3E"),
+          linear-gradient(135deg, #2A2420 0%, #1F1A17 40%, #151210 70%, #1F1A17 100%)
+        `,
+      };
+
+    default:
+      return { backgroundColor: hex };
+  }
+}
+
 const COULEURS = [
   {
     name:      "Terracotta Marquise",
     hex:       "#A84F2A",
+    textureType: "terracotta",
     role:      "Couleur principale de marque",
     groupe:    "signature",
     rgb:       "R168 G79 B42",
@@ -30,6 +154,7 @@ const COULEURS = [
   {
     name:      "Crème Maison",
     hex:       "#F4E8D6",
+    textureType: "creme",
     role:      "Couleur douce et lumineuse",
     groupe:    "clair",
     rgb:       "R244 G232 B214",
@@ -42,6 +167,7 @@ const COULEURS = [
   {
     name:      "Blanc Marbre",
     hex:       "#F8F3EA",
+    textureType: "marbre",
     role:      "Couleur matière premium",
     groupe:    "clair",
     rgb:       "R248 G243 B234",
@@ -54,6 +180,7 @@ const COULEURS = [
   {
     name:      "Beige Doux",
     hex:       "#D8C3A5",
+    textureType: "beige",
     role:      "Couleur secondaire éditoriale",
     groupe:    "clair",
     rgb:       "R216 G195 B165",
@@ -66,6 +193,7 @@ const COULEURS = [
   {
     name:      "Cuivre-Or",
     hex:       "#B8784A",
+    textureType: "cuivre-or",
     role:      "Accent premium",
     groupe:    "accent",
     rgb:       "R184 G120 B74",
@@ -78,6 +206,7 @@ const COULEURS = [
   {
     name:      "Noyer Foncé",
     hex:       "#4A2E20",
+    textureType: "noyer",
     role:      "Profondeur et architecture",
     groupe:    "chaud",
     rgb:       "R74 G46 B32",
@@ -90,6 +219,7 @@ const COULEURS = [
   {
     name:      "Noir Subtil",
     hex:       "#1F1A17",
+    textureType: "noir-mat",
     role:      "Contraste élégant",
     groupe:    "accent",
     rgb:       "R31 G26 B23",
@@ -203,10 +333,37 @@ function ColorCard({ color, animDelay = 0 }: {
       {/* Swatch — clic pour copier HEX */}
       <button
         className="relative w-full h-28 md:h-32 cursor-pointer group/sw overflow-hidden"
-        style={{ backgroundColor: color.hex }}
+        style={getTextureStyle(color.textureType, color.hex)}
         onClick={async () => { try { await navigator.clipboard.writeText(color.hex); } catch {} }}
         aria-label={`Copier HEX ${color.hex}`}
       >
+        {/* Reflet shimmer cuivre-or */}
+        {color.textureType === "cuivre-or" && (
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background: "linear-gradient(105deg, transparent 30%, rgba(255,220,140,0.35) 50%, transparent 70%)",
+              animation: "shimmer-cuivre 3s ease-in-out infinite",
+            }}
+          />
+        )}
+        {/* Veines marbre SVG */}
+        {color.textureType === "marbre" && (
+          <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M0,35 Q20,30 35,42 Q50,55 70,38 Q85,28 100,40" stroke="rgba(180,160,130,0.3)" strokeWidth="0.8" fill="none"/>
+            <path d="M0,60 Q15,55 30,65 Q45,75 65,60 Q80,50 100,62" stroke="rgba(190,170,145,0.2)" strokeWidth="0.5" fill="none"/>
+            <path d="M10,15 Q25,20 40,12 Q55,5 75,18 Q90,25 100,15" stroke="rgba(170,150,120,0.15)" strokeWidth="0.6" fill="none"/>
+          </svg>
+        )}
+        {/* Veinage bois noyer */}
+        {color.textureType === "noyer" && (
+          <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M0,25 Q30,22 50,28 Q70,34 100,26" stroke="rgba(255,200,130,0.12)" strokeWidth="1.5" fill="none"/>
+            <path d="M0,45 Q25,42 50,48 Q75,54 100,44" stroke="rgba(255,190,110,0.08)" strokeWidth="1" fill="none"/>
+            <path d="M0,65 Q35,62 55,68 Q75,74 100,64" stroke="rgba(255,200,130,0.10)" strokeWidth="1.2" fill="none"/>
+            <path d="M0,80 Q20,78 50,84 Q80,90 100,80" stroke="rgba(255,180,100,0.06)" strokeWidth="0.8" fill="none"/>
+          </svg>
+        )}
         <div className="absolute inset-0 flex items-center justify-center gap-1.5 opacity-0 group-hover/sw:opacity-100 transition-opacity bg-black/10">
           <Copy size={11} strokeWidth={1.5} className={light ? "text-white/80" : "text-black/50"} />
           <span className={cn("font-sans text-[0.58rem] font-medium tracking-[0.15em] uppercase", light ? "text-white/80" : "text-black/50")}>

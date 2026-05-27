@@ -1,25 +1,24 @@
 "use client";
 
 import { useState, useRef } from "react";
+import Image from "next/image";
 import { LogoFull } from "@/components/brand/LogoSvg";
 
 export default function LoginPage() {
-  const [error, setError]   = useState(false);
+  const [error, setError]     = useState(false);
   const [loading, setLoading] = useState(false);
-  const inputRef            = useRef<HTMLInputElement>(null);
+  const inputRef              = useRef<HTMLInputElement>(null);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
     setError(false);
-
     const password = inputRef.current?.value ?? "";
     const res = await fetch("/api/login", {
-      method: "POST",
+      method:  "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ password }),
+      body:    JSON.stringify({ password }),
     });
-
     if (res.ok) {
       window.location.href = "/";
     } else {
@@ -33,43 +32,116 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-ivoire-maison flex flex-col items-center justify-center px-5">
+    <div className="min-h-screen flex flex-col lg:flex-row">
 
-      {/* Fond marbre très discret */}
-      <div
-        className="fixed inset-0 pointer-events-none"
-        style={{
-          backgroundImage: "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(216,214,209,0.2) 0%, transparent 70%)",
-        }}
-        aria-hidden="true"
-      />
+      {/* ── GAUCHE — photo pleine hauteur ───────────────────────────────── */}
+      <div className="relative lg:flex-1 h-56 sm:h-72 lg:h-auto overflow-hidden">
 
-      <div className="relative w-full max-w-sm flex flex-col items-center gap-8">
+        {/* Photo packaging réelle */}
+        <Image
+          src="/assets/packaging2/cup-terracotta-single.jpg"
+          alt="Cup terracotta Maison Marquise sur comptoir marbre"
+          fill
+          sizes="(max-width: 1024px) 100vw, 55vw"
+          className="object-cover object-center"
+          quality={90}
+          priority
+        />
 
-        {/* Logo */}
-        <div className="w-48 text-noir-marquise">
-          <LogoFull aria-label="Maison Marquise" />
+        {/* Overlay dégradé sombre pour lisibilité du texte bas */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to top, rgba(26,14,7,0.88) 0%, rgba(26,14,7,0.35) 40%, rgba(26,14,7,0.05) 100%)",
+          }}
+          aria-hidden="true"
+        />
+
+        {/* Texte en bas à gauche — visible uniquement sur desktop */}
+        <div className="absolute bottom-0 left-0 right-0 p-8 md:p-10 hidden lg:block">
+          {/* Filet or */}
+          <div
+            className="w-8 h-px mb-5"
+            style={{ background: "linear-gradient(90deg, #B8784A, transparent)" }}
+            aria-hidden="true"
+          />
+          <p
+            className="font-serif font-light italic leading-snug mb-3"
+            style={{
+              fontSize: "clamp(1.1rem, 1.8vw, 1.4rem)",
+              color: "rgba(244, 232, 214, 0.92)",
+            }}
+          >
+            &ldquo;Bien plus qu&apos;une boulangerie.&rdquo;
+          </p>
+          <p
+            className="font-sans font-medium"
+            style={{
+              fontSize: "0.6rem",
+              letterSpacing: "0.22em",
+              textTransform: "uppercase",
+              color: "rgba(184, 120, 74, 0.75)",
+            }}
+          >
+            Pâtisserie fine · Généreuse · Accessible
+          </p>
         </div>
+      </div>
 
-        {/* Formulaire */}
-        <div className="w-full bg-blanc-marbre border border-gris-marbre rounded-[3px] overflow-hidden">
+      {/* ── DROITE — formulaire ──────────────────────────────────────────── */}
+      <div
+        className="flex flex-col items-center justify-center lg:w-[420px] xl:w-[460px] shrink-0 px-8 py-12 lg:py-0"
+        style={{ backgroundColor: "#F7F3EC" }}
+      >
+        <div className="w-full max-w-[320px]">
 
-          {/* En-tête */}
-          <div className="px-7 py-5 border-b border-gris-marbre">
-            <p className="font-sans text-[0.6rem] font-medium tracking-[0.2em] uppercase text-gris-texte/50">
-              Document confidentiel
-            </p>
-            <h1 className="font-serif font-light text-noir-marquise mt-1 text-xl">
-              Accès prestataires
-            </h1>
+          {/* Logo officiel */}
+          <div className="w-44 mx-auto mb-8 text-noir-marquise">
+            <LogoFull aria-label="Maison Marquise" />
           </div>
 
+          {/* Filet or centré */}
+          <div
+            className="mx-auto mb-8 h-px w-12"
+            style={{ background: "linear-gradient(90deg, transparent, #B8784A, transparent)" }}
+            aria-hidden="true"
+          />
+
+          {/* Badge discret */}
+          <p
+            className="text-center font-sans font-medium mb-6"
+            style={{
+              fontSize: "0.58rem",
+              letterSpacing: "0.2em",
+              textTransform: "uppercase",
+              color: "rgba(74, 74, 74, 0.45)",
+            }}
+          >
+            Accès prestataires
+          </p>
+
+          {/* Titre */}
+          <h1
+            className="font-serif font-light text-center mb-8"
+            style={{ fontSize: "1.5rem", color: "#111111" }}
+          >
+            Brandbook officiel
+          </h1>
+
           {/* Formulaire */}
-          <form onSubmit={handleSubmit} className="px-7 py-6 space-y-5">
-            <div className="space-y-2">
+          <form onSubmit={handleSubmit} className="space-y-4">
+
+            <div className="space-y-1.5">
               <label
                 htmlFor="password"
-                className="block font-sans text-[0.65rem] font-medium tracking-[0.14em] uppercase text-gris-texte/60"
+                className="block font-sans font-medium"
+                style={{
+                  fontSize: "0.62rem",
+                  letterSpacing: "0.16em",
+                  textTransform: "uppercase",
+                  color: "rgba(74, 74, 74, 0.55)",
+                }}
               >
                 Mot de passe
               </label>
@@ -79,23 +151,38 @@ export default function LoginPage() {
                 type="password"
                 autoFocus
                 autoComplete="current-password"
-                className={[
-                  "w-full px-4 py-2.5 rounded-[2px] border bg-blanc-marbre",
-                  "font-sans text-sm text-noir-marquise",
-                  "outline-none transition-colors duration-200",
-                  "focus:border-or-champagne/60",
-                  error
-                    ? "border-framboise/40 focus:border-framboise/60"
-                    : "border-gris-marbre",
-                ].join(" ")}
                 placeholder="••••••••"
                 aria-describedby={error ? "pwd-error" : undefined}
+                style={{
+                  width: "100%",
+                  padding: "10px 14px",
+                  border: error ? "1px solid rgba(166,25,46,0.4)" : "1px solid #D8D6D1",
+                  borderRadius: "2px",
+                  backgroundColor: "#FAFAF8",
+                  fontSize: "0.875rem",
+                  color: "#111111",
+                  outline: "none",
+                  fontFamily: "inherit",
+                  transition: "border-color 0.2s",
+                  boxSizing: "border-box",
+                }}
+                onFocus={(e) => {
+                  e.currentTarget.style.borderColor = error
+                    ? "rgba(166,25,46,0.6)"
+                    : "rgba(184,120,74,0.5)";
+                }}
+                onBlur={(e) => {
+                  e.currentTarget.style.borderColor = error
+                    ? "rgba(166,25,46,0.4)"
+                    : "#D8D6D1";
+                }}
               />
               {error && (
                 <p
                   id="pwd-error"
-                  className="font-sans text-[0.68rem] text-framboise"
                   role="alert"
+                  className="font-sans"
+                  style={{ fontSize: "0.68rem", color: "#A6192E" }}
                 >
                   Mot de passe incorrect.
                 </p>
@@ -105,25 +192,41 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full btn-mm justify-center"
+              style={{
+                width: "100%",
+                padding: "11px",
+                backgroundColor: "#111111",
+                color: "#F4E8D6",
+                border: "none",
+                borderRadius: "2px",
+                fontSize: "0.62rem",
+                fontFamily: "inherit",
+                fontWeight: 500,
+                letterSpacing: "0.18em",
+                textTransform: "uppercase",
+                cursor: loading ? "not-allowed" : "pointer",
+                opacity: loading ? 0.6 : 1,
+                transition: "opacity 0.2s",
+              }}
             >
               {loading ? "Vérification…" : "Accéder au brandbook"}
             </button>
           </form>
+
+          {/* Mention confidentielle */}
+          <p
+            className="text-center font-sans mt-8"
+            style={{
+              fontSize: "0.58rem",
+              letterSpacing: "0.1em",
+              color: "rgba(74, 74, 74, 0.3)",
+            }}
+          >
+            Document confidentiel · Usage interne
+          </p>
         </div>
-
-        {/* Mention */}
-        <p className="font-sans text-[0.6rem] text-gris-texte/35 text-center tracking-wide">
-          Maison Marquise · Brandbook confidentiel · Prestataires uniquement
-        </p>
-
-        {/* Filet or */}
-        <div
-          className="absolute -bottom-8 left-1/2 -translate-x-1/2 w-12 h-px"
-          style={{ background: "linear-gradient(90deg, transparent, #B99A5F, transparent)" }}
-          aria-hidden="true"
-        />
       </div>
+
     </div>
   );
 }

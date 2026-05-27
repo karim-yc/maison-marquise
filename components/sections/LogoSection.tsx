@@ -82,6 +82,7 @@ const COLORWAYS = [
   { label: "Blanc Marbre",    fill: "#F8F3EA", bg: "#111111", border: "rgba(184,120,74,0.2)", textOnBg: "#F8F3EA", name: "Sur noir" },
   { label: "Cuivre-Or",       fill: "#B8784A", bg: "#1F1A17", border: "rgba(184,120,74,0.3)", textOnBg: "#B8784A", name: "Cuivre sur noir" },
   { label: "Terracotta",      fill: "#A84F2A", bg: "#F4E8D6", border: "#D8C3A5",              textOnBg: "#A84F2A", name: "Terracotta sur crème" },
+  { label: "Blanc Marbre",    fill: "#F8F3EA", bg: "#A84F2A", border: "rgba(184,120,74,0.4)", textOnBg: "#F8F3EA", name: "Sur terracotta" },
   { label: "Crème Maison",    fill: "#F4E8D6", bg: "#4A2E20", border: "rgba(74,46,32,0.5)",   textOnBg: "#F4E8D6", name: "Crème sur noyer" },
 ] as const;
 
@@ -664,7 +665,7 @@ export function LogoSection() {
               aria-hidden="true"
             />
             <p className="mt-4 font-sans text-ui-lg text-gris-texte leading-relaxed max-w-reading">
-              Seules ces cinq combinaisons couleur/fond sont autorisées.
+              Seules ces six combinaisons couleur/fond sont autorisées.
               Toute autre teinte constitue un usage non officiel.
             </p>
           </motion.div>

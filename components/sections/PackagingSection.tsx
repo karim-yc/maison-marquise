@@ -280,9 +280,9 @@ export function PackagingSection() {
                 animate={headerIn ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.7, delay: 0.25, ease: EASE }}
               >
-                Chaque support prolonge l&apos;expérience Maison Marquise. De la cup terracotta
-                à la boîte pâtisserie, le packaging est premium par la matière, la lumière,
-                la précision et la retenue — jamais par la surcharge.
+                Six packagings officiels. De la cup terracotta à la boîte pâtisserie,
+                chaque support traduit l&apos;identité Maison Marquise
+                par la matière, la lumière et la précision.
               </motion.p>
             </div>
           </div>

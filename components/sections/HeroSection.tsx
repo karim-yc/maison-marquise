@@ -110,16 +110,6 @@ export function HeroSection({ className }: { className?: string }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.75, duration: 0.6, ease: EASE }}
         >
-          Brandbook officiel · Document confidentiel prestataires.
-        </motion.p>
-
-        {/* Phrase secondaire */}
-        <motion.p
-          className="font-sans font-light text-gris-texte/70 leading-snug text-sm mb-7"
-          initial={{ opacity: 0, y: 6 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.9, duration: 0.6, ease: EASE }}
-        >
           Charte graphique à l&apos;usage des graphistes,
           imprimeurs et prestataires.
         </motion.p>

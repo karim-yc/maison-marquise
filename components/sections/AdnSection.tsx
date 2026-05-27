@@ -50,7 +50,7 @@ const PILLARS = [
 ] as const;
 
 const ACCENT_HEX: Record<typeof PILLARS[number]["accent"], string> = {
-  "or-champagne": "#B99A5F",
+  "or-champagne": "#B8784A",  // → Cuivre-Or officiel (was Or Champagne #B99A5F)
   "caramel":      "#C7843E",
   "pistache":     "#9A9B55",
 };
@@ -191,7 +191,7 @@ export function AdnSection() {
               </motion.h2>
               <motion.div
                 className="h-px mt-4"
-                style={{ background: "linear-gradient(90deg, #B99A5F, transparent)", transformOrigin: "left" }}
+                style={{ background: "linear-gradient(90deg, #B8784A, transparent)", transformOrigin: "left" }}
                 initial={{ scaleX: 0 }}
                 animate={headerIn ? { scaleX: 1 } : {}}
                 transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
@@ -269,7 +269,7 @@ export function AdnSection() {
       <div ref={bandeRef} className="relative bg-noir-marquise overflow-hidden">
         <div
           className="h-px w-full"
-          style={{ background: "linear-gradient(90deg, transparent, #B99A5F 30%, #B99A5F 70%, transparent)" }}
+          style={{ background: "linear-gradient(90deg, transparent, #B8784A 30%, #B8784A 70%, transparent)" }}
           aria-hidden="true"
         />
         <div className="container-mm py-6 md:py-8">

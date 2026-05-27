@@ -590,7 +590,7 @@ export function LogoSection() {
 
               <motion.div
                 className="h-px mt-4"
-                style={{ background: "linear-gradient(90deg, #B99A5F, transparent)", transformOrigin: "left" }}
+                style={{ background: "linear-gradient(90deg, #B8784A, transparent)", transformOrigin: "left" }}
                 initial={{ scaleX: 0 }}
                 animate={headerIn ? { scaleX: 1 } : {}}
                 transition={{ duration: 1, delay: 0.3, ease: EASE_SPRING }}
@@ -660,7 +660,7 @@ export function LogoSection() {
             </h3>
             <div
               className="h-px mt-4 w-16"
-              style={{ background: "linear-gradient(90deg, #B99A5F, transparent)" }}
+              style={{ background: "linear-gradient(90deg, #B8784A, transparent)" }}
               aria-hidden="true"
             />
             <p className="mt-4 font-sans text-ui-lg text-gris-texte leading-relaxed max-w-reading">
@@ -685,7 +685,7 @@ export function LogoSection() {
             </h3>
             <div
               className="h-px mt-4 w-16"
-              style={{ background: "linear-gradient(90deg, #B99A5F, transparent)" }}
+              style={{ background: "linear-gradient(90deg, #B8784A, transparent)" }}
               aria-hidden="true"
             />
           </div>

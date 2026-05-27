@@ -79,7 +79,7 @@ function BlockTitle({ children }: { children: React.ReactNode }) {
       </h3>
       <div
         className="h-px w-12 mt-3"
-        style={{ background: "linear-gradient(90deg, #B99A5F, transparent)" }}
+        style={{ background: "linear-gradient(90deg, #B8784A, transparent)" }}
         aria-hidden="true"
       />
     </>
@@ -212,7 +212,7 @@ export function ArchitectureSection() {
 
               <motion.div
                 className="h-px mt-5"
-                style={{ background: "linear-gradient(90deg, #B99A5F, transparent)", transformOrigin: "left" }}
+                style={{ background: "linear-gradient(90deg, #B8784A, transparent)", transformOrigin: "left" }}
                 initial={{ scaleX: 0 }}
                 animate={headerIn ? { scaleX: 1 } : {}}
                 transition={{ duration: 1.1, delay: 0.3, ease: EASE_SPRING }}

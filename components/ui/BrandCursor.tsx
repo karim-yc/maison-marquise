@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion, useSpring, useMotionValue } from "framer-motion";
+import { motion, useSpring, useMotionValue, useReducedMotion } from "framer-motion";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // BrandCursor — curseur Maison Marquise
@@ -23,6 +23,7 @@ type CursorMode = "default" | "hover-link" | "hover-image";
 
 export function BrandCursor() {
   const [mounted,  setMounted]  = useState(false);
+  const reduced = useReducedMotion(); // Respect prefers-reduced-motion
   const [visible,  setVisible]  = useState(false);
   const [onDark,   setOnDark]   = useState(false);
   const [mode,     setMode]     = useState<CursorMode>("default");
@@ -85,7 +86,8 @@ export function BrandCursor() {
     };
   }, [mouseX, mouseY]);
 
-  if (!mounted) return null;
+  // Ne pas afficher le curseur personnalisé si réduit (curseur natif reprend)
+  if (!mounted || reduced) return null;
 
   // ── Tailles selon le mode ──────────────────────────────────────────────────
   const SIZE   = mode === "hover-image" ? 64 : mode === "hover-link" ? 50 : 44;

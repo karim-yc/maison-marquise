@@ -127,12 +127,20 @@
   ::-webkit-scrollbar-thumb { background: var(--gris-marbre); border-radius: 2px; }
   ::-webkit-scrollbar-thumb:hover { background: var(--gris-texte); }
 
-  /* Réduction de mouvement */
+  /* ── Accessibilité — Réduction de mouvement ─────────────────────────────── */
+  /* Quand l'utilisateur active 'Réduire les animations' (iOS/macOS/Windows)   */
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+    /* Curseur personnalisé masqué — le curseur natif reprend */
+    #mm-cursor-hide { display: none !important; }
+    /* Shimmer cuivre-or : arrêt complet */
+    @keyframes shimmer-cuivre {
+      0%, 100% { transform: none; opacity: 0; }
     }
   }
 }

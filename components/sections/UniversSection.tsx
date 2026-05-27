@@ -134,7 +134,7 @@ function SceneGourmand() {
       {/* Overlay sombre en bas */}
       <div
         className="absolute inset-x-0 bottom-0 h-28"
-        style={{ background: "linear-gradient(to top, rgba(28,14,4,0.70) 0%, transparent 100%)" }}
+        style={{ background: "linear-gradient(to top, rgba(100,30,8,0.75) 0%, transparent 100%)" }}
       />
     </div>
   );
@@ -192,7 +192,7 @@ function UniversCard({
       className={cn(
         "relative rounded-[3px] overflow-hidden",
         "border",
-        isDark ? "border-or-champagne/15" : "border-gris-marbre",
+        isDark ? "border-[#B8784A]/20" : "border-gris-marbre",
       )}
       initial={{ opacity: 0, y: 32 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -208,7 +208,7 @@ function UniversCard({
           className="absolute inset-x-0 bottom-0 h-20 pointer-events-none"
           style={{
             background: isDark
-              ? `linear-gradient(to top, ${univers.id === "gourmand" ? "rgba(28,14,4,0.95)" : "rgba(17,17,17,0.92)"} 0%, transparent 100%)`
+              ? `linear-gradient(to top, ${univers.id === "gourmand" ? "rgba(120,45,15,0.90)" : "rgba(17,17,17,0.92)"} 0%, transparent 100%)`
               : univers.id === "maison"
               ? "linear-gradient(to top, rgba(17,17,17,0.55) 0%, transparent 100%)"
               : "linear-gradient(to top, rgba(247,243,236,0.90) 0%, transparent 100%)",
@@ -251,7 +251,7 @@ function UniversCard({
       <div className={cn(
         "p-6 md:p-8 space-y-6",
         isDark
-          ? univers.id === "gourmand" ? "bg-[#1C0E04]" : "bg-noir-marquise"
+          ? univers.id === "gourmand" ? "bg-[#A84F2A]" : "bg-noir-marquise"
           : "bg-blanc-marbre",
       )}>
 

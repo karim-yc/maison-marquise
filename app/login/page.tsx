@@ -32,269 +32,215 @@ export default function LoginPage() {
   }
 
   return (
-    <>
-      {/* ─── MOBILE / TABLETTE : photo plein écran + carte basse ─────────── */}
-      <div className="relative min-h-screen flex flex-col justify-end lg:hidden">
+    /* Conteneur racine — photo en fond absolu, contenu par-dessus */
+    <div className="relative min-h-screen flex flex-col lg:flex-row">
 
-        {/* Photo plein écran en fond */}
-        <div className="fixed inset-0 -z-10">
-          <Image
-            src="/assets/packaging2/cup-terracotta-single.jpg"
-            alt=""
-            fill
-            sizes="100vw"
-            className="object-cover object-center"
-            quality={88}
-            priority
-          />
-          {/* Dégradé sombre bas → transparent haut */}
+      {/* ── PHOTO FOND — toujours plein écran ────────────────────── */}
+      <div className="absolute inset-0 lg:relative lg:flex-1">
+        <Image
+          src="/assets/packaging2/cup-terracotta-single.jpg"
+          alt=""
+          fill
+          sizes="(max-width: 1024px) 100vw, 55vw"
+          className="object-cover object-center"
+          quality={90}
+          priority
+          aria-hidden="true"
+        />
+        {/* Overlay : sombre en bas (mobile) + léger partout (desktop) */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: [
+              /* mobile : gradient de bas en haut pour lisibilité de la carte */
+              "linear-gradient(to top,",
+              "  rgba(20,10,4,0.96) 0%,",
+              "  rgba(20,10,4,0.75) 28%,",
+              "  rgba(20,10,4,0.2) 55%,",
+              "  transparent 100%)",
+            ].join(" "),
+          }}
+          aria-hidden="true"
+        />
+        {/* Citation — visible uniquement desktop, bas gauche */}
+        <div className="absolute bottom-0 left-0 right-0 p-10 xl:p-14 hidden lg:block">
           <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(to top, #1A0E07 0%, rgba(26,14,7,0.82) 32%, rgba(26,14,7,0.3) 60%, transparent 100%)",
-            }}
+            className="w-8 h-px mb-4"
+            style={{ background: "linear-gradient(90deg,#B8784A,transparent)" }}
             aria-hidden="true"
           />
-        </div>
-
-        {/* Citation flottante au-dessus de la carte */}
-        <div className="px-7 pb-6 text-center">
           <p
-            className="font-serif font-light italic"
-            style={{ fontSize: "1.05rem", color: "rgba(244,232,214,0.85)", lineHeight: 1.6 }}
+            className="font-serif font-light italic mb-2"
+            style={{ fontSize: "1.2rem", color: "rgba(244,232,214,0.9)", lineHeight: 1.55 }}
           >
             &ldquo;Bien plus qu&apos;une boulangerie.&rdquo;
           </p>
-        </div>
-
-        {/* Carte formulaire ancrée en bas */}
-        <div
-          className="w-full rounded-t-[20px] px-7 pt-8 pb-10"
-          style={{ backgroundColor: "#F7F3EC" }}
-        >
-          {/* Logo */}
-          <div className="w-36 mx-auto mb-6 text-noir-marquise">
-            <LogoFull aria-label="Maison Marquise" />
-          </div>
-
-          {/* Filet or */}
-          <div
-            className="mx-auto mb-6 h-px w-10"
-            style={{ background: "linear-gradient(90deg, transparent, #B8784A, transparent)" }}
-            aria-hidden="true"
-          />
-
-          {/* Formulaire */}
-          <FormBody
-            inputRef={inputRef}
-            error={error}
-            loading={loading}
-            onSubmit={handleSubmit}
-          />
+          <p
+            className="font-sans"
+            style={{
+              fontSize: "0.58rem",
+              letterSpacing: "0.22em",
+              textTransform: "uppercase",
+              color: "rgba(184,120,74,0.7)",
+            }}
+          >
+            Pâtisserie fine · Généreuse · Accessible
+          </p>
         </div>
       </div>
 
-      {/* ─── DESKTOP : split gauche photo / droite formulaire ────────────── */}
-      <div className="hidden lg:flex min-h-screen">
-
-        {/* Gauche — photo */}
-        <div className="relative flex-1 flex flex-col justify-end">
-          <Image
-            src="/assets/packaging2/cup-terracotta-single.jpg"
-            alt=""
-            fill
-            sizes="55vw"
-            className="object-cover object-center"
-            quality={90}
-            priority
-          />
-          {/* Overlay */}
+      {/* ── PANNEAU FORMULAIRE ────────────────────────────────────── */}
+      {/*
+        Mobile : position relative, pousse la carte vers le bas.
+          La photo (absolute) est visible derrière via mt-auto.
+        Desktop : colonne fixe 400px sur fond ivoire.
+      */}
+      <div
+        className="
+          relative z-10
+          mt-auto w-full rounded-t-[24px]
+          lg:mt-0 lg:rounded-none lg:w-[400px] xl:w-[440px] lg:shrink-0
+          flex flex-col justify-center
+          px-6 sm:px-10 pt-9 pb-10
+          lg:px-10 xl:px-14 lg:py-0
+        "
+        style={{ backgroundColor: "#F7F3EC" }}
+      >
+        {/* Indicateur de glissement — mobile uniquement */}
+        <div className="flex justify-center mb-6 lg:hidden" aria-hidden="true">
           <div
-            className="absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(to top, rgba(26,14,7,0.85) 0%, rgba(26,14,7,0.25) 50%, rgba(26,14,7,0.05) 100%)",
-            }}
-            aria-hidden="true"
+            className="w-10 h-[3px] rounded-full"
+            style={{ backgroundColor: "rgba(74,46,32,0.18)" }}
           />
-          {/* Citation bas gauche */}
-          <div className="relative z-10 p-10 xl:p-14">
-            <div
-              className="w-8 h-px mb-5"
-              style={{ background: "linear-gradient(90deg, #B8784A, transparent)" }}
-              aria-hidden="true"
-            />
+        </div>
+
+        {/* Logo officiel */}
+        <div className="w-36 sm:w-40 mx-auto mb-7 text-noir-marquise">
+          <LogoFull aria-label="Maison Marquise" />
+        </div>
+
+        {/* Filet or */}
+        <div
+          className="mx-auto mb-7 h-px w-10"
+          style={{ background: "linear-gradient(90deg,transparent,#B8784A,transparent)" }}
+          aria-hidden="true"
+        />
+
+        {/* Formulaire */}
+        <form onSubmit={handleSubmit} className="w-full space-y-4">
+
+          {/* Eyebrow + titre */}
+          <div className="mb-5">
             <p
-              className="font-serif font-light italic mb-3"
-              style={{
-                fontSize: "clamp(1.05rem, 1.6vw, 1.35rem)",
-                color: "rgba(244,232,214,0.9)",
-                lineHeight: 1.55,
-              }}
-            >
-              &ldquo;Bien plus qu&apos;une boulangerie.&rdquo;
-            </p>
-            <p
-              className="font-sans font-medium"
+              className="font-sans mb-1"
               style={{
                 fontSize: "0.58rem",
-                letterSpacing: "0.22em",
+                letterSpacing: "0.2em",
                 textTransform: "uppercase",
-                color: "rgba(184,120,74,0.7)",
+                color: "rgba(74,74,74,0.4)",
               }}
             >
-              Pâtisserie fine · Généreuse · Accessible
+              Accès prestataires
             </p>
-          </div>
-        </div>
-
-        {/* Droite — formulaire */}
-        <div
-          className="w-[420px] xl:w-[460px] shrink-0 flex flex-col items-center justify-center px-10 xl:px-14"
-          style={{ backgroundColor: "#F7F3EC" }}
-        >
-          {/* Logo */}
-          <div className="w-44 mx-auto mb-10 text-noir-marquise">
-            <LogoFull aria-label="Maison Marquise" />
+            <h1
+              className="font-serif font-light"
+              style={{ fontSize: "1.45rem", color: "#111111", lineHeight: 1.2 }}
+            >
+              Brandbook officiel
+            </h1>
           </div>
 
-          {/* Filet or */}
-          <div
-            className="mx-auto mb-8 h-px w-12"
-            style={{ background: "linear-gradient(90deg, transparent, #B8784A, transparent)" }}
-            aria-hidden="true"
-          />
-
-          <div className="w-full">
-            <FormBody
-              inputRef={inputRef}
-              error={error}
-              loading={loading}
-              onSubmit={handleSubmit}
+          {/* Champ mot de passe */}
+          <div className="space-y-1.5">
+            <label
+              htmlFor="password"
+              className="block font-sans"
+              style={{
+                fontSize: "0.6rem",
+                letterSpacing: "0.15em",
+                textTransform: "uppercase",
+                color: "rgba(74,74,74,0.5)",
+              }}
+            >
+              Mot de passe
+            </label>
+            <input
+              ref={inputRef}
+              id="password"
+              type="password"
+              autoFocus
+              autoComplete="current-password"
+              placeholder="••••••••"
+              aria-describedby={error ? "pwd-error" : undefined}
+              className="w-full outline-none font-sans transition-colors duration-200"
+              style={{
+                padding: "11px 14px",
+                border: error
+                  ? "1px solid rgba(166,25,46,0.5)"
+                  : "1px solid rgba(216,198,165,0.8)",
+                borderRadius: "2px",
+                backgroundColor: "#FAFAF8",
+                fontSize: "0.9rem",
+                color: "#111111",
+              }}
+              onFocus={(e) => {
+                e.currentTarget.style.borderColor = error
+                  ? "rgba(166,25,46,0.7)"
+                  : "rgba(184,120,74,0.6)";
+              }}
+              onBlur={(e) => {
+                e.currentTarget.style.borderColor = error
+                  ? "rgba(166,25,46,0.5)"
+                  : "rgba(216,198,165,0.8)";
+              }}
             />
+            {error && (
+              <p
+                id="pwd-error"
+                role="alert"
+                className="font-sans"
+                style={{ fontSize: "0.7rem", color: "#A6192E" }}
+              >
+                Mot de passe incorrect.
+              </p>
+            )}
           </div>
 
-          {/* Mention */}
-          <p
-            className="mt-10 font-sans text-center"
-            style={{ fontSize: "0.58rem", letterSpacing: "0.1em", color: "rgba(74,74,74,0.28)" }}
+          {/* Bouton */}
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full font-sans transition-opacity duration-200"
+            style={{
+              padding: "13px",
+              marginTop: "4px",
+              backgroundColor: "#111111",
+              color: "#F4E8D6",
+              border: "none",
+              borderRadius: "2px",
+              fontSize: "0.62rem",
+              letterSpacing: "0.2em",
+              textTransform: "uppercase",
+              cursor: loading ? "not-allowed" : "pointer",
+              opacity: loading ? 0.5 : 1,
+            }}
           >
-            Document confidentiel · Usage interne
-          </p>
-        </div>
-      </div>
-    </>
-  );
-}
+            {loading ? "Vérification…" : "Accéder au brandbook"}
+          </button>
+        </form>
 
-// ── Formulaire réutilisé sur mobile et desktop ──────────────────────────────
-function FormBody({
-  inputRef,
-  error,
-  loading,
-  onSubmit,
-}: {
-  inputRef: React.RefObject<HTMLInputElement>;
-  error: boolean;
-  loading: boolean;
-  onSubmit: (e: React.FormEvent) => void;
-}) {
-  return (
-    <form onSubmit={onSubmit} className="space-y-4">
-
-      <div>
+        {/* Mention */}
         <p
-          className="font-sans font-medium mb-1"
+          className="text-center font-sans mt-7 lg:mt-8"
           style={{
-            fontSize: "0.6rem",
-            letterSpacing: "0.18em",
-            textTransform: "uppercase",
-            color: "rgba(74,74,74,0.45)",
+            fontSize: "0.57rem",
+            letterSpacing: "0.1em",
+            color: "rgba(74,74,74,0.28)",
           }}
         >
-          Accès prestataires
+          Document confidentiel · Usage interne
         </p>
-        <h1
-          className="font-serif font-light"
-          style={{ fontSize: "1.4rem", color: "#111111", lineHeight: 1.2 }}
-        >
-          Brandbook officiel
-        </h1>
       </div>
-
-      <div className="pt-1 space-y-1.5">
-        <label
-          htmlFor="password"
-          className="block font-sans font-medium"
-          style={{
-            fontSize: "0.6rem",
-            letterSpacing: "0.15em",
-            textTransform: "uppercase",
-            color: "rgba(74,74,74,0.5)",
-          }}
-        >
-          Mot de passe
-        </label>
-        <input
-          ref={inputRef}
-          id="password"
-          type="password"
-          autoFocus
-          autoComplete="current-password"
-          placeholder="••••••••"
-          aria-describedby={error ? "pwd-error" : undefined}
-          className="w-full font-sans outline-none transition-colors duration-200"
-          style={{
-            padding: "11px 14px",
-            border: error ? "1px solid rgba(166,25,46,0.45)" : "1px solid #D8D6D1",
-            borderRadius: "2px",
-            backgroundColor: "#FAFAF8",
-            fontSize: "0.875rem",
-            color: "#111111",
-          }}
-          onFocus={(e) => {
-            e.currentTarget.style.borderColor = error
-              ? "rgba(166,25,46,0.65)"
-              : "rgba(184,120,74,0.55)";
-          }}
-          onBlur={(e) => {
-            e.currentTarget.style.borderColor = error
-              ? "rgba(166,25,46,0.45)"
-              : "#D8D6D1";
-          }}
-        />
-        {error && (
-          <p
-            id="pwd-error"
-            role="alert"
-            className="font-sans"
-            style={{ fontSize: "0.7rem", color: "#A6192E" }}
-          >
-            Mot de passe incorrect.
-          </p>
-        )}
-      </div>
-
-      <button
-        type="submit"
-        disabled={loading}
-        className="w-full font-sans font-medium transition-opacity duration-200"
-        style={{
-          padding: "12px",
-          backgroundColor: "#111111",
-          color: "#F4E8D6",
-          border: "none",
-          borderRadius: "2px",
-          fontSize: "0.62rem",
-          letterSpacing: "0.2em",
-          textTransform: "uppercase",
-          cursor: loading ? "not-allowed" : "pointer",
-          opacity: loading ? 0.55 : 1,
-        }}
-      >
-        {loading ? "Vérification…" : "Accéder au brandbook"}
-      </button>
-    </form>
+    </div>
   );
 }

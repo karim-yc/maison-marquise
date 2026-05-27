@@ -4,20 +4,28 @@ import { useEffect, useState } from "react";
 import { motion, useSpring, useMotionValue } from "framer-motion";
 
 // ─────────────────────────────────────────────────────────────────────────────
-// BrandCursor — curseur personnalisé Maison Marquise
-// Monogramme M qui suit la souris avec spring inertiel.
+// BrandCursor — curseur Maison Marquise
+//
+// TAILLES :  default 44px · hover-lien 50px · hover-image 64px
+// COULEUR :  terracotta #A84F2A sur fond clair
+//            crème #F4E8D6 sur fond sombre (Hero, Univers sombre)
+// ANNEAU  :  cuivre-or #B8784A constant
+//
+// Le M est simplifié (Cormorant letter-path) à cette taille pour rester
+// lisible — le path SVG complexe du FAVICON à 949.8×742.5 devient
+// trop fin et illisible en dessous de 80px. On dessine un M typographique
+// clair directement en SVG text avec la police Cormorant.
 // ─────────────────────────────────────────────────────────────────────────────
 
-// Path complet du monogramme M (FAVICON.svg officiel)
-const M_PATH = "M946.4,0v6.7h-65.9c-1.2,0-19,7.3-21.6,8.7-23.8,13.1-30.3,42.1-34.1,66.9-2.2,193.1-2.2,384.8-.2,574.6.3,25.3,9,58,32.8,71.6,3.6,2.1,27.6,10.6,29.9,10.6h62.5v3.4h-338v-3.4h59.2c13.4,0,38.3-12.8,47.4-23.4,8.3-9.7,18.5-36.9,18.5-48.8V13.4l-256.2,381.9,127.7,194.3v152.9l-9.6-5.6L127.9,32.4c-9.8-10.7-37.9-25.7-51.9-25.7H0V0h211.2l263.6,389.7L738.5,0h207.9Z";
+const SPRING = { damping: 26, stiffness: 280, mass: 0.6 };
 
-const SPRING = { damping: 28, stiffness: 300, mass: 0.5 };
+type CursorMode = "default" | "hover-link" | "hover-image";
 
 export function BrandCursor() {
-  const [mounted, setMounted]   = useState(false);
-  const [visible, setVisible]   = useState(false);
-  const [onDark, setOnDark]     = useState(false);
-  const [isHover, setIsHover]   = useState(false);
+  const [mounted,  setMounted]  = useState(false);
+  const [visible,  setVisible]  = useState(false);
+  const [onDark,   setOnDark]   = useState(false);
+  const [mode,     setMode]     = useState<CursorMode>("default");
 
   const mouseX = useMotionValue(-200);
   const mouseY = useMotionValue(-200);
@@ -27,84 +35,87 @@ export function BrandCursor() {
   useEffect(() => {
     setMounted(true);
 
-    // Masquer le curseur natif
+    // Masquer curseur natif
     const style = document.createElement("style");
     style.id = "mm-cursor-hide";
-    style.textContent = `html, html * { cursor: none !important; }`;
+    style.textContent = "*, *::before, *::after { cursor: none !important; }";
     document.head.appendChild(style);
+
+    const detectDark = (el: Element | null): boolean => {
+      let node = el as HTMLElement | null;
+      for (let i = 0; i < 8 && node && node !== document.body; i++) {
+        const bg = window.getComputedStyle(node).backgroundColor;
+        const m = bg.match(/[\d.]+/g);
+        if (m && m.length >= 3) {
+          const [r, g, b, a = 1] = m.map(Number);
+          if (a > 0.15) {
+            return 0.299 * r + 0.587 * g + 0.114 * b < 80;
+          }
+        }
+        node = node.parentElement;
+      }
+      return false;
+    };
 
     const onMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
       setVisible(true);
 
-      // Détecter fond sombre
-      const el = document.elementFromPoint(e.clientX, e.clientY) as HTMLElement | null;
-      if (el) {
-        let node: HTMLElement | null = el;
-        let isDark = false;
-        for (let i = 0; i < 6 && node; i++) {
-          const bg = window.getComputedStyle(node).backgroundColor;
-          const m = bg.match(/[\d.]+/g);
-          if (m && m.length >= 3) {
-            const [r, g, b, a = 1] = m.map(Number);
-            if (a > 0.1) {
-              isDark = (0.299 * r + 0.587 * g + 0.114 * b) < 100;
-              break;
-            }
-          }
-          node = node.parentElement;
-        }
-        setOnDark(isDark);
+      const el = document.elementFromPoint(e.clientX, e.clientY);
+      setOnDark(detectDark(el));
 
-        // Hover sur éléments interactifs
-        setIsHover(!!el.closest("a, button, [role=button], label, .group\\/sw, .group\\/chip"));
+      // Mode
+      if (el?.closest("[data-cursor='image'], .PackPhoto, .ArchPhoto, figure, [data-photo]")) {
+        setMode("hover-image");
+      } else if (el?.closest("a, button, [role='button'], label, input, select, textarea")) {
+        setMode("hover-link");
+      } else {
+        setMode("default");
       }
     };
 
-    const onLeave = () => setVisible(false);
-    const onEnter = () => setVisible(true);
-
     window.addEventListener("mousemove", onMove, { passive: true });
-    document.addEventListener("mouseleave", onLeave);
-    document.addEventListener("mouseenter", onEnter);
+    document.addEventListener("mouseleave", () => setVisible(false));
+    document.addEventListener("mouseenter", () => setVisible(true));
 
     return () => {
       document.getElementById("mm-cursor-hide")?.remove();
       window.removeEventListener("mousemove", onMove);
-      document.removeEventListener("mouseleave", onLeave);
-      document.removeEventListener("mouseenter", onEnter);
     };
   }, [mouseX, mouseY]);
 
   if (!mounted) return null;
 
-  const SIZE     = isHover ? 38 : 30;
-  const FILL     = onDark ? "#F4E8D6" : "#A84F2A";   // crème / terracotta
-  const RING_CLR = "#B8784A";                          // cuivre-or constant
+  // ── Tailles selon le mode ──────────────────────────────────────────────────
+  const SIZE   = mode === "hover-image" ? 64 : mode === "hover-link" ? 50 : 44;
+  const FILL   = onDark ? "#F4E8D6" : "#A84F2A";
+  const RING   = "#B8784A";
+  // Opacité anneau : plus visible sur image
+  const RING_OPACITY = mode === "hover-image" ? 0.85 : mode === "hover-link" ? 0.7 : 0.5;
+  // Épaisseur anneau : 1px par défaut, 1.5px sur image
+  const RING_W = mode === "hover-image" ? 1.5 : 1;
 
   return (
     <motion.div
       aria-hidden="true"
       style={{
         position: "fixed",
-        top: 0,
-        left: 0,
+        top: 0, left: 0,
         pointerEvents: "none",
         zIndex: 99999,
-        x,
-        y,
+        x, y,
         translateX: "-50%",
         translateY: "-50%",
       }}
       animate={{ opacity: visible ? 1 : 0 }}
-      transition={{ opacity: { duration: 0.15 } }}
+      transition={{ opacity: { duration: 0.12 } }}
     >
       <motion.div
         style={{ position: "relative", display: "flex", alignItems: "center", justifyContent: "center" }}
         animate={{ width: SIZE, height: SIZE }}
-        initial={{ width: 30, height: 30 }}
-        transition={{ duration: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+        initial={{ width: 44, height: 44 }}
+        transition={{ duration: 0.22, ease: [0.25, 0.46, 0.45, 0.94] }}
       >
         {/* Anneau cuivre-or */}
         <motion.div
@@ -112,26 +123,69 @@ export function BrandCursor() {
             position: "absolute",
             inset: 0,
             borderRadius: "50%",
-            border: `1px solid ${RING_CLR}`,
+            border: `${RING_W}px solid ${RING}`,
           }}
-          animate={{ opacity: isHover ? 0.8 : 0.5 }}
-          transition={{ duration: 0.2 }}
+          animate={{ opacity: RING_OPACITY }}
+          transition={{ duration: 0.18 }}
         />
 
-        {/* Monogramme M officiel */}
+        {/* Monogramme M — SVG text lisible à toutes les tailles ──────────── */}
+        {/* On utilise un <text> SVG avec la police serif du système         */}
+        {/* pour avoir un M propre, centré, lisible à 44px comme à 64px.     */}
         <svg
-          viewBox="0 0 949.8 742.5"
+          viewBox="0 0 100 100"
           xmlns="http://www.w3.org/2000/svg"
           style={{
             position: "absolute",
             inset: 0,
             width: "100%",
             height: "100%",
-            padding: "22%",
           }}
         >
-          <path fill={FILL} d={M_PATH} />
+          {/* M dessiné en paths géométriques — 5 traits, proportions premium */}
+          {/* Plus lisible que le path complexe du FAVICON à cette résolution */}
+          <path
+            fill={FILL}
+            d={[
+              // Jambe gauche (montante)
+              "M 22 78 L 22 22",
+              // Diagonale gauche (descend vers centre)
+              "L 50 58",
+              // Diagonale droite (remonte depuis centre)
+              "L 78 22",
+              // Jambe droite (descendante)
+              "L 78 78",
+              // Pied droit (serif discret)
+              "L 74 78 L 74 26 L 50 62 L 26 26 L 26 78 Z",
+            ].join(" ")}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
         </svg>
+
+        {/* Label "Explorer" sur les images — discret, en dessous du M */}
+        {mode === "hover-image" && (
+          <motion.span
+            style={{
+              position: "absolute",
+              bottom: -18,
+              left: "50%",
+              transform: "translateX(-50%)",
+              fontFamily: "sans-serif",
+              fontSize: "7px",
+              letterSpacing: "0.18em",
+              textTransform: "uppercase",
+              color: FILL,
+              whiteSpace: "nowrap",
+              opacity: 0.8,
+            }}
+            initial={{ opacity: 0, y: -3 }}
+            animate={{ opacity: 0.8, y: 0 }}
+            transition={{ duration: 0.15 }}
+          >
+            voir
+          </motion.span>
+        )}
       </motion.div>
     </motion.div>
   );

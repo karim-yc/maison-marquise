@@ -31,7 +31,7 @@ export function HeroSection({ className }: { className?: string }) {
     <motion.section
       ref={sectionRef}
       className={cn(
-        "relative w-full overflow-hidden bg-ivoire-maison",
+        "relative w-full overflow-hidden",
         "h-[calc(100dvh-4rem)] md:h-[calc(100dvh-72px)]",
         "flex flex-col items-center justify-center",
         className,
@@ -39,19 +39,29 @@ export function HeroSection({ className }: { className?: string }) {
       style={mounted ? { opacity: sectionOpacity } : undefined}
       aria-label="Accueil du brandbook Maison Marquise"
     >
-      {/* Fond marbre — parallax 0.25× la vitesse de scroll */}
+      {/* Fond terracotta — couleur principale de marque, règle charte §01 */}
       <motion.div
         className="absolute inset-0 pointer-events-none"
         style={{ y: marbleY }}
         aria-hidden="true"
       >
-        <Image
-          src="/assets/texture-marble-white.jpg"
-          alt="" fill sizes="100vw"
-          className="object-cover opacity-30"
-          quality={60} priority
+        {/* Base terracotta mate */}
+        <div className="absolute inset-0" style={{ backgroundColor: "#A84F2A" }} />
+        {/* Grain papier mat — texture charte */}
+        <div
+          className="absolute inset-0 opacity-[0.22]"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeBlend in='SourceGraphic' mode='multiply'/%3E%3C/filter%3E%3Crect width='200' height='200' fill='%23A84F2A' filter='url(%23g)'/%3E%3C/svg%3E")`,
+            backgroundSize: "200px 200px",
+          }}
         />
-        <div className="absolute inset-0 bg-ivoire-maison/72" />
+        {/* Dégradé radial chaud — lumière centrale premium */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: "radial-gradient(ellipse 70% 60% at 50% 45%, rgba(184,120,74,0.25) 0%, rgba(152,58,24,0.30) 60%, rgba(63,20,8,0.45) 100%)",
+          }}
+        />
       </motion.div>
 
       {/* ── Bloc central unique — tout ensemble, bien groupé ── */}
@@ -69,11 +79,11 @@ export function HeroSection({ className }: { className?: string }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1, duration: 0.6, ease: EASE }}
         >
-          <span className="block w-4 h-px bg-or-champagne/60" aria-hidden="true" />
-          <span className="font-sans text-[0.58rem] font-medium tracking-[0.22em] uppercase text-gris-texte">
+          <span className="block w-4 h-px" style={{ backgroundColor: "#B8784A", opacity: 0.7 }} aria-hidden="true" />
+          <span className="font-sans text-[0.58rem] font-medium tracking-[0.22em] uppercase" style={{ color: "#F4E8D6", opacity: 0.75 }}>
             Identité de marque
           </span>
-          <span className="block w-4 h-px bg-or-champagne/60" aria-hidden="true" />
+          <span className="block w-4 h-px" style={{ backgroundColor: "#B8784A", opacity: 0.7 }} aria-hidden="true" />
         </motion.div>
 
         {/* Logo officiel */}
@@ -85,7 +95,7 @@ export function HeroSection({ className }: { className?: string }) {
         >
           <HeroLogo
             variant="full"
-            colorClass="text-noir-marquise"
+            colorClass="text-[#F8F3EA]"
             className="w-full"
           />
         </motion.div>
@@ -98,14 +108,15 @@ export function HeroSection({ className }: { className?: string }) {
           transition={{ delay: 0.6, duration: 0.4 }}
           aria-hidden="true"
         >
-          <div className="h-px flex-1" style={{ background: "linear-gradient(to right, transparent, #B99A5F)" }} />
-          <div className="w-1.5 h-1.5 bg-or-champagne rotate-45 shrink-0" />
-          <div className="h-px flex-1" style={{ background: "linear-gradient(to left, transparent, #B99A5F)" }} />
+          <div className="h-px flex-1" style={{ background: "linear-gradient(to right, transparent, #B8784A)" }} />
+          <div className="w-1.5 h-1.5 rotate-45 shrink-0" style={{ backgroundColor: "#B8784A", opacity: 0.8 }} />
+          <div className="h-px flex-1" style={{ background: "linear-gradient(to left, transparent, #B8784A)" }} />
         </motion.div>
 
         {/* Sous-titre */}
         <motion.p
-          className="font-serif italic font-light text-gris-texte mb-2 text-lg md:text-xl"
+          className="font-serif italic font-light mb-2 text-lg md:text-xl"
+          style={{ color: "#F4E8D6", opacity: 0.88 }}
           initial={{ opacity: 0, y: 6 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.75, duration: 0.6, ease: EASE }}
@@ -119,7 +130,8 @@ export function HeroSection({ className }: { className?: string }) {
 
       {/* Scroll indicator — ancré en bas */}
       <motion.button
-        className="absolute bottom-5 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-gris-texte/35 hover:text-or-champagne transition-colors duration-300"
+        className="absolute bottom-5 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 transition-colors duration-300"
+        style={{ color: "rgba(244,232,214,0.45)" }}
         onClick={scrollToContent}
         aria-label="Défiler vers le contenu"
         initial={{ opacity: 0 }}

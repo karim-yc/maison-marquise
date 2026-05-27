@@ -238,27 +238,7 @@ const EQUILIBRE = [
   { pct: "10 %", label: "Accents premium", hex: ["#B8784A", "#1F1A17"], desc: "Cuivre-Or, Noir Subtil" },
 ] as const;
 
-// ── Règles ────────────────────────────────────────────────────────────────────
-const REGLES = [
-  "Toujours associer les couleurs à des matières visibles.",
-  "Éviter les aplats trop plats ou numériques.",
-  "Garder une palette chaude, douce et premium.",
-  "Ne jamais utiliser de couleurs criardes.",
-  "Le cuivre-or doit rester un accent, jamais une couleur dominante.",
-  "La terracotta est la couleur signature — elle doit respirer avec crème et marbre.",
-  "Ne jamais introduire de nouvelles couleurs sans justification produit.",
-] as const;
 
-const JAMAIS = [
-  "Terracotta orange vif.",
-  "Or jaune brillant ou bling-bling.",
-  "Blanc froid clinique.",
-  "Noir trop dominant.",
-  "Palette multicolore.",
-  "Couleurs pastel aléatoires.",
-  "Présenter les couleurs sans textures.",
-  "Créer une ambiance froide, industrielle ou impersonnelle.",
-] as const;
 
 // ─────────────────────────────────────────────────────────────────────────────
 // CopyChip — copie un code au clic

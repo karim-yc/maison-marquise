@@ -25,29 +25,6 @@ const PALETTE = [
   { name: "Noir Subtil",         hex: "#1F1A17", usage: "Textes, détails fins, contraste", texture: "Noir mat doux" },
 ] as const;
 
-// ── Règles générales ──────────────────────────────────────────────────────────
-const REGLES = [
-  "Le packaging doit toujours rester lisible.",
-  "Le logo ne doit jamais être caché, déformé ou déplacé.",
-  "Les proportions doivent rester fidèles aux références.",
-  "Les couleurs ne doivent pas être recolorisées librement.",
-  "La terracotta ne doit jamais devenir orange vif.",
-  "Le cuivre-or ne doit jamais devenir jaune brillant.",
-  "Le marbre doit rester clair, subtil et élégant.",
-  "Les finitions doivent rester sobres, premium et réalistes.",
-] as const;
-
-// ── À ne jamais faire ─────────────────────────────────────────────────────────
-const JAMAIS = [
-  "Inventer un paper bag, tote bag ou coffee bean bag.",
-  "Créer un nouveau cup ou une nouvelle boîte.",
-  "Ajouter un sticker, illustration, doodle ou motif décoratif.",
-  "Changer la position ou les proportions du logo.",
-  "Utiliser des textures plates sans matière visible.",
-  "Surcharger les packagings.",
-  "Créer une identité café générique.",
-] as const;
-
 // ─────────────────────────────────────────────────────────────────────────────
 // Composants utilitaires
 // ─────────────────────────────────────────────────────────────────────────────

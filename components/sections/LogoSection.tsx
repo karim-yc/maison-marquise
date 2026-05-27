@@ -115,7 +115,7 @@ const LOGO_COMPONENTS: Record<VariantId, (p: { fill: string; className?: string 
 // ─────────────────────────────────────────────────────────────────────────────
 
 // ── Boutons de téléchargement logo ───────────────────────────────────────────
-// SVG disponibles dès maintenant ; PNG/PDF à intégrer plus tard.
+
 const LOGO_FILE_URLS: Record<string, string | null> = {
   // SVG officiels — 4 déclinaisons exactes
   "SVG (complet)":        "/assets/LOGO_complet.svg",        // M + nom + baseline
@@ -171,21 +171,7 @@ function DownloadButtons({ files, variantId }: { files: readonly string[]; varia
             </a>
           );
         }
-        return (
-          <button
-            key={fmt}
-            disabled
-            className={[
-              "inline-flex items-center gap-1.5 px-3 py-1.5 rounded-[2px]",
-              "font-sans text-[0.58rem] font-medium tracking-[0.12em] uppercase",
-              "border border-gris-marbre text-gris-texte/35 bg-blanc-marbre cursor-not-allowed",
-            ].join(" ")}
-            title={`${fmt} — bientôt disponible`}
-          >
-            {DownloadIcon}
-            {fmt}
-          </button>
-        );
+        return null; // Format non encore disponible
       })}
     </div>
   );

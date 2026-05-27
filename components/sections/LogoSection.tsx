@@ -664,7 +664,7 @@ export function LogoSection() {
               aria-hidden="true"
             />
             <p className="mt-4 font-sans text-ui-lg text-gris-texte leading-relaxed max-w-reading">
-              Seules ces quatre combinaisons couleur/fond sont autorisées.
+              Seules ces cinq combinaisons couleur/fond sont autorisées.
               Toute autre teinte constitue un usage non officiel.
             </p>
           </motion.div>

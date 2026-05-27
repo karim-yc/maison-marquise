@@ -28,11 +28,11 @@ const UNIVERS = [
     desc:    "Le socle permanent de la marque. Sobre, architecturé, premium. Toutes les communications officielles s'inscrivent dans cet univers.",
     mood:    ["Élégant", "Maîtrisé", "Intemporel", "Premium"],
     palette: [
-      { hex: "#FAFAF8", label: "Blanc Marbre",  role: "Fond" },
-      { hex: "#F7F3EC", label: "Ivoire Maison", role: "Surface" },
-      { hex: "#111111", label: "Noir Marquise", role: "Texte" },
-      { hex: "#B99A5F", label: "Or Champagne",  role: "Accent" },
-      { hex: "#D8D6D1", label: "Gris Marbre",   role: "Neutre" },
+      { hex: "#F8F3EA", label: "Blanc Marbre",  role: "Fond" },
+      { hex: "#F4E8D6", label: "Crème Maison",  role: "Surface" },
+      { hex: "#111111", label: "Noir Marquise",  role: "Texte" },
+      { hex: "#B8784A", label: "Cuivre-Or",      role: "Accent" },
+      { hex: "#D8C3A5", label: "Beige Doux",     role: "Neutre" },
     ],
     usages: [
       "Façade & enseigne",
@@ -53,11 +53,11 @@ const UNIVERS = [
     desc:    "L'univers des produits, des saisons et des émotions. Chaud, généreux, accessible. Il fait envie et invite à la dégustation.",
     mood:    ["Chaleureux", "Généreux", "Appétissant", "Accessible"],
     palette: [
-      { hex: "#F7F3EC", label: "Ivoire Maison",       role: "Fond" },
-      { hex: "#C7843E", label: "Caramel Pâtissier",   role: "Principal" },
-      { hex: "#A6192E", label: "Framboise Signature", role: "Accent fort" },
-      { hex: "#9A9B55", label: "Pistache Fine",        role: "Accent doux" },
-      { hex: "#6F5A2E", label: "Brun Marquis",         role: "Profondeur" },
+      { hex: "#A84F2A", label: "Terracotta",    role: "Principal" },
+      { hex: "#F4E8D6", label: "Crème Maison",  role: "Fond chaud" },
+      { hex: "#B8784A", label: "Cuivre-Or",     role: "Accent" },
+      { hex: "#4A2E20", label: "Noyer Foncé",   role: "Profondeur" },
+      { hex: "#F8F3EA", label: "Blanc Marbre",  role: "Lumière" },
     ],
     usages: [
       "Fiches produits & vitrines",
@@ -77,10 +77,10 @@ const UNIVERS = [
     desc:    "Réservé aux moments forts. Contrasté, éditorial, collectible. Un univers à utiliser avec parcimonie pour lui conserver son impact.",
     mood:    ["Fort", "Contrasté", "Éditorial", "Événementiel"],
     palette: [
-      { hex: "#111111", label: "Noir Marquise", role: "Fond dominant" },
-      { hex: "#B99A5F", label: "Or Champagne",  role: "Accent signature" },
-      { hex: "#A6192E", label: "Framboise",      role: "Accent émotionnel" },
-      { hex: "#F7F3EC", label: "Ivoire Maison",  role: "Texte clair" },
+      { hex: "#1F1A17", label: "Noir Subtil",   role: "Fond dominant" },
+      { hex: "#B8784A", label: "Cuivre-Or",     role: "Accent signature" },
+      { hex: "#A84F2A", label: "Terracotta",    role: "Accent chaud" },
+      { hex: "#F4E8D6", label: "Crème Maison",  role: "Texte clair" },
     ],
     usages: [
       "Collaborations & partenariats",
@@ -267,7 +267,7 @@ function UniversCard({
           <p className={cn(
             "font-serif italic",
             "text-body-lg",
-            isDark ? "text-or-champagne/70" : "text-or-champagne",
+            isDark ? "text-[#B8784A]/80" : "text-[#B8784A]",
           )}>
             {univers.tagline}
           </p>
@@ -286,7 +286,7 @@ function UniversCard({
           className="h-px"
           style={{
             background: isDark
-              ? "linear-gradient(90deg, rgba(185,154,95,0.25), transparent)"
+              ? "linear-gradient(90deg, rgba(184,120,74,0.30), transparent)"
               : "linear-gradient(90deg, rgba(17,17,17,0.08), transparent)",
           }}
           aria-hidden="true"
